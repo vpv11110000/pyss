@@ -1,0 +1,9 @@
+include MANIFEST.in
+include setup.py
+recursive-include pyss *.py
+recursive-include demo *
+recursive-include examples *
+recursive-include docs *
+recursive-include other *
+recursive-include tests *
+recursive-include LICENSE *
