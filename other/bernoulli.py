@@ -51,8 +51,15 @@ from pyss.pyss_const import *
 def main():
     logger.info("--- Распределение Бернулли ---")
     random.seed()
+    
+    ### MODEL ----------------------------------
+    m = PyssModel()
+    sgm = Segment(m)
+    
     #
-    options.flags.logTransactTrace = False
+    m[OPTIONS].setAllFalse()
+    m[OPTIONS].printResult = True       
+
     #
     MAX_TIME=24
     # tables
