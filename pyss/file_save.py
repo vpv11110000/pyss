@@ -32,22 +32,21 @@ class FileSave(Block):
         lines = [line.rstrip('\n') for line in f.readlines()]
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)  
     fileName="default.dat" - имя файла
     funcSave=None - функция формирования данных для записи. Сигнатура str f(owner,transact)
     mode="write" - режим записи. 
                    "write" - создание или перезапись файла (аналог python io 'wb' ). 
                    "append" - создаёт файл ("wb") если не существует и добавляет данные в существующий файл (аналог python io 'wb' и 'ab').
-    label - метка блока, см. block.py.
 
 Например, блок
 
-file_save.FileSave(fileName="c:\\temp\\model.dat",funcSave=lambda o,t:str(model.getCurTime()),mode="write",label=None)
+file_save.FileSave(sgm, fileName="c:\\temp\\model.dat",funcSave=lambda o,t:str(model.getCurTime()),mode="write")
 
 записывает текущее время в файл c:\temp\model.dat.
 
-Пример использования см. tests/test_file_save.py.
-
-Атрибуты блока Mark (в дополнение к атрибутам block.Block):
+Атрибуты блока FileSave (в дополнение к атрибутам block.Block):
 bl = file_save.FileSave(...)
 bl[FILENAME] - имя файла
 bl[FUNC_SAVE] - функция формирования данных для записи. Сигнатура str f(owner,transact)

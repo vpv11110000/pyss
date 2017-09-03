@@ -29,6 +29,8 @@ class Gate(Block):
 следующему по порядку блоку.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py) 
     condition - условие
         NU - устройство свободно (т.е. не используется),
         U - устройство не свободно (т.е. используется),
@@ -50,12 +52,10 @@ Args:
         Когда состояние любого из объектов меняется,
         заблокированный транзакт снова активизируется,
         повторяется проверка заданного блоком Gate условия.
-    
-    label - см. block.py.
 
 Например, блок
 
-gate.Gate(condition=SNF,objectName="STORAGE_NAME",nextBlockLabel="Occupied",label="Again")
+gate.Gate(sgm, "Again", condition=SNF,objectName="STORAGE_NAME",nextBlockLabel="Occupied")
 
 будет пропускать транзакты если память не заполнена, и направлять их в блок с меткой "Occupied",
 если память заполнена.

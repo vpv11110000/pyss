@@ -28,13 +28,14 @@ class Test(Block):
 - если параметр move2block не задан, то транзакт задерживается в предыдущем блоке. 
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     funcCondition=None - функция вычисления условия, сигнатура: bool f(owner, transact)
     move2block=None - метка блока, к которому будет направляться транзакт, если условие не будет выполняться
-    label - см. block.py.
 
 Например, блок
 
-test.Test(funcCondition=lambda t: getCurrentTransact()[NUM] % 2 != 0,move2block="IF_EVEN",label=None)
+test.Test(sgm, funcCondition=lambda t: getCurrentTransact()[NUM] % 2 != 0,move2block="IF_EVEN")
 
 будет направлять транзакты с чётными номерами в блок с меткой "IF_EVEN", 
 а транзактам с нечётными номерами входит в блок.

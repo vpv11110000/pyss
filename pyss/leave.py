@@ -24,17 +24,18 @@ class Leave(Block):
 - освобождается память на значение, рассчитанное или полученное функцией funcBusySize
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py) 
     storageName=None - строка с наименованием памяти
     funcBusySize=1 - число освобождаемых единиц памяти или функция, возвращающая указанное число.  Сигнатура функции f(owner,transact).
-    label - см. block.py.
 
 Например, блок
 
-leave.Leave(storageName="mcd",funcBusySize=1,label=None)
+leave.Leave(sgm, storageName="mcd",funcBusySize=1)
 
 или
 
-leave.Leave(storageName="mcd",funcBusySize=funcBusySize=lambda x: 1, label=None)
+leave.Leave(sgm, storageName="mcd",funcBusySize=funcBusySize=lambda x: 1)
 
 при прохождении транзакта будет освобождать память на одну единицу.
 

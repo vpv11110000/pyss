@@ -16,6 +16,7 @@ class PlotStorageLifeLine(PyssOwnerObject):
     """Формирование графической диаграммы для линий жизни МКУ
     
 Args:
+    ownerModel=None - объект модели-владельца 
     stor=None - МКУ или список блоков МКУ
     title - заголовок диаграммы
     funcAnnotate - функция анноторирования линии жизни МКУ. 

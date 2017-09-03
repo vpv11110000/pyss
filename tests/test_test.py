@@ -109,8 +109,8 @@ class TestTest(unittest.TestCase):
         Handle(sgm, handlerFunc=funcTransactTo_list_all_transact)
         #        
         # .addBlock(bprint_blocks.buildBprintCurrentTime(strFormat="=== Time: [%.12f]"))
-        Test(sgm, funcCondition=checkTest, move2block=None, label=None)
-        Terminate(sgm, deltaTerminate=1, label=None)
+        Test(sgm, funcCondition=checkTest, move2block=None)
+        Terminate(sgm, deltaTerminate=1)
 
         #
         m.start(terminationCount=3, maxTime=MAX_TIME)
@@ -173,14 +173,14 @@ class TestTest(unittest.TestCase):
         Handle(sgm, handlerFunc=funcTransactTo_list_all_transact)
         #        
         # направляет транзакт с NUM равным 2 в блок с меткой "ALT"
-        Test(sgm, funcCondition=checkTest, move2block=LABEL_ALT, label=None)
+        Test(sgm, funcCondition=checkTest, move2block=LABEL_ALT)
         Terminate(sgm, deltaTerminate=1, label=LABEL_TERMINATE)        
         
         # ------------------------------------------------
         # ----- ветвь маршрута ALT
         Advance(sgm, meanTime=5, modificatorFunc=None, label=LABEL_ALT)
         # направлять все транзакты на блок с меткой "TERMINATE"
-        Transfer(sgm, funcTransfer=lambda o, t: o.findBlockByLabel(LABEL_TERMINATE), label=None)
+        Transfer(sgm, funcTransfer=lambda o, t: o.findBlockByLabel(LABEL_TERMINATE))
         #
         m.start(terminationCount=3, maxTime=MAX_TIME)
         

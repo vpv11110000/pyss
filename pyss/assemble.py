@@ -32,17 +32,14 @@ class Assemble(Block):
 
 Наименование семейства (ансамбля) определяется Transact[ASSEMBLY_SET].
 
-Assemble(countTransact=None,label=None)
-
-Параметр countTransact количество объединяемых транзактов.
-
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)
     countTransact - количество объединяемых транзактов одного семейства.
-    label - см. block.py.
 
 Например, блок
 
-assemble.Assemble(countTransact=2,label="Assemble001")
+assemble.Assemble(sgm, countTransact=2,label="Assemble001")
 
 объединяет каждые два транзакта одного семейства.
 
@@ -60,8 +57,6 @@ assemble.Assemble(countTransact=2,label="Assemble001")
 то он не обрабатывается, проходит транзитом.
 
 Если countTransact равен 0 или 1, то транзакт проходит транзитом.
-
-Пример использования см. demo/demo_assemble.py.
 
 Атрибуты блока Assemble (в дополнение к атрибутам block.Block):
 bl = Assemble(...)

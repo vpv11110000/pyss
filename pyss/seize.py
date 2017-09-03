@@ -33,12 +33,13 @@ class Seize(Block):
 Освобождение устройства происходит в блоке release.Release.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     facilityName=None - наименование устройства (см. facility.Facility)
-    label - см. block.py.
 
 Например, блок
 
-seize.Seize(facilityName='F_1',label=None)
+seize.Seize(sgm, facilityName='F_1')
 
 моделирует занятие устройства 'F_1'.
 

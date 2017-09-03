@@ -15,15 +15,15 @@ class Handle(Block):
     """Блок обработки элементов модели.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py) 
     handlerFunc - определяет функцию обработки.
         Функция handlerFunc вызывается при прохождении транзакта через блок.
         Сигнатура f(owner,transact)
-    label - см. block.py.
 
 Например, блок
 
-handle.Handle(handlerFunc=lambda owner,transact: print transact,
-    label=None)
+handle.Handle(sgm, handlerFunc=lambda owner,transact: print transact)
 
 печатает объект транзакта.
 

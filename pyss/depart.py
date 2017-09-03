@@ -16,6 +16,8 @@ class Depart(Block):
     """Блок Depart служит для уменьшения длины очереди.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     queueName - имя объекта (queue.Queue) очереди или функция без параметров,
             определяющая имя объекта очереди, в которой должна уменьшиться длина
     deltaDecrease - значение или функция, возвращающая целое значение,
@@ -24,19 +26,16 @@ Args:
                     Параметр deltaDecrease, как правило, должен быть равен deltaIncrease
                     блока queue.Queue.
                     Сигнатура float f(o,t).                    
-    label - см. block.py.
 
 Например, блок
 
-depart.Depart(queueName="QUEUE_1", deltaDecrease=1, label=None)
+depart.Depart(sgm, queueName="QUEUE_1", deltaDecrease=1)
 
 или
 
-depart.Depart(queueName=lambda:"QUEUE_1", deltaDecrease=1, label=None)
+depart.Depart(queueName=lambda:"QUEUE_1", deltaDecrease=1)
 
 при прохождении транзакта будет уменьшать длину очереди QUEUE_1 на 1.
-
-Пример использования см. tests/test_queue.py.
 
 См. также queue.py (занятие очереди).
 

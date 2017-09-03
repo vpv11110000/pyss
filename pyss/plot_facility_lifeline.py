@@ -16,6 +16,7 @@ class PlotFacilityLifeLine(PyssOwnerObject):
     """Формирование графической диаграммы для линий жизни ОКУ
     
 Args:
+    ownerModel=None - объект модели-владельца 
     facilities=None - ОКУ или список блоков ОКУ
     title - заголовок диаграммы
     funcAnnotate - функция аннторирования линии жизни ОКУ. 

@@ -30,21 +30,20 @@ class Enter(Block):
 - транзакт запоминается в списке задержки components.delayedList[storageName].
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     storageName=None - строка с наименованием памяти
     funcBusySize=1 - число занимаемых единиц памяти или функция, возвращающая указанное число. Сигнатура функции f(owner,transact).
-    label - см. block.py.
 
 Например, блок
 
-enter.Enter(storageName="mcd",funcBusySize=1,label=None)
+enter.Enter(sgm, storageName="mcd",funcBusySize=1)
 
 или
 
-enter.Enter(storageName="mcd", funcBusySize=lambda x: 1, label=None)
+enter.Enter(sgm, storageName="mcd", funcBusySize=lambda x: 1)
 
 при прохождении транзакта будет занимать память на одну единицу.
-
-Пример использования см. tests/test_enter_leave.py.
 
 См. также leave.py, storage.py
 

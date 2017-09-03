@@ -21,15 +21,16 @@ class Queue(Block):
 При прохождении транзакта увеличивает длину очереди на значение, полученное из атрибута DELTA_INCREASE.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py) 
     queueName - имя очереди, в которой должна увеличиться длина
     deltaIncrease - значение или функция, возвращающая значение,
                     на которое увеличивается длина очереди, по умолчанию 1.
                     Сигнатура float f(o,t).
-    label - см. block.py.
 
 Например, блок
 
-queue.Queue(queueName="QUEUE_1", deltaIncrease=1, label=None)
+queue.Queue(sgm, queueName="QUEUE_1", deltaIncrease=1)
 
 создаст (при страте моделирования) в pyss_model.PyssModel()[QUEUE_OBJECTS] объект 
 очереди QueueObject с именем QUEUE_1

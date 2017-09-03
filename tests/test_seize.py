@@ -110,7 +110,7 @@ class TestSeize(unittest.TestCase):
         Advance(sgm, meanTime=5, modificatorFunc=0)
         Handle(sgm, handlerFunc=lambda o, t:
                self.assertTrue(m.getCurTime() in [6, 11, 16]))
-        Release(sgm, facilityName=F_1, label=None)
+        Release(sgm, facilityName=F_1)
         Terminate(sgm, deltaTerminate=1)
         #
         # test

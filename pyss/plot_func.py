@@ -21,6 +21,7 @@ class PlotFunc(PyssOwnerObject):
     """Формирование диаграммы плотности вероятностей и функции распределения для функций func_discrete, func_exponential, func_normal
     
 Args:
+    ownerModel=None - объект модели-владельца 
     funcObj=None - объект функции (м.б. func_discrete, func_exponential, func_normal)
     maxPoints=1000 - количество формируемых значений вызова функции
     countIntervals=20 - количество интервалов аргумента в промежутке [0,1]

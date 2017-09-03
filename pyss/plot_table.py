@@ -19,6 +19,7 @@ class PlotTable(PyssOwnerObject):
     """Формирование графической диаграммы по данным из таблиц Table, QTable
     
 Args:
+    ownerModel=None - объект модели-владельца 
     table=None - таблица
     title - заголовок диаграммы
                        

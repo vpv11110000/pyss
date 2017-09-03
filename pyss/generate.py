@@ -23,6 +23,8 @@ class Generate(Block):
 Транзакты модели не должны входить в блок GENERATE.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py) 
     med_value=1 - среднее время формирования транзактов (вещественное число),
                   или функция float f()
                   Если задано вещественное число, 
@@ -55,19 +57,15 @@ Args:
                  самый низкий приоритет - нулевой.
                  Если параметр priority равен None,
                  то формируемые транзакты имeют нулевой приоритет.
-    label - см. block.py.
-
 
 Простейший вызов имеет следующий формат:
 from pyss import generate
  ...
 # model
-m = pyss_model.PyssModel().addSegment(
-    segment.Segment()
-    .addBlock(generate.Generate(med_value=1, modificatorFunc=None, first_tx=0, max_amount=None, priority=0,label=None))
-    .addBlock(terminate.Terminate(deltaTerminate=1))
-    )
-logger.info(str(m))
+m = pyss_model.PyssModel()
+sgm=segment.Segment()
+generate.Generate(sgm, med_value=1, modificatorFunc=None, first_tx=0, max_amount=None, priority=0)
+terminate.Terminate(sgm, deltaTerminate=1)
 m.start(10, maxTime=20)
 
 Параметр med_value задает среднее значение интервала времени
@@ -81,7 +79,7 @@ m.start(10, maxTime=20)
 
 Например, блок
 
-generate.Generate(med_value=100, modificatorFunc=lambda owner, currentTime: random.uniform(-40.0,40.0), first_tx=0, max_amount=None, priority=0,label=None)
+generate.Generate(sgm, med_value=100, modificatorFunc=lambda owner, currentTime: random.uniform(-40.0,40.0), first_tx=0, max_amount=None, priority=0)
 
 создает транзакты через случайные интервалы времени, равномерно распределенные на отрезке [60;140].
 

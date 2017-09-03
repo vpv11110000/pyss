@@ -30,6 +30,7 @@ class Facility(PyssStateObject):
 Владельцем Facility является модель.
 
 Args:
+    ownerModel=None - объект модели-владельца 
     facilityName - строка с наименованием одноканального устройства
 
 Например, строка
@@ -37,8 +38,6 @@ Args:
 facility.Facility(facilityName="F_1")
 
 создаёт объект одноканальное устройство c именем F_1.
-
-Пример использования см. demo/demo_preempt_return.py.
 
 Особенности см. tests/test_preempt_return.py
 

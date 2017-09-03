@@ -29,6 +29,7 @@ class Segment(PyssStateObject):
 на предыдущий обрабатываемый транзакт.
 
 Args:
+    ownerModel=None - объект модели-владельца
     label=None - заголовок сегмента
     options_val - опции сегмента
     ownerModel=None - объект модели, в которую добавляется сегмент

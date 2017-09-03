@@ -3,14 +3,6 @@
 
 """
 Модуль с функциями создания блоков вывода на экран часто используемых параметров сущностей модели.
-
-def buildBprintDelaiedList(strFormat="delayedList: [%s]", label=None):
-def buildBprintCurrentTransact(strFormat="Transact: [%s]", label=None):
-def buildBprintQueue(queueName = None,strFormat="Queue: [%s]", label=None):
-def buildBprintFEL(strFormat="FEL: [%s]", label=None):
-def buildBprintCurrentTime(strFormat="Time: [%.12f]", onlyOncePerCurrentTime = True,label=None):
-def buildBprintDelaiedList(strFormat="delayedList: [%s]", label=None):
-
 """
 
 from pyss.pyss_const import *
@@ -23,8 +15,9 @@ def buildBprintDelaiedList(ownerSegment=None, label=None, strFormat="delayedList
     """Сформировать блок для вывода данных списка задержанных событий
 
     Args:
+        ownerSegment=None - объект сегмента-владельца 
+        label=None - метка блока (см. block.py)    
         strFormat - строка формата вывода
-        label     - метка блока
 
     """
     return bprint.Bprint(ownerSegment, label, outputFunc=lambda owner, transact: strFormat % str(owner.getOwnerModel().delayedList))
@@ -33,9 +26,10 @@ def buildBprintCurrentTransact(ownerSegment=None, label=None, funcTransactToStr=
     """Сформировать блок для вывода данных текущего транзакта
 
     Args:
+        ownerSegment=None - объект сегмента-владельца 
+        label=None - метка блока (см. block.py)    
         funcTransactToStr - функция преобразования к строке, сигнатура funcTransactToStr(transact)
         strFormat - строка формата вывода
-        label     - метка блока
 
     """
     if funcTransactToStr is None:
@@ -47,9 +41,10 @@ def buildBprintQueue(ownerSegment=None, label=None, queueName=None, strFormat="Q
     """Сформировать блок для вывода данных очереди
 
     Args:
+        ownerSegment=None - объект сегмента-владельца 
+        label=None - метка блока (см. block.py)    
         queueName - наименование очереди (см. queue)
         strFormat - строка формата вывода
-        label     - метка блока
 
     Пример: test_queue.py
 
@@ -69,8 +64,9 @@ def buildBprintFEL(ownerSegment=None, label=None, strFormat="FEL: [%s]"):
     """Сформировать блок для вывода данных Списка будущих событий components.FEL
 
     Args:
+        ownerSegment=None - объект сегмента-владельца 
+        label=None - метка блока (см. block.py)    
         strFormat - строка формата вывода
-        label     - метка блока
 
     Пример: test_queue.py
 
@@ -86,9 +82,10 @@ def buildBprintCurrentTime(ownerSegment=None, label=None, strFormat="Time: [%.12
     """Сформировать блок для вывода текущего времени
 
     Args:
+        ownerSegment=None - объект сегмента-владельца 
+        label=None - метка блока (см. block.py)    
         strFormat - строка формата вывода
         onlyOncePerCurrentTime - выводить текущее время только один раз
-        label     - метка блока
 
     Пример: test_queue.py
 

@@ -29,7 +29,7 @@ class Table(PyssOwnerObject):
 Таблица добавляется в модель с помощью вызова метода addTable контейнера pyss_model.PyssModel.
 
 Args:
-    ownerModel - модель-владелец
+    ownerModel - объект модели-владельца
     tableName - имя таблицы
     argFunc=None - функция определения аргумента таблицы. Сигнатура argFunc(owner,transact).
     limitUpFirst=None - правая граница первого интервала аргумента таблицы
@@ -42,9 +42,6 @@ Args:
 table.Table(tableName="T_1", argFunc=argFunc_T_1, limitUpFirst=1.0, widthInt=1.0, countInt=50)
 
 определяет таблицу T_1, аргумент таблицы определяется функцией argFunc_T_1, первый интервал ограничен сверху значением 1.0, ширина интервала 1.0, количество инетрвалов 50.
-
-Пример использования см. demo/demo_table.py, demo/demo_enter_leave.py, demo/demo_queue.py, 
-demo/demo_plot_table.py,.
 
 См. также tabulate.py.
 

@@ -16,14 +16,15 @@ class Tabulate(Block):
     """Блок Tabulate для результата вызова argFunc таблицы вычисляет valFunc и помещает в таблицу.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     table=None - объект таблицы, argFunc задаёт аргументы таблицы
     valFunc=1 - функция вычисления значения для аргумента таблицы.
                 Если valFunc - число, то преобразуется в лямбду и охраняется в атрибут VAL_FUNC.
-    label - метка блока, см. block.py.
 
 Например, блок
 
-tabulate.Tabulate(table=tbl,valFunc=1,label=None)
+tabulate.Tabulate(sgm, table=tbl,valFunc=1)
 
 при прохождении транзакта будет заполнять таблицу tbl.
 

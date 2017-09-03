@@ -26,6 +26,8 @@ class Bprint(Block):
 Если outputFunc равен None, то никакой обработки не происходит.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     outputFunc - функция с сигнатурой str function(owner,transact).
         Возвращает строку, выводимую на экран.
     ifExpr - функция беp параметров, возвращающая True/False. Если True - то разрешается вывод.
@@ -35,12 +37,10 @@ Args:
 
 Например, блок
 
-bprint.Bprint(outputFunc=lambda owner,transact: str(transact),
+bprint.Bprint(sgm, outputFunc=lambda owner,transact: str(transact),
     label=None)
 
 выведет на экран данные транзакта transact.
-
-Пример использования см. tests/test_assign.py.
 
 Атрибуты блока Bprint (в дополнение к атрибутам block.Block):
 bl = Bprint(...)

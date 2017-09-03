@@ -16,24 +16,21 @@ from pyss.block import Block
 class Advance(Block):
     """Блок задержки транзакта в течение некоторого интервала модельного времени.
 
-Advance(meanTime=None, modificatorFunc=None,label=None)
-
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)
     meanTime - задаёт среднее время обслуживания (число или функция f()).
                Если задан список или кортеж, 
                то среднее значение будет последовательно выбираться из списка.
                По окончании списка будет возвращаться 0.
     modificatorFunc - число или функция-модификатор среднего значения meanTime (f(owner,currentTime))
-    label - см. block.py.
 
 Например, блок
 
-advance.Advance(meanTime=3*60,modificatorFunc=lambda owner, currentTime: random.uniform(-1.0*60,1.0*60))
+advance.Advance(sgm, meanTime=3*60,modificatorFunc=lambda owner, currentTime: random.uniform(-1.0*60,1.0*60))
 
 задерживает попавший в него транзакт на время от 120 до 240 единиц
 модельного времени (например секунд, если за одну секунду принято значение 1.0).
-
-Пример использования см. demo/demo_advance.py, demo/demo_queue.py, .
 
 Атрибуты блока Advance (в дополнение к атрибутам block.Block):
 bl = Advance(...)

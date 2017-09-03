@@ -25,7 +25,7 @@ Args:
 
 Например, блок
 
-loop.Loop(parametrName="COUNT_LOOP_CIKL",toBlockLabel="BEGIN_LOOP",label=None)
+loop.Loop(sgm, parametrName="COUNT_LOOP_CIKL",toBlockLabel="BEGIN_LOOP")
 
 направляет транзакт tr на блок с меткой "BEGIN_LOOP", если атрибут tr["COUNT_LOOP_CIKL"] не равен 0.
 

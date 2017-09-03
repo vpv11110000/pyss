@@ -43,6 +43,8 @@ class Split(Block):
 Объекдинение транзактов одного семества происходит в блоке assemble.Assemble.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     funcCountCopies=None - функция или целое число, определяющее количество копий текущего транзакта
                            Сигнатура int f(transact), возвращает количество копий текущего транзакта.
                            
@@ -61,13 +63,11 @@ Args:
                      копии транзакта записывается значение 
                      transact[NUM_GENERATOR].buildObjectNumber().
                      Где transact - исходный транзакт.
-                     
-    label - см. block.py.
 
 Например, блок
 
-split.Split(funcCountCopies=2,funcNextBlockLabel=None,paramName=None,label=None)
-split.Split(funcCountCopies=lambda: 2,funcNextBlockLabel=None,paramName=None,label=None)
+split.Split(sgm, funcCountCopies=2,funcNextBlockLabel=None,paramName=None)
+split.Split(sgm, funcCountCopies=lambda: 2,funcNextBlockLabel=None,paramName=None)
 
 создаёт две копии транзакта.
 

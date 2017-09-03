@@ -38,12 +38,13 @@ class Preempt(Block):
 Освобождение устройства происходит в блоке g_return.GReturn.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py) 
     facilityName=None - наименование устройства (см. facility.Facility)
-    label - см. block.py.
 
 Например, блок
 
-preempt.Preempt(facilityName='F_1',label=None)
+preempt.Preempt(sgm, facilityName='F_1')
 
 моделирует прерывание устройства 'F_1'.
 

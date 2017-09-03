@@ -27,6 +27,7 @@ class Storage(PyssStateObject):
 Значение старого состояния равно старому значению атрибута BUSY_SIZE.
 
 Args:
+    ownerModel - объект модели-владельца
     storageName=None - строка с наименованием памяти
     storageSize=32767 - размер памяти или число каналов многоканального устройства
     initBusySize=0 - начальное значение занятого объёма. Значение сразу заносится в атрибут 
@@ -35,7 +36,7 @@ Args:
 
 Например, строка
 
-storage.Storage(storageName="mcd",storageSize=2)
+storage.Storage(m, storageName="mcd",storageSize=2)
 
 создаёт память из 2-х ячеек.
 

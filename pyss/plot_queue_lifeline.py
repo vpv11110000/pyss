@@ -16,7 +16,7 @@ class PlotQueueLifeLine(PyssOwnerObject):
     """Формирование графической диаграммы для линий жизни объекта Очереди
     
 Args:
-    ownerModel - модель-владелец
+    ownerModel=None - объект модели-владельца 
     queueObject=None - объект очереди
     title - заголовок диаграммы
     funcAnnotate - функция анноторирования линии жизни. 

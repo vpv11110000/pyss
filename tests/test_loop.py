@@ -90,7 +90,7 @@ class TestLoop(unittest.TestCase):
         # печатаем значение параметра цикла и метку времени транзакта 
         bprint_blocks.buildBprintCurrentTransact(sgm,
                                                  funcTransactToStr=lambda tr:"[%s][%s:%s][%s:%s]" % (tr[NUM], LOOP_COUNT, tr[LOOP_COUNT], METKA, tr[METKA]))
-        Advance(sgm, meanTime=5, modificatorFunc=lambda o, t:0, label=None)
+        Advance(sgm, meanTime=5, modificatorFunc=lambda o, t:0)
         Loop(sgm, parametrName=LOOP_COUNT, toBlockLabel=BEGIN_CIKL, label="END_CIKL")
         
         #

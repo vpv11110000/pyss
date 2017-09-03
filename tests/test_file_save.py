@@ -59,7 +59,7 @@ class TestFileSave(unittest.TestCase):
             # for test
             expected.append(s)
             return s        
-        FileSave(sgm, fileName=DEFAULT_DAT, funcSave=funcSave, mode="write", label=None)
+        FileSave(sgm, fileName=DEFAULT_DAT, funcSave=funcSave, mode="write")
         Terminate(sgm, deltaTerminate=1)
         #
         # test

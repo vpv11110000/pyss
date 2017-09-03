@@ -21,19 +21,17 @@ class Transfer(Block):
 на который должен быть перемещён транзакт.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     funcTransfer=None - строка с меткой блока или функция вычисления следующего блока, 
                         сигнатура: <extend Block> f(owner, transact).
                         Если функция возвращает None, то транзакт переходт к следующему за текущим блоку. 
-    label - см. block.py.
 
 Например, блок
 
-transfer.Transfer(funcTransfer=lambda o,t: o.findBlockByLabel("ВСЕГДА СЛЕДУЮЩИЙ БЛОК"), label=None)
+transfer.Transfer(sgm, funcTransfer=lambda o,t: o.findBlockByLabel("ВСЕГДА СЛЕДУЮЩИЙ БЛОК"))
 
 будет направлять транзакты на блок, помеченный меткой "ВСЕГДА СЛЕДУЮЩИЙ БЛОК".
-
-Пример использования см.:
-- tests/test_test.py
 
 Атрибуты блока Transfer (в дополнение к атрибутам block.Block):
 bl = Test(...)

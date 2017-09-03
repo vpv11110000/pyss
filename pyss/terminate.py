@@ -17,8 +17,9 @@ class Terminate(Block):
     """Блок для удаления транзакта из модели
     
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     deltaTerminate=1 - величина, на которую уменьшается значение счётчика завершений components.terminateCounter.
-    label - метка блока, см. block.py.
 
 При входе транзакта в блок Terminate, происходит:
 - уменьшение значение счётчика завершений components.terminateCounter;
@@ -28,7 +29,7 @@ Args:
 
 Пример, блока:
 
-terminate.Terminate(deltaTerminate=1, label=None)
+terminate.Terminate(sgm, deltaTerminate=1)
 
 Пример использования см. tests/*
 

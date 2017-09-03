@@ -21,12 +21,13 @@ class Release(Block):
 У текущий транзакта сбрасывается присвоенное в блоке Seize наименование устройства (FACILITY_NAME).
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py) 
     facilityName=None - наименование устройства (см. facility.Facility)
-    label - см. block.py.
 
 Например, блок
 
-release.Release(facilityName='F_1',label=None)
+release.Release(sgm, facilityName='F_1')
 
 моделирует освобождение устройства 'F_1'.
 

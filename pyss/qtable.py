@@ -27,6 +27,7 @@ class Qtable(PyssOwnerObject):
 Объекту Qtable присваивается атрибут label: QTABLE+"_"+queueName.
 
 Args:
+    ownerModel=None - объект модели-владельца
     queueName - имя очереди
     limitUpFirst=None - верхний предел первого частотного интервала
     widthInt=None - ширина частотного интервала

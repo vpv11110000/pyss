@@ -22,7 +22,9 @@ class QueueObject(PyssStateObject):
 Под значением старого состояния понимается старое значение текущей длины очереди.
 
 Args:
+    ownerModel=None - объект модели-владельца
     queueName - имя очереди
+    initLength=0 - начальная длина очереди
 
 Атрибуты объекта QueueObject (в дополнение к атрибутам pyssownerobject.PyssOwnerObject):
 bl = Queue(...)

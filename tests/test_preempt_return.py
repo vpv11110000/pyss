@@ -86,12 +86,12 @@ class TestPreemptReturn(unittest.TestCase):
         # test
         Handle(sgm, handlerFunc=lambda o, t:self.assertNotIn(F_1, t[FACILITY]))
         #
-        Preempt(sgm, facilityName=F_1, label=None)
+        Preempt(sgm, facilityName=F_1)
         # test
         Handle(sgm, handlerFunc=lambda o, t:self.assertIn(F_1, t[FACILITY]))
         #
         Advance(sgm, meanTime=5, modificatorFunc=None)
-        GReturn(sgm, facilityName=F_1, label=None)
+        GReturn(sgm, facilityName=F_1)
         # test
         Handle(sgm, handlerFunc=lambda o, t:not self.assertNotIn(F_1, t[FACILITY]))
         #

@@ -22,12 +22,13 @@ class GReturn(Block):
 Из транзакта снявшего прерывание удаляется атрибут FACILITY.
 
 Args:
+    ownerSegment=None - объект сегмента-владельца 
+    label=None - метка блока (см. block.py)    
     facilityName=None - наименование устройства (см. facility.Facility)
-    label - см. block.py.
 
 Например, блок
 
-g_return.GReturn(facilityName='F_1',label=None)
+g_return.GReturn(sgm, facilityName='F_1')
 
 моделирует снятие прерывания c устройства 'F_1'.
 
