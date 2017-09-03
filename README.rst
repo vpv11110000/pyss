@@ -53,7 +53,7 @@ Requirements
 
 1. `1_example_3_4`_.
 
-.. _`1_example_3_4`: examples/1_example_3_4/readme.md
+.. _`1_example_3_4`: examples/1_example_3_4/
 
 2. `1_example_3_5`_.
 
