@@ -5,7 +5,4 @@ PYSS Examples
 
 2. Учебное руководство по системе GPSS World
 
-To run the examples in your development environment:
-
-1. Clone this repo
-2. 
+3. Собственные примеры

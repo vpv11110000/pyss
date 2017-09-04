@@ -102,35 +102,28 @@ def main():
     tbl = Table(m, tableName=TABLE_NAME, argFunc=lambda o, t: m.getCurTime(),
           limitUpFirst=1, widthInt=1, countInt=MAX_TIME)
     #--------------------------
-    def advanceModFunc(o, timeValue):
-        # обработка заявок
-        # return random.randint(1,3)
-        # return random.normalvariate(1.9,0.5)
-        return 0.0
-
     def coefFunc(owner, transact):
         if transact:
             return transact[PARAMETR_NAME]
 
     def modFunc(owner, currentTime):
         # генерация заявок
+        # с 0-100 заявка приходит по 1 в 4 единицы времени
+        # с 101-119 заявка приходит по 1 в единицу времени
+        # с 120 заявка приходит по 1 в 5 единиц времени
+        if (currentTime < 101):
+            return 4.0        
         if (currentTime > 100) and (currentTime < 120):
-            return 0
+            return 1.0
         else:
-            return 3
-        # return random.normalvariate(2.0,.5)
-        # Poisson process
-        # return random.expovariate(1.0)
-
-        # return random.paretovariate(2.0)
-        # return random.weibullvariate(1.0,1.5)
+            return 5.0
 
     ### SEGMENT ---------------------------
-    Generate(sgm, med_value=1, modificatorFunc=modFunc, priority=PRIORITY_MODEL)
+    Generate(sgm, med_value=0, modificatorFunc=modFunc, priority=PRIORITY_MODEL)
     Queue(sgm, queueName=QUEUE_NAME, deltaIncrease=1)
     Seize(sgm, facilityName=KASSA)
     Depart(sgm, queueName=QUEUE_NAME, deltaDecrease=1)
-    Advance(sgm, meanTime=2, modificatorFunc=advanceModFunc)
+    Advance(sgm, meanTime=2, modificatorFunc=None)
     Release(sgm, facilityName=KASSA)
     Terminate(sgm, deltaTerminate=1)
     
@@ -143,20 +136,8 @@ def main():
     ### КАРТИНКИ ----------------------
     m.initPlotTable()
     m.initPlotQueueLifeLine()
-
-    # активность
-    def transactFilter(transact):
-        return True
-    def funcAnnotate(transact):
-        s = "Day: " + str(transact["Day"])
-        return s
-    X_LABEL = "DAYLY"
-    m.initPlotTransactLifeLine(
-        terminateBlockLabels=["OVERHAUL", "SPOT", "REPAIRS", X_LABEL],
-        transactFilter=transactFilter, title="Active ",
-        funcAnnotate=funcAnnotate)
-    
-    m.initPlotFacilityLifeLine(facilityNames=None, title="OCF", funcAnnotate=None)
+    m.initPlotTransactLifeLine()
+    m.initPlotFacilityLifeLine()
     
     # РАСЧЁТ --------------------------
     m.start(terminationCount=1000000, maxTime=MAX_TIME)

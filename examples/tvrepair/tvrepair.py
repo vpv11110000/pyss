@@ -359,6 +359,7 @@ def main():
     m.initPlotFacilityLifeLine(facilityNames=None, title="OCF", funcAnnotate=None)
     # РАСЧЁТ --------------------------
     m.start(terminationCount=1000000, maxTime=MAX_TIME)
+    print "Wait..."
     
     # ПОКАЗ КАРТИНОК ------------------------
     m.getPlotSubsystem().plotByModules()
