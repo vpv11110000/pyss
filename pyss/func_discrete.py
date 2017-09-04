@@ -19,7 +19,9 @@ class FuncDiscrete(dict):
 discrete({<правая граница суммарной частоты случайного события1>:<значение функции1>,
           <правая граница суммарной частоты случайного события2>:<значение функции2>,
           ...})
-          
+    
+<значение функцииN> - может быть числом или функцией без аргументов
+     
 Левая граница суммарной частоты случайного события не входит в интервал между 
 левой границей суммарной частоты случайного события и правой границей суммарной 
 частоты случайного события.
@@ -46,6 +48,9 @@ Sotn = количество случайных событий А / общее к
 
 Декларация функции:
 fd = FuncDiscrete(randomGenerator=random.random, dictValues={.1:2,.3:3,.7:4,.8:5,1.0:6})
+# или
+# fd = FuncDiscrete(randomGenerator=random.random, dictValues={.1:lambda:2,.3:lambda:3,.7:lambda:4,.8:lambda:5,1.0:lambda:6})
+
 print fd.get()
 
 Пример, см. tests/test_func_discrete.py
@@ -62,7 +67,10 @@ print fd.get()
         r = self[RANDOM_GENERATOR]()
         for key, value in self[DICT_VALUES].iteritems():
             if r <= key:
-                return value
+                if pyssobject.isfunction(value):
+                    return value()
+                else:
+                    return value
         # fail
         return None
         
