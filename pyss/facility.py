@@ -1,4 +1,3 @@
-# #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -35,7 +34,7 @@ Args:
 
 Например, строка
 
-facility.Facility(facilityName="F_1")
+facility.Facility(m, facilityName="F_1")
 
 создаёт объект одноканальное устройство c именем F_1.
 
@@ -43,7 +42,7 @@ facility.Facility(facilityName="F_1")
 
 См. также seize.py, preempt.py, release.py
 
-Атрибуты объекта Facility (в дополнение к атрибутам pyssobject.PyssObject):
+Атрибуты объекта Facility (в дополнение к атрибутам pyssstateobject.PyssStateObject):
 f = Facility(...)
 f[FACILITY_NAME] - имя одноканального устройства.
 f[STATE] - текущее состояние одноканального устройства (м.б. STATE_FREE, STATE_BUSY, STATE_NOT_ACCESS).
@@ -238,7 +237,4 @@ f[LIFE_TIME_LIST] - список меток времени и состояний
             self[OWNER].getCel().put(transact)
 
 if __name__ == '__main__':
-    def main():
-        print "?"
-
-    main()
+    pass

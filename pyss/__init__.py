@@ -28,6 +28,8 @@ __all__=[
     "handle",
     "leave",
     "logger",
+    "logic",
+    "logic_object",
     "loop",
     "mark",
     "modificatorfunc",

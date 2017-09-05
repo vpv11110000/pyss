@@ -126,7 +126,7 @@ ENABLED = "enabled"
 ###################
 TERMINATE = "TERMINATE"
 
-ITEMS="ITEMS"
+ITEMS = "ITEMS"
 DELTA_TERMINATE = "deltaTerminate"
 ON_DELETED = "onDeleted"
 
@@ -171,12 +171,12 @@ VAL_FUNC = "VAL_FUNC"
 ##########################
 MODEL = "MODEL"
 
-QUEUE_OBJECTS="QUEUE_LIST"
-SEGMENTS="SEGMENTS"
+QUEUE_OBJECTS = "QUEUE_LIST"
+SEGMENTS = "SEGMENTS"
 
 START_TIME = "start_time"
 END_TIME = "end_time"
-TERMINATION_CRITERIA="TERMINATION_CRITERIA"
+TERMINATION_CRITERIA = "TERMINATION_CRITERIA"
 MAX_TIME_STR = "max_time"
 BLOCKS = "blocks"
 FACILITIES = "facilities"
@@ -185,7 +185,7 @@ PRINT_EVENT_LIST = "printEventList"
 START = "start"
 END = "end"
 
-TRANSACT_FAMILIES="TRANSACT_FAMILIES"
+TRANSACT_FAMILIES = "TRANSACT_FAMILIES"
 
 CURRENT_TIME = "CURRENT_TIME"
 CURRENT_TRANSACT = "CURRENT_TRANSACT"
@@ -338,25 +338,35 @@ GATE = "GATE"
 # В поле операции блока GATE записывается слово GATE и через пробел - символ проверяемого условия.
 # Существует десять условий, которые проверяются в блоке GATE для оборудования:
 # NU - устройство свободно (т.е. не используется),
-NU = "NU"
+GATE_NOT_USED = "NOT_USED"
+NU = GATE_NOT_USED
 # U - устройство не свободно (т.е. используется),
-U = "U"
+GATE_USED = "U"
+U = GATE_USED
 # NI - устройство не захвачено,
-NI = "NI"
+GATE_NOT_INTERRUPTED = "NI"
+NI = GATE_NOT_INTERRUPTED
 # I - устройство захвачено,
-I = "I"
+GATE_INTERRUPTED = "I"
+I = GATE_INTERRUPTED
 # SE - память пуста (все единицы памяти свободны),
-SE = "SE"
+GATE_STORAGE_EMPTY = "SE"
+SE = GATE_STORAGE_EMPTY
 # SNE - память не пуста,
-SNE = "SNE"
+GATE_STORAGE_NOT_EMPTY = "SNE"
+SNE = GATE_STORAGE_NOT_EMPTY
 # SF - память заполнена (все единицы заняты),
-SF = "SF"
+GATE_STORAGE_FULL = "SF"
+SF = GATE_STORAGE_FULL
 # SNF - память не заполнена,
-SNF = "SNF"
+GATE_STORAGE_NOT_FULL = "SNF"
+SNF = GATE_STORAGE_NOT_FULL
 # LR - ключ выключен,
-LR = "LR"
+GATE_LOGIC_RESET = "LR"
+LR = GATE_LOGIC_RESET
 # LS - ключ включен.
-LS = "LS"
+GATE_LOGIC_SET = "LS"
+LS = GATE_LOGIC_SET
 
 CONDITION = "condition"
 NEXT_BLOCK_LABEL = "nextBlockLabel"
@@ -394,6 +404,11 @@ STDDEV_VAL = "stdDev"
 
 TERMINATE_BLOCK = "TERMINATE_BLOCK"
 
+LOGIC = "LOGIC"
+LOGIC_OBJECT = "LOGIC_OBJECT"
+LOGIC_OBJECTS = "LOGIC_OBJECTS"
+LOGIC_OBJECT_NAME = "logicObjectName"
+
 FILE_SAVE = "FILE_SAVE"
 FILE_READ = "FILE_READ"
 FILENAME = "filename"
@@ -414,10 +429,10 @@ MAX_POINT = "maxPoint"
 
 ##############
 REGISTERED_BLOCK_ENTITY_TYPE = [GENERATE, TERMINATE,
-                              TABULATE, SEIZE, RELEASE, ADVANCE, QUEUE,
-                              DEPART, TRANSFER, ASSIGN,
-                              GATE, MARK, LOOP, TEST, ENTER, LEAVE, SPLIT, ASSEMBLE,
-                              BPRINT, HANDLE, FILE_SAVE, FILE_READ]
+                                TABULATE, SEIZE, RELEASE, ADVANCE, QUEUE,
+                                DEPART, TRANSFER, ASSIGN,
+                                GATE, MARK, LOOP, TEST, ENTER, LEAVE, SPLIT, ASSEMBLE,
+                                BPRINT, HANDLE, FILE_SAVE, FILE_READ, LOGIC]
 
 
 

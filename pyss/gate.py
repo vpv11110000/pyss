@@ -21,27 +21,26 @@ from pyss import facility
 class Gate(Block):
     """Блок, проверяющий состояния устройств, памятей, логических ключей
     
-При работе в режиме отказа блок GATE не пропускает транзакты,
-если соответствующий объект не находится в требуемом состоянии.
+Если проверяемое условие для объекта выполняется (True), то транзакт входит в блок GATE. 
 
-Если же поставленное в блоке GATE условие удовлетворяется,
-то активный транзакт входит в него и затем переходит к
-следующему по порядку блоку.
+Если проверяемое условие не выполняется (False), то возможны два случая:
+1. если параметр nextBlockLabel задан (is not None), то транзакт идет в соответствующий блок;
+2) если параметр nextBlockLabel is None, то транзакт ждет в предыдущем блоке, пока не выполнится условие. 
 
 Args:
     ownerSegment=None - объект сегмента-владельца 
     label=None - метка блока (см. block.py) 
     condition - условие
-        NU - устройство свободно (т.е. не используется),
-        U - устройство не свободно (т.е. используется),
-        NI - устройство не захвачено,
-        I - устройство захвачено,
-        SE - память пуста (все единицы памяти свободны),
-        SNE - память не пуста,
-        SF - память заполнена (все единицы заняты),
-        SNF - память не заполнена,
-        LR - ключ выключен,
-        LS - ключ включен.    
+        GATE_NOT_USED или NU - устройство свободно (т.е. не используется),
+        GATE_USED или U - устройство не свободно (т.е. используется),
+        GATE_NOT_INTERRUPTED или NI - устройство не захвачено,
+        GATE_INTERRUPTED или I - устройство захвачено,
+        GATE_STORAGE_EMPTY или SE - память пуста (все единицы памяти свободны),
+        GATE_STORAGE_NOT_EMPTY или SNE - память не пуста,
+        GATE_STORAGE_FULL или SF - память заполнена (все единицы заняты),
+        GATE_STORAGE_NOT_FULL или SNF - память не заполнена,
+        GATE_LOGIC_RESET или LR - ключ выключен,
+        GATE_LOGIC_SET или LS - ключ включен.    
     
     objectName - наименование объекта, м.б. facility, память, ключ.
         
@@ -82,6 +81,8 @@ bl[secBlock_4365643] - кеш, внутреннее использование
 
         super(Gate, self).__init__(GATE, label=label, ownerSegment=ownerSegment)
         map(pyssobject.raiseIsTrue, [condition not in [U, NU, NI, I, SE, SNE, SF, SNF, LR, LS], objectName is None or objectName.strip() == ""])
+        if nextBlockLabel is None:
+            raise pyssobject.ErrorNotImplemented("Ограничение текущей версии (не допускается nextBlockLabel is None)")
         self[CONDITION] = condition
         self[NEXT_BLOCK_LABEL] = nextBlockLabel
         # may be facility, память, ключ
@@ -99,9 +100,7 @@ bl[secBlock_4365643] - кеш, внутреннее использование
             else:
                 raise Exception("Not implemented [%s]" % self[CONDITION])
 
-    def canEnter(self, transact):
-        if self[OBJECT_NAME] is not None:
-            return True
+    def _calcCondition(self):
         self._refreshCash()
         f = self[TEMP_KEYS]
         rv = False
@@ -130,8 +129,18 @@ bl[secBlock_4365643] - кеш, внутреннее использование
             raise Exception("Not known condition")
         return rv
 
+    def canEnter(self, transact):
+        rv = False
+        if self[NEXT_BLOCK_LABEL] is not None:
+            return True
+        # TODO Gate.canEnter 
+        return rv
+
     def handleCanNotEnter(self, transact):
         # # При работе в режиме отказа блок GATE не пропускает транзакты,
+        
+        # TODO Gate.handleCanNotEnter 
+
         f = self[TEMP_KEYS]
         if self[CONDITION] in [NU, U, NI, I, SE, SNE, SF, SNF]:
             f.moveToRetryAttempList(transact)
@@ -139,48 +148,18 @@ bl[secBlock_4365643] - кеш, внутреннее использование
             raise Exception("Not known condition")
 
     def transactInner(self, currentTime, transact=None):
-        # # calc modificatorFunc on current transact[self[PARAMETR_NAME]]
-        # and set new value to transact[self[PARAMETR_NAME]]
-        if not self[firstBlock_4365643]:
-            block = self.findBlockByLabel(self[NEXT_BLOCK_LABEL])
-            if block is None:
-                raise Exception("Block not found, label is [%s]" % self[NEXT_BLOCK_LABEL])
-            self[firstBlock_4365643] = block
-            self[secBlock_4365643] = self[BLOCK_NEXT]
-
-        # pylint:disable=unused-argument
-        self._refreshCash()
-        block = self[secBlock_4365643]
-        if self[OBJECT_NAME]:
-            if self[CONDITION] == NU:
-                if not self[TEMP_KEYS].isFree():
-                    # если условие ложно
-                    block = self[firstBlock_4365643]
-            elif self[CONDITION] == U:
-                if self[TEMP_KEYS].isFree():
-                    # если условие ложно
-                    block = self[firstBlock_4365643]
-            elif self[CONDITION] == SNF:
-                # если не полный, то к secBlock_4365643
-                # иначе к firstBlock_4365643
-                if self[TEMP_KEYS].storageFull():
-                    # если условие ложно
-                    block = self[firstBlock_4365643]
-            elif self[CONDITION] == SF:
-                # если полный, то к secBlock_4365643
-                # иначе, если не полный, к firstBlock_4365643
-                if self[TEMP_KEYS].storageNotFull():
-                    # если условие ложно
-                    block = self[firstBlock_4365643]
+        
+        if self[NEXT_BLOCK_LABEL] is not None:
+            c = self._calcCondition()
+            if not c:
+                block = self.findBlockByLabel(self[NEXT_BLOCK_LABEL])
             else:
-                raise Exception("Not known condition")
-        else:
-            pass
-        self[BLOCK_NEXT] = block
+                block = self[BLOCK_NEXT]
+                
+        transact[BLOCK_NEXT] = block
+                
+        # TODO Gate.transactInner 
         return transact
 
 if __name__ == '__main__':
-    def main():
-        print "?"
-
-    main()
+    pass

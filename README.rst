@@ -43,7 +43,7 @@ Requirements
 
 1. `API`_ документация.
 
-.. _`API`: docs/api
+.. _`API`: docs/api/html/index.html
 
 
 ==================
@@ -83,6 +83,10 @@ Requirements
 2. `1_example_3_9`_.
 
 .. _`1_example_3_9`: examples/1_example_3_9
+
+2. Пример с использованием Gate (1) `1_example_3_13`_.
+
+.. _`1_example_3_13`: examples/1_example_3_13
 
 2. `manufact`_.
 

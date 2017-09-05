@@ -82,7 +82,7 @@ Methods:
             fig = plt.figure(i)
             #21x19
             fig.set_size_inches(8.26, 7.48)
-            plt.savefig("%s_%3d"%(filename, i))
+            plt.savefig("%s%03d"%(filename, i))
             plt.close(i)    # close the figure
 
 if __name__ == '__main__':

@@ -37,6 +37,9 @@ class ErrorPlotExists(Exception):
 class ErrorQueueObjectExists(Exception):
     pass
 
+class ErrorNotImplemented(Exception):
+    pass
+
 class TerminationCounterIsEmpty(Exception):
     pass
 

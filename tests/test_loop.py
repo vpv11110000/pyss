@@ -53,7 +53,7 @@ class TestLoop(unittest.TestCase):
     # @
     # unittest.skip("testing skipping test_queue_001")
     def test_loop_001(self):
-        logger.info("--- test_queue_001 ----------------------------------")
+        logger.info("--- test_loop_001 ----------------------------------")
         
         ### MODEL ------------------------
         m = PyssModel()

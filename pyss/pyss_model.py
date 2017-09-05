@@ -91,6 +91,8 @@ class PyssModel(PyssStateObject):
         self[END_TIME] = None
         # Словарь устройств
         self[FACILITIES] = {}
+        # словарь логических ключей
+        self[LOGIC_OBJECTS] = {}
         # перечень всех блоков модели
         # инициализируется из сегментов при вызове метода старт
         self[BLOCKS] = []
@@ -195,12 +197,20 @@ class PyssModel(PyssStateObject):
 
     def getFacilities(self):
         return self[FACILITIES]
+    
+    def getLogicObject(self):
+        return self[LOGIC_OBJECTS]
 
     def findFacility(self, facilityName):
         if facilityName not in self[FACILITIES]:
             return None
         return self[FACILITIES][facilityName]
 
+    def findLogicObject(self, logicObjectName):
+        if logicObjectName not in self[LOGIC_OBJECTS]:
+            return None
+        return self[LOGIC_OBJECTS][logicObjectName]
+    
     def getDelayedList(self):
         return self[DELAYED_LIST]
 
@@ -284,12 +294,27 @@ class PyssModel(PyssStateObject):
             raise Exception("Name is exists in delayedList")
         return self
 
+    def addLogicObject(self, logicObject):
+        """Добавление логического ключа в модель
+
+        Напрямую не вызывать.
+        Вызывается конструктором LogicObject.
+        """
+        
+        key = logicObject[LOGIC_OBJECT_NAME]
+        if key in self[LOGIC_OBJECTS]:
+            raise ErrorKeyExists("Key exists: [%s]" % key)
+        self[LOGIC_OBJECTS][key] = logicObject
+        logicObject[NUM] = len(self[LOGIC_OBJECTS].keys())
+        return self        
+
     def addFacility(self, faclity):
         """Добавление устройства в модель
 
         Напрямую не вызывать.
         Вызывается конструктором Facility.
         """
+        
         key = faclity[FACILITY_NAME]
         if key in self[FACILITIES]:
             raise ErrorKeyExists("Key exists: [%s]" % key)
@@ -802,8 +827,13 @@ Args:
 
         if self[OPTIONS].logTransactTrace:
             logger.info(strValue)
+            
+    def plotByModulesAndSave(self, filename):
+        self.plotSubsystem.plotByModulesAndSave(filename)
 
-
-
+    def plotByModulesAndShow(self):
+        self.getPlotSubsystem().plotByModules()
+        self.getPlotSubsystem().show()
+        
 if __name__ == '__main__':
     pass
