@@ -62,53 +62,53 @@ Requirements
 
 1. `1_example_3_4`_.
 
-.. _`1_example_3_4`: examples/1_example_3_4/
+.. _`1_example_3_4`: examples/1_example_3_4
 
 2. `1_example_3_5`_.
 
-.. _`1_example_3_5`: examples/1_example_3_5/readme.md
+.. _`1_example_3_5`: examples/1_example_3_5
 
 2. `1_example_3_6`_.
 
-.. _`1_example_3_6`: examples/1_example_3_6/readme.md
+.. _`1_example_3_6`: examples/1_example_3_6
 
 2. `1_example_3_7`_.
 
-.. _`1_example_3_7`: examples/1_example_3_7/readme.md
+.. _`1_example_3_7`: examples/1_example_3_7
 
 2. `1_example_3_8`_.
 
-.. _`1_example_3_8`: examples/1_example_3_8/readme.md
+.. _`1_example_3_8`: examples/1_example_3_8
 
 2. `1_example_3_9`_.
 
-.. _`1_example_3_9`: examples/1_example_3_9/readme.md
+.. _`1_example_3_9`: examples/1_example_3_9
 
 2. `manufact`_.
 
-.. _`manufact`: examples/manufact/readme.md
+.. _`manufact`: examples/manufact
 
 2. `ordernt`_.
 
-.. _`ordernt`: examples/ordernt/readme.md
+.. _`ordernt`: examples/ordernt
 
 2. `periodic`_.
 
-.. _`periodic`: examples/periodic/readme.md
+.. _`periodic`: examples/periodic
 
 2. `qcontrol`_.
 
-.. _`qcontrol`: examples/qcontrol/readme.md
+.. _`qcontrol`: examples/qcontrol
 
 2. `telephone`_.
 
-.. _`telephone`: examples/telephone/readme.md
+.. _`telephone`: examples/telephone
 
 2. `turnstil`_.
 
-.. _`turnstil`: examples/turnstil/readme.md
+.. _`turnstil`: examples/turnstil
 
 2. `tvrepair`_.
 
-.. _`tvrepair`: examples/tvrepair/readme.md
+.. _`tvrepair`: examples/tvrepair
 
