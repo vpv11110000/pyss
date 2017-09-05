@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/seize.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/seize.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="seize_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1seize.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль блока занятия одноканального устройства</span>
+<a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00011"></a>00011 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00012"></a>00012 <span class="keyword">from</span> pyss <span class="keyword">import</span> facility
+<a name="l00013"></a>00013 <span class="keyword">from</span> pyss <span class="keyword">import</span> queue_event_priorities
+<a name="l00014"></a>00014 <span class="keyword">from</span> pyss.block <span class="keyword">import</span> Block
+<a name="l00015"></a>00015 
+<a name="l00016"></a><a class="code" href="classpyss_1_1seize_1_1_seize.html">00016</a> <span class="keyword">class </span><a class="code" href="classpyss_1_1seize_1_1_seize.html">Seize</a>(<a class="code" href="classpyss_1_1block_1_1_block.html">Block</a>):
+<a name="l00017"></a>00017     <span class="stringliteral">&quot;&quot;&quot;Занятие транзактом одноканального устройства.</span>
+<a name="l00018"></a>00018 <span class="stringliteral">    </span>
+<a name="l00019"></a>00019 <span class="stringliteral">Освобождение устройства происходит в блоке release.Release.</span>
+<a name="l00020"></a>00020 <span class="stringliteral"></span>
+<a name="l00021"></a>00021 <span class="stringliteral">При вызове конструктора блока,</span>
+<a name="l00022"></a>00022 <span class="stringliteral">если устройство ещё не существует в словарь pyss_model.PyssModel()[FACILITIES],</span>
+<a name="l00023"></a>00023 <span class="stringliteral">происходит его создание и добавление в словарь устройств pyss_model.PyssModel()[FACILITIES].</span>
+<a name="l00024"></a>00024 <span class="stringliteral">Ключом является наименование устройства.</span>
+<a name="l00025"></a>00025 <span class="stringliteral"></span>
+<a name="l00026"></a>00026 <span class="stringliteral">Перед входом транзакта в блок Seize, cистема проверяет доступность устройства (STATE_FREE).</span>
+<a name="l00027"></a>00027 <span class="stringliteral"></span>
+<a name="l00028"></a>00028 <span class="stringliteral">Если устройство не доступно, то транзакт задерживается (transact[DELAYED]=True) в</span>
+<a name="l00029"></a>00029 <span class="stringliteral">предыдущем блоке. Также транзакт помещается в список задержек ОКУ components.delayedList[facilityName].</span>
+<a name="l00030"></a>00030 <span class="stringliteral"></span>
+<a name="l00031"></a>00031 <span class="stringliteral">Если устройство доступно, то транзакт входит в блок Seize. При этом устройство занимается текущим транзактом. Устройство переводится в состояние STATE_BUSY. В атрибут транзакта transact[FACILITY] записывается наименование устройства (FACILITY_NAME).</span>
+<a name="l00032"></a>00032 <span class="stringliteral"></span>
+<a name="l00033"></a>00033 <span class="stringliteral">Освобождение устройства происходит в блоке release.Release.</span>
+<a name="l00034"></a>00034 <span class="stringliteral"></span>
+<a name="l00035"></a>00035 <span class="stringliteral">Args:</span>
+<a name="l00036"></a>00036 <span class="stringliteral">    ownerSegment=None - объект сегмента-владельца </span>
+<a name="l00037"></a>00037 <span class="stringliteral">    label=None - метка блока (см. block.py)    </span>
+<a name="l00038"></a>00038 <span class="stringliteral">    facilityName=None - наименование устройства (см. facility.Facility)</span>
+<a name="l00039"></a>00039 <span class="stringliteral"></span>
+<a name="l00040"></a>00040 <span class="stringliteral">Например, блок</span>
+<a name="l00041"></a>00041 <span class="stringliteral"></span>
+<a name="l00042"></a>00042 <span class="stringliteral">seize.Seize(sgm, facilityName=&#39;F_1&#39;)</span>
+<a name="l00043"></a>00043 <span class="stringliteral"></span>
+<a name="l00044"></a>00044 <span class="stringliteral">моделирует занятие устройства &#39;F_1&#39;.</span>
+<a name="l00045"></a>00045 <span class="stringliteral"></span>
+<a name="l00046"></a>00046 <span class="stringliteral">Пример использования см. tests/test_seize.py.</span>
+<a name="l00047"></a>00047 <span class="stringliteral"></span>
+<a name="l00048"></a>00048 <span class="stringliteral">Атрибуты блока Seize (в дополнение к атрибутам block.Block):</span>
+<a name="l00049"></a>00049 <span class="stringliteral">bl = Seize(...)</span>
+<a name="l00050"></a>00050 <span class="stringliteral">bl[FACILITY_NAME] - наименование устройства (см. facility.Facility)</span>
+<a name="l00051"></a>00051 <span class="stringliteral"></span>
+<a name="l00052"></a>00052 <span class="stringliteral">См. также release.py</span>
+<a name="l00053"></a>00053 <span class="stringliteral"></span>
+<a name="l00054"></a>00054 <span class="stringliteral">    &quot;&quot;&quot;</span>
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="classpyss_1_1seize_1_1_seize.html#ab464c5b4cbdd9a782dfa84daf2811f1b">00056</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1seize_1_1_seize.html#ab464c5b4cbdd9a782dfa84daf2811f1b">__init__</a>(self, ownerSegment=None, label=None, facilityName=None):
+<a name="l00057"></a>00057         super(Seize, self).__init__(SEIZE, label=label, ownerSegment=ownerSegment)
+<a name="l00058"></a>00058         map(pyssobject.raiseIsTrue, [facilityName <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> facilityName == <span class="stringliteral">&quot;&quot;</span>])
+<a name="l00059"></a>00059         self[FACILITY_NAME] = facilityName
+<a name="l00060"></a>00060         <span class="keywordflow">if</span> facilityName <span class="keywordflow">not</span> <span class="keywordflow">in</span> ownerSegment.getModel().getFacilities():
+<a name="l00061"></a>00061             facility.Facility(ownerModel=ownerSegment.getModel(), facilityName=facilityName)        
+<a name="l00062"></a>00062 
+<a name="l00063"></a><a class="code" href="classpyss_1_1seize_1_1_seize.html#ad43ebb1cdad417b57f58c21d2fc7b45c">00063</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1seize_1_1_seize.html#ad43ebb1cdad417b57f58c21d2fc7b45c">canEnter</a>(self, transact):
+<a name="l00064"></a>00064         facilityName = self[FACILITY_NAME]
+<a name="l00065"></a>00065         f = self.getOwnerModel().findFacility(facilityName)
+<a name="l00066"></a>00066         <span class="keywordflow">return</span> f.isFree()
+<a name="l00067"></a>00067 
+<a name="l00068"></a><a class="code" href="classpyss_1_1seize_1_1_seize.html#abd9cae46a9e623e9f48f16dae4da182a">00068</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1seize_1_1_seize.html#abd9cae46a9e623e9f48f16dae4da182a">handleCanNotEnter</a>(self, transact):
+<a name="l00069"></a>00069         facilityName = self[FACILITY_NAME]
+<a name="l00070"></a>00070         m = self.getOwnerModel()
+<a name="l00071"></a>00071         f = m.findFacility(facilityName)
+<a name="l00072"></a>00072         <span class="keywordflow">if</span> <span class="keywordflow">not</span> f.isFree():
+<a name="l00073"></a>00073             m.appendToDelayedList(facilityName, transact)
+<a name="l00074"></a>00074         <span class="keywordflow">else</span>:
+<a name="l00075"></a>00075             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;facility must NOT free [%s]&quot;</span> % facilityName)
+<a name="l00076"></a>00076 
+<a name="l00077"></a><a class="code" href="classpyss_1_1seize_1_1_seize.html#a79514f39d22b71c8ec119523e971471e">00077</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1seize_1_1_seize.html#a79514f39d22b71c8ec119523e971471e">transactInner</a>(self, currentTime, transact):
+<a name="l00078"></a>00078         <span class="comment"># #</span>
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080         <span class="comment"># pylint: disable=unused-argument</span>
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082         facilityName = self[FACILITY_NAME]
+<a name="l00083"></a>00083         f = self.getOwnerModel().findFacility(facilityName)
+<a name="l00084"></a>00084         <span class="keywordflow">if</span> f.isFree():
+<a name="l00085"></a>00085             f.toBusy(currentTime, transact)
+<a name="l00086"></a>00086             transact.setFacility(facilityName)
+<a name="l00087"></a>00087             <span class="keywordflow">return</span> transact
+<a name="l00088"></a>00088         <span class="keywordflow">else</span>:
+<a name="l00089"></a>00089             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;facility must free [%s]&quot;</span> % facilityName)
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00092"></a>00092     <span class="keywordflow">pass</span>
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

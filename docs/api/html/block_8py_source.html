@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/block.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/block.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="block_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1block.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль родительского класса для блоков и других сущностей модели</span>
+<a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">from</span> pyss.pyssownerobject <span class="keyword">import</span> PyssOwnerObject
+<a name="l00011"></a>00011 <span class="keyword">from</span> pyss <span class="keyword">import</span> logger
+<a name="l00012"></a>00012 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00013"></a>00013 
+<a name="l00014"></a><a class="code" href="classpyss_1_1block_1_1_block.html">00014</a> <span class="keyword">class </span><a class="code" href="classpyss_1_1block_1_1_block.html">Block</a>(<a class="code" href="classpyss_1_1pyssownerobject_1_1_pyss_owner_object.html">PyssOwnerObject</a>):
+<a name="l00015"></a>00015     <span class="stringliteral">&quot;&quot;&quot;Базовый класс для блоков</span>
+<a name="l00016"></a>00016 <span class="stringliteral"></span>
+<a name="l00017"></a>00017 <span class="stringliteral">Параметр entityType задает строку, идентифицирующую блок модели.</span>
+<a name="l00018"></a>00018 <span class="stringliteral"></span>
+<a name="l00019"></a>00019 <span class="stringliteral">Параметр label задаёт метку, по которой можно найти блок в сегменте модели:</span>
+<a name="l00020"></a>00020 <span class="stringliteral"></span>
+<a name="l00021"></a>00021 <span class="stringliteral">m.findBlockByLabel(&#39;labelOfBlock&#39;)</span>
+<a name="l00022"></a>00022 <span class="stringliteral"></span>
+<a name="l00023"></a>00023 <span class="stringliteral">или</span>
+<a name="l00024"></a>00024 <span class="stringliteral"></span>
+<a name="l00025"></a>00025 <span class="stringliteral">block.findBlockByLabel(&#39;labelOfBlock&#39;)</span>
+<a name="l00026"></a>00026 <span class="stringliteral"></span>
+<a name="l00027"></a>00027 <span class="stringliteral">Атрибуты базового класса блока (в дополнение к атрибутам pyssownerobject.PyssOwnerObject):</span>
+<a name="l00028"></a>00028 <span class="stringliteral">bl = &lt;наследник от Block&gt;(...)</span>
+<a name="l00029"></a>00029 <span class="stringliteral">bl[ENTRY_COUNT]=0 - количество входов транзактов в блок</span>
+<a name="l00030"></a>00030 <span class="stringliteral">bl[CURRENT_COUNT]=0 - текущее количество транзактов в блоке</span>
+<a name="l00031"></a>00031 <span class="stringliteral">bl[RETRY]=0 - количество повторных входов транзактов</span>
+<a name="l00032"></a>00032 <span class="stringliteral">bl[BLOCK_NEXT]=None - следующий блок в модели, может меняться в ходе моделирования</span>
+<a name="l00033"></a>00033 <span class="stringliteral">bl[BLOCK_PREV]=None - предыдущий блок в модели, может меняться в ходе моделирования</span>
+<a name="l00034"></a>00034 <span class="stringliteral"></span>
+<a name="l00035"></a>00035 <span class="stringliteral">    &quot;&quot;&quot;</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="classpyss_1_1block_1_1_block.html#a9f2b8bd8775c92aa845a9d4894a2eec8">00037</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#a9f2b8bd8775c92aa845a9d4894a2eec8">__init__</a>(self, entityType, label=None, ownerSegment=None):
+<a name="l00038"></a>00038         super(Block, self).__init__(entityType, label=label, owner=ownerSegment)
+<a name="l00039"></a>00039         self[ENTRY_COUNT] = 0
+<a name="l00040"></a>00040         self[CURRENT_COUNT] = 0
+<a name="l00041"></a>00041         self[RETRY] = 0
+<a name="l00042"></a>00042         self[BLOCK_NEXT] = <span class="keywordtype">None</span>
+<a name="l00043"></a>00043         self[BLOCK_PREV] = <span class="keywordtype">None</span>
+<a name="l00044"></a>00044         ownerSegment.addBlock(self)
+<a name="l00045"></a>00045         
+<a name="l00046"></a><a class="code" href="classpyss_1_1block_1_1_block.html#a0957ed609c76bf7de848e471fd597f43">00046</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#a0957ed609c76bf7de848e471fd597f43">canEnter</a>(self, transact):
+<a name="l00047"></a>00047         <span class="comment"># pylint: disable=unused-argument, no-self-use</span>
+<a name="l00048"></a>00048         <span class="keywordflow">return</span> <span class="keyword">True</span>
+<a name="l00049"></a>00049 
+<a name="l00050"></a><a class="code" href="classpyss_1_1block_1_1_block.html#a1e5a009a63308f8c5c9106be0def2c67">00050</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#a1e5a009a63308f8c5c9106be0def2c67">handleCanNotEnter</a>(self, transact):
+<a name="l00051"></a>00051         <span class="keywordflow">pass</span>
+<a name="l00052"></a>00052 
+<a name="l00053"></a><a class="code" href="classpyss_1_1block_1_1_block.html#abfe7fed4d47fa27469b86d41fec4d86b">00053</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#abfe7fed4d47fa27469b86d41fec4d86b">transactInner</a>(self, currentTime, transact):
+<a name="l00054"></a>00054         <span class="comment"># # must be override</span>
+<a name="l00055"></a>00055         <span class="comment"># pylint: disable=unused-argument, no-self-use</span>
+<a name="l00056"></a>00056         <span class="keywordflow">return</span> transact
+<a name="l00057"></a>00057 
+<a name="l00058"></a><a class="code" href="classpyss_1_1block_1_1_block.html#af948623da6074bf8db25c0252e427eb3">00058</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#af948623da6074bf8db25c0252e427eb3">transactHandle</a>(self, currentTime, transact):
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060         <span class="comment"># pylint: disable=unsubscriptable-object</span>
+<a name="l00061"></a>00061         m = self.<a class="code" href="classpyss_1_1block_1_1_block.html#a6fe64d7242ca8ee949e95ca668025f4c">getOwnerModel</a>()
+<a name="l00062"></a>00062         cs = m.getCurrentSegment()
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064         rv = <span class="keyword">False</span>
+<a name="l00065"></a>00065         b = transact
+<a name="l00066"></a>00066         <span class="keywordflow">if</span> <span class="keywordflow">not</span> transact[HANDLED]:
+<a name="l00067"></a>00067             <span class="keywordflow">if</span> cs[OPTIONS]:
+<a name="l00068"></a>00068                 <span class="keywordflow">if</span> cs[OPTIONS].logTransactTrace:
+<a name="l00069"></a>00069                     logger.info(<span class="stringliteral">&quot;[%s] handle transact\n    [%s] &quot;</span> % (str(self[ENTITY_TYPE]), str(transact)))
+<a name="l00070"></a>00070             <span class="keywordflow">if</span> self.<a class="code" href="classpyss_1_1block_1_1_block.html#a0957ed609c76bf7de848e471fd597f43">canEnter</a>(transact):
+<a name="l00071"></a>00071                 nextBlock = transact[BLOCK_NEXT]
+<a name="l00072"></a>00072                 transact[BLOCK_NEXT] = <span class="keywordtype">None</span>
+<a name="l00073"></a>00073                 transact[HANDLED] = <span class="keyword">True</span>
+<a name="l00074"></a>00074                 <span class="keywordflow">if</span> self[ENTITY_TYPE] != GENERATE:
+<a name="l00075"></a>00075                     self[ENTRY_COUNT] += 1
+<a name="l00076"></a>00076                     self[CURRENT_COUNT] += 1
+<a name="l00077"></a>00077                 <span class="comment"># transact[BLOCK_NEXT] - может меняться, например в transferto</span>
+<a name="l00078"></a>00078                 b = self.<a class="code" href="classpyss_1_1block_1_1_block.html#abfe7fed4d47fa27469b86d41fec4d86b">transactInner</a>(currentTime, transact)
+<a name="l00079"></a>00079                 <span class="keywordflow">if</span> transact[BLOCK_NEXT] <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> transact[TRANSACT_DELETED]:
+<a name="l00080"></a>00080                     transact[BLOCK_NEXT] = nextBlock
+<a name="l00081"></a>00081             <span class="keywordflow">else</span>:
+<a name="l00082"></a>00082                 self.<a class="code" href="classpyss_1_1block_1_1_block.html#a1e5a009a63308f8c5c9106be0def2c67">handleCanNotEnter</a>(transact)
+<a name="l00083"></a>00083         <span class="comment"># not join!</span>
+<a name="l00084"></a>00084         <span class="comment"># b can change!</span>
+<a name="l00085"></a>00085         <span class="keywordflow">if</span> b <span class="keywordflow">and</span> transact[HANDLED]:
+<a name="l00086"></a>00086             rv = <span class="keyword">True</span>
+<a name="l00087"></a>00087             <span class="keywordflow">if</span> transact[BLOCK_NEXT]:
+<a name="l00088"></a>00088                 <span class="keywordflow">if</span> transact[BLOCK_NEXT].canEnter(transact):
+<a name="l00089"></a>00089                     self.<a class="code" href="classpyss_1_1block_1_1_block.html#addc7dd443a59fd99807f8b7bc5d0557b">transactOut</a>(transact)
+<a name="l00090"></a>00090                 <span class="keywordflow">else</span>:
+<a name="l00091"></a>00091                     transact[BLOCK_NEXT].handleCanNotEnter(transact)
+<a name="l00092"></a>00092                     rv = <span class="keyword">False</span>
+<a name="l00093"></a>00093             <span class="keywordflow">else</span>:
+<a name="l00094"></a>00094                 <span class="keywordflow">if</span> self[BLOCK_NEXT]:
+<a name="l00095"></a>00095                     <span class="keywordflow">if</span> self[BLOCK_NEXT].canEnter(transact):
+<a name="l00096"></a>00096                         self.<a class="code" href="classpyss_1_1block_1_1_block.html#addc7dd443a59fd99807f8b7bc5d0557b">transactOut</a>(transact)
+<a name="l00097"></a>00097                     <span class="keywordflow">else</span>:
+<a name="l00098"></a>00098                         self[BLOCK_NEXT].handleCanNotEnter(transact)
+<a name="l00099"></a>00099                         rv = <span class="keyword">False</span>
+<a name="l00100"></a>00100                 <span class="keywordflow">else</span>:
+<a name="l00101"></a>00101                     rv = <span class="keyword">False</span>
+<a name="l00102"></a>00102         <span class="keywordflow">return</span> rv
+<a name="l00103"></a>00103 
+<a name="l00104"></a><a class="code" href="classpyss_1_1block_1_1_block.html#a8b5888dec7702a2d4b0aec9d3c221ac8">00104</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#a8b5888dec7702a2d4b0aec9d3c221ac8">moveToNextBlock</a>(self, transact):
+<a name="l00105"></a>00105         <span class="keywordflow">if</span> transact[BLOCK_NEXT]:
+<a name="l00106"></a>00106             transact[CURRENT_BLOCK] = transact[BLOCK_NEXT]
+<a name="l00107"></a>00107             transact[BLOCK_NEXT] = <span class="keywordtype">None</span>
+<a name="l00108"></a>00108         <span class="keywordflow">else</span>:
+<a name="l00109"></a>00109             transact[CURRENT_BLOCK] = self[BLOCK_NEXT]
+<a name="l00110"></a>00110         transact[HANDLED] = <span class="keyword">False</span>
+<a name="l00111"></a>00111 
+<a name="l00112"></a><a class="code" href="classpyss_1_1block_1_1_block.html#addc7dd443a59fd99807f8b7bc5d0557b">00112</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#addc7dd443a59fd99807f8b7bc5d0557b">transactOut</a>(self, transact):
+<a name="l00113"></a>00113         self[CURRENT_COUNT] -= 1
+<a name="l00114"></a>00114         <span class="keywordflow">if</span> self[CURRENT_COUNT] &lt;0:
+<a name="l00115"></a>00115             <span class="comment"># TODO УБРАТЬ</span>
+<a name="l00116"></a>00116             <span class="keywordflow">print</span> <span class="stringliteral">&quot;BAD&quot;</span>
+<a name="l00117"></a>00117         self.<a class="code" href="classpyss_1_1block_1_1_block.html#a8b5888dec7702a2d4b0aec9d3c221ac8">moveToNextBlock</a>(transact)
+<a name="l00118"></a>00118 
+<a name="l00119"></a><a class="code" href="classpyss_1_1block_1_1_block.html#a737d839914e052ca15ed477caefd3bb3">00119</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#a737d839914e052ca15ed477caefd3bb3">getOwnerSegment</a>(self):
+<a name="l00120"></a>00120         <span class="stringliteral">&quot;&quot;&quot;Получить объект сегмента владельца этого блока&quot;&quot;&quot;</span>
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122         <span class="keywordflow">return</span> self[OWNER]
+<a name="l00123"></a>00123         
+<a name="l00124"></a><a class="code" href="classpyss_1_1block_1_1_block.html#a6fe64d7242ca8ee949e95ca668025f4c">00124</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#a6fe64d7242ca8ee949e95ca668025f4c">getOwnerModel</a>(self):
+<a name="l00125"></a>00125         <span class="stringliteral">&quot;&quot;&quot;Получить объект модели владельца сегмента и соответственно этого блока&quot;&quot;&quot;</span>
+<a name="l00126"></a>00126          
+<a name="l00127"></a>00127         <span class="keywordflow">return</span> self[OWNER][OWNER]
+<a name="l00128"></a>00128 
+<a name="l00129"></a><a class="code" href="classpyss_1_1block_1_1_block.html#ae379938fbb9c0846aa13e24a07045aa6">00129</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#ae379938fbb9c0846aa13e24a07045aa6">__str__</a>(self):
+<a name="l00130"></a>00130         s = <span class="stringliteral">&quot;&quot;</span>
+<a name="l00131"></a>00131         <span class="keywordflow">for</span> key <span class="keywordflow">in</span> self:
+<a name="l00132"></a>00132             <span class="keywordflow">if</span> key <span class="keywordflow">not</span> <span class="keywordflow">in</span> [OWNER, BLOCK_NEXT, BLOCK_PREV]:
+<a name="l00133"></a>00133                 <span class="keywordflow">if</span> s:
+<a name="l00134"></a>00134                     s += <span class="stringliteral">&quot;;&quot;</span>
+<a name="l00135"></a>00135                 s += key + <span class="stringliteral">&quot;:&quot;</span> + str(self[key])
+<a name="l00136"></a>00136         <span class="keywordflow">return</span> s
+<a name="l00137"></a>00137     
+<a name="l00138"></a><a class="code" href="classpyss_1_1block_1_1_block.html#a3a7d563718689ab495b0de59aef46817">00138</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1block_1_1_block.html#a3a7d563718689ab495b0de59aef46817">findBlockByLabel</a>(self, label):
+<a name="l00139"></a>00139         <span class="keywordflow">if</span> label <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00140"></a>00140             <span class="keywordflow">return</span> <span class="keywordtype">None</span>
+<a name="l00141"></a>00141         <span class="keywordflow">return</span> self.<a class="code" href="classpyss_1_1block_1_1_block.html#a6fe64d7242ca8ee949e95ca668025f4c">getOwnerModel</a>().findBlockByLabel(label)
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00144"></a>00144     <span class="keywordflow">pass</span>
+<a name="l00145"></a>00145     
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

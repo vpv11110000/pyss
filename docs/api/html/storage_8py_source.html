@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/storage.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/storage.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="storage_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1storage.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль реализации оспобождения памяти или многоканального устройства</span>
+<a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00011"></a>00011 <span class="keyword">from</span> pyss.pyssobject <span class="keyword">import</span> PyssObject
+<a name="l00012"></a>00012 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00013"></a>00013 <span class="keyword">from</span> pyss.statisticalseries <span class="keyword">import</span> StatisticalSeries
+<a name="l00014"></a>00014 <span class="keyword">from</span> pyss.pyssstateobject <span class="keyword">import</span> PyssStateObject
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 <span class="comment">#</span>
+<a name="l00017"></a><a class="code" href="namespacepyss_1_1storage.html#a4de1b75a7865f9ff997bfd83a8054e4c">00017</a> T123 = <span class="stringliteral">&quot;$$$123&quot;</span>
+<a name="l00018"></a><a class="code" href="namespacepyss_1_1storage.html#a692701b5d90f93053f22d691e98a9854">00018</a> T124 = <span class="stringliteral">&quot;$$$124&quot;</span>
+<a name="l00019"></a>00019 
+<a name="l00020"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html">00020</a> <span class="keyword">class </span><a class="code" href="classpyss_1_1storage_1_1_storage.html">Storage</a>(<a class="code" href="classpyss_1_1pyssstateobject_1_1_pyss_state_object.html">PyssStateObject</a>):
+<a name="l00021"></a>00021     <span class="stringliteral">&quot;&quot;&quot;Объект Storage для представления памяти или многоканального устройства.</span>
+<a name="l00022"></a>00022 <span class="stringliteral"></span>
+<a name="l00023"></a>00023 <span class="stringliteral">Память storage добавляется в модель при выполнии метода pyss_model.PyssModel(...).addStorage(storage).</span>
+<a name="l00024"></a>00024 <span class="stringliteral"></span>
+<a name="l00025"></a>00025 <span class="stringliteral">Можно назначать обработчики изменения состояния (см. PyssStateObject).</span>
+<a name="l00026"></a>00026 <span class="stringliteral">Обработчик вызывается при изменении значения атрибута BUSY_SIZE в методах Enter и Leave.</span>
+<a name="l00027"></a>00027 <span class="stringliteral">Значение старого состояния равно старому значению атрибута BUSY_SIZE.</span>
+<a name="l00028"></a>00028 <span class="stringliteral"></span>
+<a name="l00029"></a>00029 <span class="stringliteral">Args:</span>
+<a name="l00030"></a>00030 <span class="stringliteral">    ownerModel - объект модели-владельца</span>
+<a name="l00031"></a>00031 <span class="stringliteral">    storageName=None - строка с наименованием памяти</span>
+<a name="l00032"></a>00032 <span class="stringliteral">    storageSize=32767 - размер памяти или число каналов многоканального устройства</span>
+<a name="l00033"></a>00033 <span class="stringliteral">    initBusySize=0 - начальное значение занятого объёма. Значение сразу заносится в атрибут </span>
+<a name="l00034"></a>00034 <span class="stringliteral"></span>
+<a name="l00035"></a>00035 <span class="stringliteral">Владельцем Storage является модель.</span>
+<a name="l00036"></a>00036 <span class="stringliteral"></span>
+<a name="l00037"></a>00037 <span class="stringliteral">Например, строка</span>
+<a name="l00038"></a>00038 <span class="stringliteral"></span>
+<a name="l00039"></a>00039 <span class="stringliteral">storage.Storage(m, storageName=&quot;mcd&quot;,storageSize=2)</span>
+<a name="l00040"></a>00040 <span class="stringliteral"></span>
+<a name="l00041"></a>00041 <span class="stringliteral">создаёт память из 2-х ячеек.</span>
+<a name="l00042"></a>00042 <span class="stringliteral"></span>
+<a name="l00043"></a>00043 <span class="stringliteral">Пример использования см. tests/test_enter_leave.py.</span>
+<a name="l00044"></a>00044 <span class="stringliteral"></span>
+<a name="l00045"></a>00045 <span class="stringliteral">См. также enter.py, storage.py</span>
+<a name="l00046"></a>00046 <span class="stringliteral"></span>
+<a name="l00047"></a>00047 <span class="stringliteral">Атрибуты объекта Storage (в дополнение к атрибутам block.Block):</span>
+<a name="l00048"></a>00048 <span class="stringliteral">bl = Leave(...)</span>
+<a name="l00049"></a>00049 <span class="stringliteral">bl[STORAGE_NAME] - имя памяти или функция без параметров, возвращающая имя памяти.</span>
+<a name="l00050"></a>00050 <span class="stringliteral">bl[FUNC_BUSY_SIZE] - число занимаемых единиц памяти или функция, возвращающая указанное число</span>
+<a name="l00051"></a>00051 <span class="stringliteral">bl[BUSY_SIZE]=0 - число зянятых единиц памяти</span>
+<a name="l00052"></a>00052 <span class="stringliteral">bl[R] = self[S] #$j – свободная емкость памяти j;</span>
+<a name="l00053"></a>00053 <span class="stringliteral">bl[SR] = 0 #$j – коэффициент использования памяти j;</span>
+<a name="l00054"></a>00054 <span class="stringliteral">bl[SM] = 0 #$j – максимальное заполнение памяти j;</span>
+<a name="l00055"></a>00055 <span class="stringliteral">bl[SA] = 0 #$j – среднее заполнение памяти j;</span>
+<a name="l00056"></a>00056 <span class="stringliteral">bl[SC] = 0 #$j – число входов в память j;</span>
+<a name="l00057"></a>00057 <span class="stringliteral">bl[ST] = 0 #$j – среднее время пребывания транзакта в памяти j.</span>
+<a name="l00058"></a>00058 <span class="stringliteral">bl[MIN] - минимальное значение занятого пространства</span>
+<a name="l00059"></a>00059 <span class="stringliteral"></span>
+<a name="l00060"></a>00060 <span class="stringliteral">Память имеет также стандартные логические атрибуты,</span>
+<a name="l00061"></a>00061 <span class="stringliteral">которые используются для проверки состояния памяти:</span>
+<a name="l00062"></a>00062 <span class="stringliteral">bl[SE] = True #$j – память j пуста;</span>
+<a name="l00063"></a>00063 <span class="stringliteral">bl[NE] = not self[SE] #$j – память j не пуста;</span>
+<a name="l00064"></a>00064 <span class="stringliteral">bl[SF] = False #$j – память j заполнена;</span>
+<a name="l00065"></a>00065 <span class="stringliteral">bl[SNF] = not self[SF] #$j – память j не заполнена.</span>
+<a name="l00066"></a>00066 <span class="stringliteral">bl[DATA]=StatisticalSeries()</span>
+<a name="l00067"></a>00067 <span class="stringliteral">bl[RETRY]=0</span>
+<a name="l00068"></a>00068 <span class="stringliteral">bl[DELAY]=0</span>
+<a name="l00069"></a>00069 <span class="stringliteral">bl[ENTRIES]=0</span>
+<a name="l00070"></a>00070 <span class="stringliteral">bl[AVL]=True #  The availability state of the Storage entity. 1 means available, 0 means unavailable</span>
+<a name="l00071"></a>00071 <span class="stringliteral">bl[TRANSACT_LIST]=[] - перечень длительностей нахождения транзактов в памяти</span>
+<a name="l00072"></a>00072 <span class="stringliteral">bl[LIFE_TIME_LIST] - список меток времени и состояний активности МКУ</span>
+<a name="l00073"></a>00073 <span class="stringliteral">    &quot;&quot;&quot;</span>
+<a name="l00074"></a>00074 
+<a name="l00075"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#af7713f180545eb63de17f528a65e896b">00075</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#af7713f180545eb63de17f528a65e896b">__init__</a>(self, ownerModel=None, storageName=None, storageSize=32767, initBusySize=0):
+<a name="l00076"></a>00076         <span class="comment"># #Поле метки строки STORAGE содержит номер или метку памяти,</span>
+<a name="l00077"></a>00077         <span class="comment"># поле операции - слово STORAGE, а поле A указывает емкость памяти.</span>
+<a name="l00078"></a>00078         <span class="comment"># Емкость памяти должна выражаться целым числом.</span>
+<a name="l00079"></a>00079         <span class="comment"># вызывать recalc для обновления значений self[SR], self[SA], self[ST]</span>
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081         <span class="comment"># С объектом STORAGE связаны следующие СЧА:</span>
+<a name="l00082"></a>00082         <span class="comment"># S$j – ёмкость памяти j;</span>
+<a name="l00083"></a>00083         <span class="comment"># R$j – свободная емкость памяти j;</span>
+<a name="l00084"></a>00084         <span class="comment"># SR$j – коэффициент использования памяти j;</span>
+<a name="l00085"></a>00085         <span class="comment"># SM$j – максимальное заполнение памяти j;</span>
+<a name="l00086"></a>00086         <span class="comment"># SA$j – среднее заполнение памяти j;</span>
+<a name="l00087"></a>00087         <span class="comment"># SC$j – число входов в память j;</span>
+<a name="l00088"></a>00088         <span class="comment"># ST$j – среднее время пребывания транзакта в памяти j.</span>
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090         <span class="comment"># Память имеет также стандартные логические атрибуты,</span>
+<a name="l00091"></a>00091         <span class="comment"># которые используются для проверки состояния памяти:</span>
+<a name="l00092"></a>00092         <span class="comment"># SE$j – память j пуста;  NE$j – память j не пуста;</span>
+<a name="l00093"></a>00093         <span class="comment"># SF$j – память j заполнена; SNF$j – память j не заполнена.</span>
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095         <span class="comment"># pylint:disable=too-many-arguments</span>
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097         super(Storage, self).__init__(STORAGE, label=<span class="keywordtype">None</span>, owner=ownerModel)
+<a name="l00098"></a>00098         map(pyssobject.raiseIsTrue, [storageName <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> storageName.strip() == <span class="stringliteral">&quot;&quot;</span>,
+<a name="l00099"></a>00099                                      storageSize &lt; 1,
+<a name="l00100"></a>00100                                      initBusySize <span class="keywordflow">is</span> <span class="keywordtype">None</span>,
+<a name="l00101"></a>00101                                      initBusySize &gt;= storageSize])
+<a name="l00102"></a>00102         self[STORAGE_NAME] = storageName
+<a name="l00103"></a>00103         self[TITLE] = storageName
+<a name="l00104"></a>00104         self[S] = storageSize
+<a name="l00105"></a>00105         self[INIT_BUSY_SIZE] = initBusySize
+<a name="l00106"></a>00106         self[STORAGE_TRANSACT_KEY] = STORAGE_TRANSACT_KEY + storageName
+<a name="l00107"></a>00107         self.<a class="code" href="classpyss_1_1storage_1_1_storage.html#afa433b1b4a2c0841218b07763d1aa379">reset</a>()
+<a name="l00108"></a>00108         ownerModel.addStorage(self)
+<a name="l00109"></a>00109         
+<a name="l00110"></a>00110 
+<a name="l00111"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#a4ad3d1920a6e5ef09a26e370cfa09958">00111</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#a4ad3d1920a6e5ef09a26e370cfa09958">storageEmpty</a>(self):
+<a name="l00112"></a>00112         <span class="keywordflow">return</span> self[BUSY_SIZE] == 0
+<a name="l00113"></a>00113 
+<a name="l00114"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#ac81b42cd6587dd13a934f00d8def31ba">00114</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#ac81b42cd6587dd13a934f00d8def31ba">storageNotEmpty</a>(self):
+<a name="l00115"></a>00115         <span class="keywordflow">return</span> self[BUSY_SIZE] &gt; 0
+<a name="l00116"></a>00116 
+<a name="l00117"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#a85bcc731b1b8b18b79cfe7237cceabe4">00117</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#a85bcc731b1b8b18b79cfe7237cceabe4">storageFull</a>(self):
+<a name="l00118"></a>00118         <span class="keywordflow">return</span> self[BUSY_SIZE] == self[S]
+<a name="l00119"></a>00119 
+<a name="l00120"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#a00c9aaf9a6a2d5a31328198b2088780f">00120</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#a00c9aaf9a6a2d5a31328198b2088780f">storageNotFull</a>(self):
+<a name="l00121"></a>00121         <span class="keywordflow">return</span> self[BUSY_SIZE] &lt; self[S]
+<a name="l00122"></a>00122     
+<a name="l00123"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#af4fdf1652d04c5f0b43e9784df74e245">00123</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#af4fdf1652d04c5f0b43e9784df74e245">getBusySize</a>(self):
+<a name="l00124"></a>00124         <span class="keywordflow">return</span> self[BUSY_SIZE]
+<a name="l00125"></a>00125 
+<a name="l00126"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#aa133ef13128e5ed1242463a6ba724ba2">00126</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#aa133ef13128e5ed1242463a6ba724ba2">getStorageSize</a>(self):
+<a name="l00127"></a>00127         <span class="keywordflow">return</span> self[S]
+<a name="l00128"></a>00128     
+<a name="l00129"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#afa433b1b4a2c0841218b07763d1aa379">00129</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#afa433b1b4a2c0841218b07763d1aa379">reset</a>(self):
+<a name="l00130"></a>00130         self[MIN] = self[INIT_BUSY_SIZE]        
+<a name="l00131"></a>00131         self[BUSY_SIZE] = self[INIT_BUSY_SIZE]
+<a name="l00132"></a>00132         self[R] = self[S]  <span class="comment"># $j – свободная емкость памяти j;</span>
+<a name="l00133"></a>00133         self[SR] = 0  <span class="comment"># $j – коэффициент использования памяти j;</span>
+<a name="l00134"></a>00134         self[SM] = 0  <span class="comment"># $j – максимальное заполнение памяти j;</span>
+<a name="l00135"></a>00135         self[SA] = 0  <span class="comment"># $j – среднее заполнение памяти j;</span>
+<a name="l00136"></a>00136         self[SC] = 0  <span class="comment"># $j – число входов в память j;</span>
+<a name="l00137"></a>00137         self[ST] = 0  <span class="comment"># $j – среднее время пребывания транзакта в памяти j.</span>
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139         <span class="comment"># Память имеет также стандартные логические атрибуты,</span>
+<a name="l00140"></a>00140         <span class="comment"># которые используются для проверки состояния памяти:</span>
+<a name="l00141"></a>00141         self[SE] = <span class="keyword">True</span>  <span class="comment"># $j – память j пуста;</span>
+<a name="l00142"></a>00142         self[NE] = <span class="keywordflow">not</span> self[SE]  <span class="comment"># $j – память j не пуста;</span>
+<a name="l00143"></a>00143         self[SF] = <span class="keyword">False</span>  <span class="comment"># $j – память j заполнена;</span>
+<a name="l00144"></a>00144         self[SNF] = <span class="keywordflow">not</span> self[SF]  <span class="comment"># $j – память j не заполнена.</span>
+<a name="l00145"></a>00145         self[DATA] = StatisticalSeries()
+<a name="l00146"></a>00146         self[RETRY] = 0
+<a name="l00147"></a>00147         self[DELAY] = 0
+<a name="l00148"></a>00148         self[ENTRIES] = 0
+<a name="l00149"></a>00149         self[AVL] = <span class="keyword">True</span>  <span class="comment">#  The availability state of the Storage entity. 1 means available, 0 means unavailable</span>
+<a name="l00150"></a>00150         self[TRANSACT_LIST] = []
+<a name="l00151"></a>00151         <span class="comment"># в STATE записываем сколько занято</span>
+<a name="l00152"></a>00152         self[LIFE_TIME_LIST] = [{START:self[OWNER].getCurTime(), STATE:self[BUSY_SIZE]}]
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154 
+<a name="l00155"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#a7814635ca401e2f85a2fcb27d47d378b">00155</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#a7814635ca401e2f85a2fcb27d47d378b">recalc</a>(self, timeValue=None):
+<a name="l00156"></a>00156         <span class="comment"># # вызывать recalc для обновления значений self[SR], self[SA], self[ST]</span>
+<a name="l00157"></a>00157         <span class="keywordflow">if</span> timeValue <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00158"></a>00158             timeValue = self[OWNER].getCurTime()
+<a name="l00159"></a>00159         self[SR] = self.<a class="code" href="classpyss_1_1storage_1_1_storage.html#a831fe5906e58f02d91a3094ac4a7c3cf">utilization</a>(timeValue=timeValue)
+<a name="l00160"></a>00160         self[SA] = self.<a class="code" href="classpyss_1_1storage_1_1_storage.html#ad506b72a8ad6462b1bc0625fec1a3f13">meanMemoryFill</a>(timeValue=timeValue)
+<a name="l00161"></a>00161         self[ST] = self.<a class="code" href="classpyss_1_1storage_1_1_storage.html#aaad6c0d3fe7f750c3bf87e991e3dca5c">meanTimeForTransact</a>(timeValue=timeValue)
+<a name="l00162"></a>00162 
+<a name="l00163"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#aaad6c0d3fe7f750c3bf87e991e3dca5c">00163</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#aaad6c0d3fe7f750c3bf87e991e3dca5c">meanTimeForTransact</a>(self, timeValue=0):
+<a name="l00164"></a>00164         <span class="comment"># pylint: disable=unused-argument</span>
+<a name="l00165"></a>00165         t = self[TRANSACT_LIST]
+<a name="l00166"></a>00166         rv = StatisticalSeries().extend(t).mean()
+<a name="l00167"></a>00167         <span class="keywordflow">return</span> rv
+<a name="l00168"></a>00168 
+<a name="l00169"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#a868618ebc88e784cb7cbc8b481931e7c">00169</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#a868618ebc88e784cb7cbc8b481931e7c">_volume</a>(self, timeValue=0):
+<a name="l00170"></a>00170         <span class="keywordflow">if</span> <span class="keywordflow">not</span> self[DATA][DATA]:
+<a name="l00171"></a>00171             <span class="keywordflow">return</span> 0.0
+<a name="l00172"></a>00172         v = 0.0
+<a name="l00173"></a>00173         last = 0.0
+<a name="l00174"></a>00174         d = self[DATA][DATA]
+<a name="l00175"></a>00175         values = sorted(d)
+<a name="l00176"></a>00176         i = 0
+<a name="l00177"></a>00177         lastV = d[values[0]]
+<a name="l00178"></a>00178         <span class="keywordflow">while</span> i &lt; len(values) <span class="keywordflow">and</span> last &lt; timeValue:
+<a name="l00179"></a>00179             <span class="keywordflow">if</span> values[i] &gt; timeValue:
+<a name="l00180"></a>00180                 t = timeValue
+<a name="l00181"></a>00181             <span class="keywordflow">else</span>:
+<a name="l00182"></a>00182                 t = values[i]
+<a name="l00183"></a>00183             p = (t - last) * lastV
+<a name="l00184"></a>00184             v += p
+<a name="l00185"></a>00185             last = t
+<a name="l00186"></a>00186             lastV = d[t]
+<a name="l00187"></a>00187             i += 1
+<a name="l00188"></a>00188         <span class="keywordflow">return</span> v
+<a name="l00189"></a>00189 
+<a name="l00190"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#ad506b72a8ad6462b1bc0625fec1a3f13">00190</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#ad506b72a8ad6462b1bc0625fec1a3f13">meanMemoryFill</a>(self, timeValue=0):
+<a name="l00191"></a>00191         <span class="keywordflow">if</span> <span class="keywordflow">not</span> timeValue:
+<a name="l00192"></a>00192             <span class="keywordflow">return</span> <span class="keywordtype">None</span>
+<a name="l00193"></a>00193         <span class="keywordflow">return</span> self.<a class="code" href="classpyss_1_1storage_1_1_storage.html#a868618ebc88e784cb7cbc8b481931e7c">_volume</a>(timeValue) / timeValue
+<a name="l00194"></a>00194 
+<a name="l00195"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#a831fe5906e58f02d91a3094ac4a7c3cf">00195</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#a831fe5906e58f02d91a3094ac4a7c3cf">utilization</a>(self, timeValue=0):
+<a name="l00196"></a>00196         <span class="comment"># # Коэффициент использования памяти</span>
+<a name="l00197"></a>00197         <span class="keywordflow">if</span> <span class="keywordflow">not</span> timeValue:
+<a name="l00198"></a>00198             <span class="keywordflow">return</span> <span class="keywordtype">None</span>
+<a name="l00199"></a>00199         m = float(self[S]) * float(timeValue)
+<a name="l00200"></a>00200         <span class="keywordflow">return</span> self.<a class="code" href="classpyss_1_1storage_1_1_storage.html#a868618ebc88e784cb7cbc8b481931e7c">_volume</a>(timeValue) / m
+<a name="l00201"></a>00201 
+<a name="l00202"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#abe81637d0f02772a3f7ccba74703c570">00202</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#abe81637d0f02772a3f7ccba74703c570">_sla</a>(self):
+<a name="l00203"></a>00203         self[SE] = self[BUSY_SIZE] == 0
+<a name="l00204"></a>00204         self[NE] = <span class="keywordflow">not</span> self[SE]  <span class="comment"># $j – память j не пуста;</span>
+<a name="l00205"></a>00205         self[SF] = self[BUSY_SIZE] == self[S]  <span class="comment"># $j – память j заполнена;</span>
+<a name="l00206"></a>00206         self[SNF] = <span class="keywordflow">not</span> self[SF]  <span class="comment"># $j – память j не заполнена.</span>
+<a name="l00207"></a>00207 
+<a name="l00208"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#a364456f1d69f1c784166b1c1c38a3bb8">00208</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#a364456f1d69f1c784166b1c1c38a3bb8">enter</a>(self, transact=None, busySize=1, currentTime=None):
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210         <span class="comment"># Когда транзакт входит в блок ENTER (см. блок-диаграмму),</span>
+<a name="l00211"></a>00211         <span class="comment"># планировщик выполняет следующие действия:</span>
+<a name="l00212"></a>00212 
+<a name="l00213"></a>00213         <span class="comment"># увеличивает на 1 счетчик входов МКУ;</span>
+<a name="l00214"></a>00214         <span class="comment"># увеличивает на значение операнда B (по умолчанию на 1 ) текущее содержимое МКУ;</span>
+<a name="l00215"></a>00215         <span class="comment"># уменьшает на значение операнда B (по умолчанию на 1 ) доступную емкость МКУ.</span>
+<a name="l00216"></a>00216         <span class="comment"># транзакт помечается currentTime по ключу self[STORAGE_TRANSACT_KEY], см.</span>
+<a name="l00217"></a>00217         <span class="comment"># __init__</span>
+<a name="l00218"></a>00218         <span class="keywordflow">if</span> <span class="keywordflow">not</span> busySize:
+<a name="l00219"></a>00219             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Illegal busySize&quot;</span>)
+<a name="l00220"></a>00220         
+<a name="l00221"></a>00221         c = self[BUSY_SIZE] + busySize
+<a name="l00222"></a>00222         <span class="keywordflow">if</span> c &gt; self[S]:
+<a name="l00223"></a>00223             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Illegal operation&quot;</span>)
+<a name="l00224"></a>00224         <span class="keywordflow">if</span> currentTime <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00225"></a>00225             currentTime = self[OWNER].getCurTime()
+<a name="l00226"></a>00226         <span class="keywordflow">if</span> transact:
+<a name="l00227"></a>00227             transact[self[STORAGE_TRANSACT_KEY]] = currentTime
+<a name="l00228"></a>00228         self[ENTRIES] += 1
+<a name="l00229"></a>00229         oldState = self[BUSY_SIZE]
+<a name="l00230"></a>00230         self[BUSY_SIZE] = c
+<a name="l00231"></a>00231         <span class="comment"># в STATE записываем сколько занято</span>
+<a name="l00232"></a>00232         self[LIFE_TIME_LIST].append({START:self[OWNER].getCurTime(), STATE:self[BUSY_SIZE]})        
+<a name="l00233"></a>00233         self[R] = self[S] - self[BUSY_SIZE]
+<a name="l00234"></a>00234         self[SM] = c <span class="keywordflow">if</span> self[SM] &lt; c <span class="keywordflow">else</span> self[SM]
+<a name="l00235"></a>00235         self[DATA].append(currentTime, c)
+<a name="l00236"></a>00236         self[SC] += 1
+<a name="l00237"></a>00237         self.<a class="code" href="classpyss_1_1storage_1_1_storage.html#abe81637d0f02772a3f7ccba74703c570">_sla</a>()
+<a name="l00238"></a>00238         self.fireHandlerOnStateChange(oldState)
+<a name="l00239"></a>00239 
+<a name="l00240"></a>00240 
+<a name="l00241"></a><a class="code" href="classpyss_1_1storage_1_1_storage.html#a2aef8c715ef75648370bf2504eacf566">00241</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1storage_1_1_storage.html#a2aef8c715ef75648370bf2504eacf566">leave</a>(self, transact=None, busySize=1, currentTime=None):
+<a name="l00242"></a>00242         <span class="comment"># # если транзакт помечен временем входа (self.enter), то будет вестись</span>
+<a name="l00243"></a>00243         <span class="comment"># статистика среднего времени пребывания танзакта в Storage</span>
+<a name="l00244"></a>00244         <span class="comment"># transact[self[STORAGE_TRANSACT_KEY]] по завершении будет содержать</span>
+<a name="l00245"></a>00245         <span class="comment"># время пребывания в Storage</span>
+<a name="l00246"></a>00246         <span class="comment"># если входит и выходит несколько раз, то</span>
+<a name="l00247"></a>00247         <span class="comment"># transact[self[STORAGE_TRANSACT_KEY]] содержит только последнее</span>
+<a name="l00248"></a>00248         <span class="comment"># время пребывания в Storage</span>
+<a name="l00249"></a>00249 
+<a name="l00250"></a>00250         c = self[BUSY_SIZE] - busySize
+<a name="l00251"></a>00251         <span class="keywordflow">if</span> c &lt; 0:
+<a name="l00252"></a>00252             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Illegal operation&quot;</span>)
+<a name="l00253"></a>00253         <span class="keywordflow">if</span> <span class="keywordflow">not</span> currentTime:
+<a name="l00254"></a>00254             currentTime = self[OWNER].getCurTime()
+<a name="l00255"></a>00255         <span class="keywordflow">if</span> transact:
+<a name="l00256"></a>00256             <span class="keywordflow">if</span> self[STORAGE_TRANSACT_KEY] <span class="keywordflow">in</span> transact:
+<a name="l00257"></a>00257                 delta = currentTime - transact[self[STORAGE_TRANSACT_KEY]]
+<a name="l00258"></a>00258                 self[TRANSACT_LIST].append(delta)
+<a name="l00259"></a>00259                 transact[self[STORAGE_TRANSACT_KEY]] = delta
+<a name="l00260"></a>00260         oldState = self[BUSY_SIZE]
+<a name="l00261"></a>00261         self[BUSY_SIZE] = c
+<a name="l00262"></a>00262         <span class="comment"># в STATE записываем сколько занято</span>
+<a name="l00263"></a>00263         self[LIFE_TIME_LIST].append({START:self[OWNER].getCurTime(), STATE:self[BUSY_SIZE]})         
+<a name="l00264"></a>00264         self[MIN] = min(c, self[MIN])
+<a name="l00265"></a>00265         self[R] = self[S] - self[BUSY_SIZE]
+<a name="l00266"></a>00266         self[DATA].append(self[OWNER].getCurTime(), c)
+<a name="l00267"></a>00267         self[SC] -= 1
+<a name="l00268"></a>00268         self.<a class="code" href="classpyss_1_1storage_1_1_storage.html#abe81637d0f02772a3f7ccba74703c570">_sla</a>()
+<a name="l00269"></a>00269         self.fireHandlerOnStateChange(oldState)
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00272"></a><a class="code" href="namespacepyss_1_1storage.html#a0288c52cc50f91b5e12a05a761248697">00272</a>     <span class="keyword">def </span><a class="code" href="namespacepyss_1_1storage.html#a0288c52cc50f91b5e12a05a761248697">main</a>():
+<a name="l00273"></a>00273         <span class="keywordflow">print</span> <span class="stringliteral">&quot;?&quot;</span>
+<a name="l00274"></a>00274 
+<a name="l00275"></a>00275     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

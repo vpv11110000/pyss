@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Пространство имен tvrepair</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li class="current"><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="namespacemembers.html"><span>Члены&nbsp;пространств&nbsp;имен</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Функции</a> &#124;
+<a href="#var-members">Переменные</a>  </div>
+  <div class="headertitle">
+<h1>Пространство имен tvrepair</h1>  </div>
+</div>
+<div class="contents">
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetvrepair.html#a07085c7fccd071056ea4b2d0da142a45">main</a></td></tr>
+<tr><td colspan="2"><h2><a name="var-members"></a>
+Переменные</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetvrepair.html#adf05dd934a67bcce3ddd79578bdb8cf2">DIRNAME_MODULE</a> = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))))</td></tr>
+</table>
+<hr/><h2>Функции</h2>
+<a class="anchor" id="a07085c7fccd071056ea4b2d0da142a45"></a><!-- doxytag: member="tvrepair::main" ref="a07085c7fccd071056ea4b2d0da142a45" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def tvrepair::main </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>См. определение в файле <a class="el" href="tvrepair_8py_source.html">tvrepair.py</a> строка <a class="el" href="tvrepair_8py_source.html#l00153">153</a></p>
+
+<p><div class="fragment"><pre class="fragment"><a name="l00154"></a>00154           :
+<a name="l00155"></a>00155     logger.info(<span class="stringliteral">&quot;-------------------------------------&quot;</span>)
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157     <span class="comment">### MODEL ----------------------------------</span>
+<a name="l00158"></a>00158     m = PyssModel()
+<a name="l00159"></a>00159     sgm = Segment(m, <span class="stringliteral">&quot;TVREPAIR&quot;</span>)
+<a name="l00160"></a>00160     
+<a name="l00161"></a>00161     <span class="comment">#</span>
+<a name="l00162"></a>00162     m[OPTIONS].setAllFalse()
+<a name="l00163"></a>00163     
+<a name="l00164"></a>00164     <span class="comment">#-------------------------------</span>
+<a name="l00165"></a>00165     PRIORITY_MODEL = 1
+<a name="l00166"></a>00166     PRIORITY_SPOT = 3
+<a name="l00167"></a>00167     PRIORITY_SERVICE = 2
+<a name="l00168"></a>00168     
+<a name="l00169"></a>00169     TRANSACT_GROUP = <span class="stringliteral">&quot;TRANSACT_GROUP&quot;</span>
+<a name="l00170"></a>00170     GEN_1 = <span class="stringliteral">&quot;GEN_O&quot;</span>
+<a name="l00171"></a>00171     GEN_2 = <span class="stringliteral">&quot;GEN_S&quot;</span>
+<a name="l00172"></a>00172     GEN_3 = <span class="stringliteral">&quot;GEN_R&quot;</span>
+<a name="l00173"></a>00173     GEN_4 = <span class="stringliteral">&quot;Day&quot;</span>    
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175     <span class="comment">#-------------------------------</span>
+<a name="l00176"></a>00176     MAX_TIME = 50 * 8 * 60
+<a name="l00177"></a>00177     <span class="comment">#-------------------------------</span>
+<a name="l00178"></a>00178     QUEUE_OVERHAUL = <span class="stringliteral">&quot;Overhaul&quot;</span>
+<a name="l00179"></a>00179     QUEUE_ALLJOBS = <span class="stringliteral">&quot;Alljobs&quot;</span>
+<a name="l00180"></a>00180     QUEUE_SPOT = <span class="stringliteral">&quot;Spot&quot;</span>
+<a name="l00181"></a>00181     QUEUE_SERVICE = <span class="stringliteral">&quot;Service&quot;</span>
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183     <span class="comment"># def queue_len_by_timeFunc(owner,transact):</span>
+<a name="l00184"></a>00184         <span class="comment"># q=m[QUEUE_OBJECTS][QUEUE_NAME]</span>
+<a name="l00185"></a>00185         <span class="comment"># if q:</span>
+<a name="l00186"></a>00186             <span class="comment"># return q[QUEUE_LENGTH]</span>
+<a name="l00187"></a>00187         <span class="comment"># else:</span>
+<a name="l00188"></a>00188             <span class="comment"># raise &quot;Queue [%s] not found&quot;%QUEUE_NAME</span>
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190     <span class="comment">#-----------</span>
+<a name="l00191"></a>00191     <span class="comment">#****************************************************************</span>
+<a name="l00192"></a>00192     <span class="comment"># *</span>
+<a name="l00193"></a>00193     <span class="comment"># * Tables of queue statistics</span>
+<a name="l00194"></a>00194     <span class="comment"># Overhaul QTABLE Overhaul,10,10,20</span>
+<a name="l00195"></a>00195     tblOverhaul = Qtable(m, queueName=QUEUE_OVERHAUL, limitUpFirst=10, widthInt=10, countInt=20)
+<a name="l00196"></a>00196     <span class="comment"># Spot QTABLE Spot,10,10,20</span>
+<a name="l00197"></a>00197     tblSpot = Qtable(m, queueName=QUEUE_SPOT, limitUpFirst=10, widthInt=10, countInt=20)
+<a name="l00198"></a>00198     <span class="comment"># Service QTABLE Service,10,10,20</span>
+<a name="l00199"></a>00199     tblService = Qtable(m, queueName=QUEUE_SERVICE, limitUpFirst=10, widthInt=10, countInt=20)
+<a name="l00200"></a>00200     <span class="comment"># Alljobs QTABLE Alljobs,10,10,20</span>
+<a name="l00201"></a>00201     tblAlljobs = Qtable(m, queueName=QUEUE_ALLJOBS, limitUpFirst=10, widthInt=10, countInt=20)
+<a name="l00202"></a>00202     
+<a name="l00203"></a>00203     <span class="comment">#---------</span>
+<a name="l00204"></a>00204     FAC_MAINTENANCE = <span class="stringliteral">&quot;Maintenance&quot;</span>
+<a name="l00205"></a>00205     <span class="comment"># -----------------------------------------------------</span>
+<a name="l00206"></a>00206     <span class="comment"># модель в рамках одного сегмента</span>
+<a name="l00207"></a>00207     
+<a name="l00208"></a>00208     <span class="comment"># Починка телевизионного оборудования компании осуществляется каждые 40±8 часов</span>
+<a name="l00209"></a>00209     <span class="comment"># и занимает 10±1 часов.</span>
+<a name="l00210"></a>00210     <span class="comment"># GENERATE 2400,480,,,1 ;Overhaul of a rented set</span>
+<a name="l00211"></a>00211     <span class="keyword">def </span>generateFunc001(owner, currentTime):
+<a name="l00212"></a>00212         <span class="keywordflow">return</span> random.uniform(-480.0, 480.0)    
+<a name="l00213"></a>00213     Generate(sgm, label=<span class="stringliteral">&quot;GEN_1&quot;</span>,
+<a name="l00214"></a>00214              med_value=2400, modificatorFunc=generateFunc001,
+<a name="l00215"></a>00215              first_tx=<span class="keywordtype">None</span>,
+<a name="l00216"></a>00216              priority=PRIORITY_MODEL)
+<a name="l00217"></a>00217     <span class="comment"># segment001.addBlock(file_save.FileSave(fileName=FILENAMES[0], funcSave=funcSave, mode=&quot;write&quot;, label=None))</span>
+<a name="l00218"></a>00218     <span class="keyword">def </span>funcHandle1(o, t):
+<a name="l00219"></a>00219         t[TRANSACT_GROUP] = GEN_1
+<a name="l00220"></a>00220         <span class="keywordflow">print</span> GEN_1
+<a name="l00221"></a>00221     Handle(sgm, handlerFunc=funcHandle1)
+<a name="l00222"></a>00222     <span class="comment"># QUEUE Overhaul ;Queue for service</span>
+<a name="l00223"></a>00223     Queue(sgm, queueName=QUEUE_OVERHAUL, deltaIncrease=1)
+<a name="l00224"></a>00224     <span class="comment"># QUEUE Alljobs ;Collect global statistics</span>
+<a name="l00225"></a>00225     Queue(sgm, queueName=QUEUE_ALLJOBS, deltaIncrease=1)
+<a name="l00226"></a>00226     <span class="comment"># SEIZE Maintenance ;Obtain TV repairman</span>
+<a name="l00227"></a>00227     Seize(sgm, facilityName=FAC_MAINTENANCE)
+<a name="l00228"></a>00228     <span class="comment"># DEPART Overhaul ;Leave queue for man</span>
+<a name="l00229"></a>00229     Depart(sgm, queueName=QUEUE_OVERHAUL, deltaDecrease=1)
+<a name="l00230"></a>00230     <span class="comment"># DEPART Alljobs ;Collect global statistics</span>
+<a name="l00231"></a>00231     Depart(sgm, queueName=QUEUE_ALLJOBS, deltaDecrease=1)
+<a name="l00232"></a>00232     <span class="comment"># ADVANCE 600,60 ;Complete job 10+/-1 hours</span>
+<a name="l00233"></a>00233     <span class="keyword">def </span>advanceCall(owner, timeValue):
+<a name="l00234"></a>00234         x = random.uniform(-1.0 * 60, 1.0 * 60)
+<a name="l00235"></a>00235         <span class="comment"># file_save.appendToFile(FILENAMES[4], str(x))</span>
+<a name="l00236"></a>00236         <span class="keywordflow">return</span> x
+<a name="l00237"></a>00237     Advance(sgm, meanTime=600.0, modificatorFunc=advanceCall)
+<a name="l00238"></a>00238     <span class="comment"># RELEASE Maintenance ;Free repairman</span>
+<a name="l00239"></a>00239     Release(sgm, facilityName=FAC_MAINTENANCE)
+<a name="l00240"></a>00240     <span class="comment"># TERMINATE ;Remove one Transaction</span>
+<a name="l00241"></a>00241     Terminate(sgm, label=<span class="stringliteral">&quot;OVERHAUL&quot;</span>, deltaTerminate=0)
+<a name="l00242"></a>00242     
+<a name="l00243"></a>00243     <span class="comment">#--------</span>
+<a name="l00244"></a>00244     <span class="comment"># * On the spot repairs</span>
+<a name="l00245"></a>00245     <span class="comment"># GENERATE 90,10,,,3 ;On-the-spot repairs</span>
+<a name="l00246"></a>00246     <span class="keyword">def </span>generateFunc002(owner, currentTime):
+<a name="l00247"></a>00247         <span class="keywordflow">return</span> random.uniform(-10.0, 10.0)    
+<a name="l00248"></a>00248     Generate(sgm, label=<span class="stringliteral">&quot;GEN_2&quot;</span>,
+<a name="l00249"></a>00249              med_value=90, modificatorFunc=generateFunc002,
+<a name="l00250"></a>00250              first_tx=90 + generateFunc002(<span class="keywordtype">None</span>, <span class="keywordtype">None</span>),
+<a name="l00251"></a>00251              priority=PRIORITY_SPOT)
+<a name="l00252"></a>00252     <span class="comment"># segment001.addBlock(file_save.FileSave(fileName=FILENAMES[1], funcSave=funcSave, mode=&quot;write&quot;, label=None))</span>
+<a name="l00253"></a>00253     <span class="keyword">def </span>funcHandle2(o, t):
+<a name="l00254"></a>00254         t[TRANSACT_GROUP] = GEN_2
+<a name="l00255"></a>00255         <span class="keywordflow">print</span> GEN_2
+<a name="l00256"></a>00256     Handle(sgm, handlerFunc=funcHandle2) 
+<a name="l00257"></a>00257     <span class="comment"># QUEUE Spot ;Queue for spot repairs</span>
+<a name="l00258"></a>00258     Queue(sgm, queueName=QUEUE_SPOT, deltaIncrease=1)
+<a name="l00259"></a>00259     <span class="comment"># QUEUE Alljobs ;Collect global statistics</span>
+<a name="l00260"></a>00260     Queue(sgm, queueName=QUEUE_ALLJOBS, deltaIncrease=1)
+<a name="l00261"></a>00261     <span class="comment"># PREEMPT Maintenance,PR ;Get the TV repairman</span>
+<a name="l00262"></a>00262     Preempt(sgm, facilityName=FAC_MAINTENANCE)
+<a name="l00263"></a>00263     <span class="comment"># DEPART Spot ;Depart the ‘spot’ queue</span>
+<a name="l00264"></a>00264     Depart(sgm, queueName=QUEUE_SPOT, deltaDecrease=1)
+<a name="l00265"></a>00265     <span class="comment"># DEPART Alljobs ;Collect global statistics</span>
+<a name="l00266"></a>00266     Depart(sgm, queueName=QUEUE_ALLJOBS, deltaDecrease=1)
+<a name="l00267"></a>00267     <span class="comment"># ADVANCE 15,5 ;Time for tuning/fuse/fault</span>
+<a name="l00268"></a>00268     <span class="keyword">def </span>advanceCall002(owner, timeValue):
+<a name="l00269"></a>00269         x = random.uniform(-1.0 * 5, 1.0 * 5)
+<a name="l00270"></a>00270         <span class="comment"># file_save.appendToFile(FILENAMES[5], str(x))</span>
+<a name="l00271"></a>00271         <span class="keywordflow">return</span> x
+<a name="l00272"></a>00272     Advance(sgm, meanTime=15.0, modificatorFunc=advanceCall002)
+<a name="l00273"></a>00273     <span class="comment"># RETURN Maintenance ;Free maintenance man</span>
+<a name="l00274"></a>00274     GReturn(sgm, facilityName=FAC_MAINTENANCE)
+<a name="l00275"></a>00275     <span class="comment"># TERMINATE</span>
+<a name="l00276"></a>00276     Terminate(sgm, label=<span class="stringliteral">&quot;SPOT&quot;</span>, deltaTerminate=0)
+<a name="l00277"></a>00277     
+<a name="l00278"></a>00278     <span class="comment">#****************************************************************</span>
+<a name="l00279"></a>00279     <span class="comment"># * Normal repairs on customer owned sets</span>
+<a name="l00280"></a>00280     <span class="comment"># GENERATE 300,60,,,2 ;Normal TV Repairs</span>
+<a name="l00281"></a>00281     <span class="keyword">def </span>generateFunc003(owner, currentTime):
+<a name="l00282"></a>00282         <span class="keywordflow">return</span> random.uniform(-60.0, 60.0)    
+<a name="l00283"></a>00283     Generate(sgm, label=<span class="stringliteral">&quot;GEN_3&quot;</span>,
+<a name="l00284"></a>00284              med_value=300, modificatorFunc=generateFunc003,
+<a name="l00285"></a>00285              first_tx=300 + generateFunc003(<span class="keywordtype">None</span>, <span class="keywordtype">None</span>),
+<a name="l00286"></a>00286              priority=PRIORITY_SERVICE)
+<a name="l00287"></a>00287     <span class="comment"># segment001.addBlock(file_save.FileSave(fileName=FILENAMES[2], funcSave=funcSave, mode=&quot;write&quot;, label=None))</span>
+<a name="l00288"></a>00288     <span class="keyword">def </span>funcHandle3(o, t):
+<a name="l00289"></a>00289         t[TRANSACT_GROUP] = GEN_3
+<a name="l00290"></a>00290         <span class="keywordflow">print</span> GEN_3
+<a name="l00291"></a>00291     Handle(sgm, handlerFunc=funcHandle3) 
+<a name="l00292"></a>00292     <span class="comment"># QUEUE Service ;Queue for service</span>
+<a name="l00293"></a>00293     Queue(sgm, queueName=QUEUE_SERVICE, deltaIncrease=1)
+<a name="l00294"></a>00294     <span class="comment"># QUEUE Alljobs ;Collect global statistics</span>
+<a name="l00295"></a>00295     Queue(sgm, queueName=QUEUE_ALLJOBS, deltaIncrease=1)
+<a name="l00296"></a>00296     <span class="comment"># PREEMPT Maintenance,PR ;Preempt maintenance man</span>
+<a name="l00297"></a>00297     Preempt(sgm, facilityName=FAC_MAINTENANCE)
+<a name="l00298"></a>00298     <span class="comment"># DEPART Service ;Depart the ‘service’ queue</span>
+<a name="l00299"></a>00299     Depart(sgm, queueName=QUEUE_SERVICE, deltaDecrease=1)
+<a name="l00300"></a>00300     <span class="comment"># DEPART Alljobs ;Collect global statistics</span>
+<a name="l00301"></a>00301     Depart(sgm, queueName=QUEUE_ALLJOBS, deltaDecrease=1)
+<a name="l00302"></a>00302     <span class="comment"># ADVANCE 120,30 ;Normal service time</span>
+<a name="l00303"></a>00303     <span class="keyword">def </span>advanceCall003(owner, timeValue):
+<a name="l00304"></a>00304         x = random.uniform(-1.0 * 30, 1.0 * 30)
+<a name="l00305"></a>00305         <span class="comment"># file_save.appendToFile(FILENAMES[6], str(x))</span>
+<a name="l00306"></a>00306         <span class="keywordflow">return</span> x    
+<a name="l00307"></a>00307     Advance(sgm, meanTime=120.0, modificatorFunc=advanceCall003)
+<a name="l00308"></a>00308     <span class="comment"># RETURN Maintenance ;Release the man</span>
+<a name="l00309"></a>00309     GReturn(sgm, facilityName=FAC_MAINTENANCE)
+<a name="l00310"></a>00310     <span class="comment"># TERMINATE</span>
+<a name="l00311"></a>00311     Terminate(sgm, label=<span class="stringliteral">&quot;REPAIRS&quot;</span>, deltaTerminate=0)
+<a name="l00312"></a>00312     <span class="comment">#****************************************************************</span>
+<a name="l00313"></a>00313     <span class="comment"># *</span>
+<a name="l00314"></a>00314     <span class="comment"># GENERATE 480 ;One xact each 8 hr. day</span>
+<a name="l00315"></a>00315     day = [0]
+<a name="l00316"></a>00316     generate.Generate(sgm, label=<span class="stringliteral">&quot;GEN_4&quot;</span>,
+<a name="l00317"></a>00317                       med_value=480,
+<a name="l00318"></a>00318                       <span class="comment"># modificatorFunc=DATS[3],</span>
+<a name="l00319"></a>00319                       modificatorFunc=<span class="keywordtype">None</span>,
+<a name="l00320"></a>00320                       first_tx=0,
+<a name="l00321"></a>00321                       priority=100)
+<a name="l00322"></a>00322     <span class="keyword">def </span>funcHandle4(o, t):
+<a name="l00323"></a>00323         t[<span class="stringliteral">&quot;Day&quot;</span>] = day[0]
+<a name="l00324"></a>00324         day[0] = day[0] + 1
+<a name="l00325"></a>00325         t[TRANSACT_GROUP] = GEN_4
+<a name="l00326"></a>00326         <span class="keywordflow">print</span> GEN_4
+<a name="l00327"></a>00327     Handle(sgm, handlerFunc=funcHandle4)    
+<a name="l00328"></a>00328     <span class="comment"># TERMINATE 1</span>
+<a name="l00329"></a>00329     X_LABEL = <span class="stringliteral">&quot;DAYLY&quot;</span>
+<a name="l00330"></a>00330     Terminate(sgm, label=X_LABEL, deltaTerminate=1)
+<a name="l00331"></a>00331     <span class="comment"># * Day counter</span>
+<a name="l00332"></a>00332     <span class="comment">#-------</span>
+<a name="l00333"></a>00333     
+<a name="l00334"></a>00334     <span class="comment">### КАРТИНКИ ----------------------</span>
+<a name="l00335"></a>00335     m.initPlotTable()
+<a name="l00336"></a>00336     m.initPlotQueueLifeLine()
+<a name="l00337"></a>00337 
+<a name="l00338"></a>00338 <span class="comment">#     m.getPlotSubsystem().appendPlotTable(tblAlljobs, title=&quot;All Jobs&quot;)    </span>
+<a name="l00339"></a>00339 <span class="comment">#     m.getPlotSubsystem().appendPlotTable(tblOverhaul, title=&quot;Overhaul&quot;)    </span>
+<a name="l00340"></a>00340 <span class="comment">#     m.getPlotSubsystem().appendPlotTable(tblSpot, title=&quot;Spot&quot;)    </span>
+<a name="l00341"></a>00341 <span class="comment">#     m.getPlotSubsystem().appendPlotTable(tblService, title=&quot;Service&quot;)    </span>
+<a name="l00342"></a>00342     
+<a name="l00343"></a>00343     <span class="comment"># активность</span>
+<a name="l00344"></a>00344     <span class="keyword">def </span>transactFilter(transact):
+<a name="l00345"></a>00345         <span class="keywordflow">return</span> <span class="keyword">True</span>
+<a name="l00346"></a>00346     <span class="keyword">def </span>funcAnnotate(transact):
+<a name="l00347"></a>00347         <span class="keywordflow">if</span> transact[TRANSACT_GROUP] != GEN_4:
+<a name="l00348"></a>00348             <span class="keywordflow">if</span> transact[TERMINATED_TIME] != transact[TIME_CREATED]: 
+<a name="l00349"></a>00349                 s = <span class="stringliteral">&quot;%s:%d (%.2f)&quot;</span> % (transact[TRANSACT_GROUP], transact[NUM], transact[TERMINATED_TIME] - transact[TIME_CREATED])
+<a name="l00350"></a>00350             <span class="keywordflow">else</span>:
+<a name="l00351"></a>00351                 s = <span class="stringliteral">&quot;%s:%d&quot;</span> % (transact[TRANSACT_GROUP], transact[NUM])
+<a name="l00352"></a>00352         <span class="keywordflow">else</span>:
+<a name="l00353"></a>00353             s = <span class="stringliteral">&quot;Day: &quot;</span> + str(transact[<span class="stringliteral">&quot;Day&quot;</span>])
+<a name="l00354"></a>00354         <span class="keywordflow">return</span> s
+<a name="l00355"></a>00355     m.initPlotTransactLifeLine(
+<a name="l00356"></a>00356         terminateBlockLabels=[<span class="stringliteral">&quot;OVERHAUL&quot;</span>, <span class="stringliteral">&quot;SPOT&quot;</span>, <span class="stringliteral">&quot;REPAIRS&quot;</span>, X_LABEL],
+<a name="l00357"></a>00357         transactFilter=transactFilter, title=<span class="stringliteral">&quot;Active &quot;</span>,
+<a name="l00358"></a>00358         funcAnnotate=funcAnnotate)
+<a name="l00359"></a>00359     
+<a name="l00360"></a>00360     m.initPlotFacilityLifeLine(facilityNames=<span class="keywordtype">None</span>, title=<span class="stringliteral">&quot;OCF&quot;</span>, funcAnnotate=<span class="keywordtype">None</span>)
+<a name="l00361"></a>00361     <span class="comment"># РАСЧЁТ --------------------------</span>
+<a name="l00362"></a>00362     m.start(terminationCount=1000000, maxTime=MAX_TIME)
+<a name="l00363"></a>00363     <span class="keywordflow">print</span> <span class="stringliteral">&quot;Wait...&quot;</span>
+<a name="l00364"></a>00364     
+<a name="l00365"></a>00365     <span class="comment"># ПОКАЗ КАРТИНОК ------------------------</span>
+<a name="l00366"></a>00366     m.getPlotSubsystem().plotByModules()
+<a name="l00367"></a>00367     m.getPlotSubsystem().show()
+
+</pre></div></p>
+
+</div>
+</div>
+<hr/><h2>Переменные</h2>
+<a class="anchor" id="adf05dd934a67bcce3ddd79578bdb8cf2"></a><!-- doxytag: member="tvrepair::DIRNAME_MODULE" ref="adf05dd934a67bcce3ddd79578bdb8cf2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="namespacetvrepair.html#adf05dd934a67bcce3ddd79578bdb8cf2">tvrepair::DIRNAME_MODULE</a> = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))))</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>См. определение в файле <a class="el" href="tvrepair_8py_source.html">tvrepair.py</a> строка <a class="el" href="tvrepair_8py_source.html#l00053">53</a></p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:15. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

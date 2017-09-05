@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл setup.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>setup.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="setup_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacesetup.html">00001</a> <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00002"></a>00002 
+<a name="l00003"></a>00003 <span class="keywordflow">try</span>:
+<a name="l00004"></a>00004     <span class="keyword">from</span> setuptools <span class="keyword">import</span> setup
+<a name="l00005"></a>00005 <span class="keywordflow">except</span> ImportError:
+<a name="l00006"></a>00006     <span class="keyword">from</span> distutils.core <span class="keyword">import</span> setup
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="keyword">from</span> setuptools <span class="keyword">import</span> find_packages
+<a name="l00009"></a>00009 <span class="keyword">from</span> os.path <span class="keyword">import</span> join, dirname
+<a name="l00010"></a>00010 <span class="keyword">import</span> pyss
+<a name="l00011"></a>00011 <span class="keyword">import</span> unittest
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 setup(    
+<a name="l00014"></a><a class="code" href="namespacesetup.html#a4b28e5b21e957c451ff3aa28f58c6383">00014</a>     name=<span class="stringliteral">&#39;pyss&#39;</span>,
+<a name="l00015"></a><a class="code" href="namespacesetup.html#affa224d545b33f71274b30ba1c709657">00015</a>     version=pyss.__version__,
+<a name="l00016"></a><a class="code" href="namespacesetup.html#a61c4df0a151113447498726d453324de">00016</a>     packages=find_packages(),
+<a name="l00017"></a><a class="code" href="namespacesetup.html#a2e8655c91c2658305ee0ee4c023d59eb">00017</a>     long_description=open(join(dirname(__file__), <span class="stringliteral">&#39;README.rst&#39;</span>)).read(),
+<a name="l00018"></a><a class="code" href="namespacesetup.html#a85dad60316171523a8538c5f6dd764c3">00018</a>     install_requires=[
+<a name="l00019"></a>00019         <span class="stringliteral">&#39;matplotlib==2.0.2&#39;</span>
+<a name="l00020"></a>00020         <span class="comment">#,&#39;Flask==0.8&#39;</span>
+<a name="l00021"></a>00021     ],
+<a name="l00022"></a><a class="code" href="namespacesetup.html#a6548d07bffe2114176be01447602d0e3">00022</a>     include_package_data=<span class="keyword">True</span>,
+<a name="l00023"></a><a class="code" href="namespacesetup.html#a0e55c2e28d112353d7b057e7ca1374a9">00023</a>     test_suite=<span class="stringliteral">&#39;discover_tests&#39;</span>,    
+<a name="l00024"></a>00024 )
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

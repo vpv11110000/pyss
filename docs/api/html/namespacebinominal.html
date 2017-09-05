@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Пространство имен binominal</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li class="current"><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="namespacemembers.html"><span>Члены&nbsp;пространств&nbsp;имен</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Функции</a> &#124;
+<a href="#var-members">Переменные</a>  </div>
+  <div class="headertitle">
+<h1>Пространство имен binominal</h1>  </div>
+</div>
+<div class="contents">
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebinominal.html#a240d45b3c1f8d08a5fea9dcfcec70a1a">main</a></td></tr>
+<tr><td colspan="2"><h2><a name="var-members"></a>
+Переменные</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebinominal.html#a70d903f05611d12790665a6f5e36f6bb">DIRNAME_MODULE</a> = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))</td></tr>
+</table>
+<hr/><h2>Функции</h2>
+<a class="anchor" id="a240d45b3c1f8d08a5fea9dcfcec70a1a"></a><!-- doxytag: member="binominal::main" ref="a240d45b3c1f8d08a5fea9dcfcec70a1a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def binominal::main </td>
+          <td>(</td>
+          <td class="paramtype">&nbsp;</td>
+          <td class="paramname"> <em>N</em> = <code>2</code></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>См. определение в файле <a class="el" href="binominal_8py_source.html">binominal.py</a> строка <a class="el" href="binominal_8py_source.html#l00059">59</a></p>
+
+<p><div class="fragment"><pre class="fragment"><a name="l00060"></a>00060              :
+<a name="l00061"></a>00061     logger.info(<span class="stringliteral">&quot;--- Биноминальное распределение (монета) ---&quot;</span>)
+<a name="l00062"></a>00062     random.seed()
+<a name="l00063"></a>00063     <span class="comment">#</span>
+<a name="l00064"></a>00064     options.flags.logTransactTrace = <span class="keyword">False</span>
+<a name="l00065"></a>00065     <span class="comment">#</span>
+<a name="l00066"></a>00066     MAX_TIME=24*4
+<a name="l00067"></a>00067     <span class="comment"># tables</span>
+<a name="l00068"></a>00068     F_1=<span class="stringliteral">&quot;F_1&quot;</span>
+<a name="l00069"></a>00069     <span class="keyword">def </span>argFunc_T_1(owner, transact):
+<a name="l00070"></a>00070         <span class="keywordflow">return</span> transact[TIME_CREATED]
+<a name="l00071"></a>00071     <span class="keyword">def </span>valFunc_T_1(owner, transact):
+<a name="l00072"></a>00072         l=[random.choice([0,1]) <span class="keywordflow">for</span> x <span class="keywordflow">in</span> range(N)]
+<a name="l00073"></a>00073         <span class="keywordflow">print</span> str(l)
+<a name="l00074"></a>00074         <span class="keywordflow">return</span> sum(l)
+<a name="l00075"></a>00075     <span class="comment"># запускаем несколько раз на разных таблицах</span>
+<a name="l00076"></a>00076     <span class="comment"># всего 5 таблиц</span>
+<a name="l00077"></a>00077     TBL_COUNT=5
+<a name="l00078"></a>00078     tables = [table.Table(tableName=<span class="stringliteral">&quot;T_%d&quot;</span>%count, argFunc=argFunc_T_1, limitUpFirst=1, widthInt=1, countInt=MAX_TIME).setDisplaying(displaying=<span class="keyword">False</span>) <span class="keywordflow">for</span> count <span class="keywordflow">in</span> xrange(TBL_COUNT)]
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080     <span class="comment">#</span>
+<a name="l00081"></a>00081     <span class="comment"># ОКУ</span>
+<a name="l00082"></a>00082     facility_1 = facility.Facility(facilityName=F_1)
+<a name="l00083"></a>00083     <span class="comment">#</span>
+<a name="l00084"></a>00084     <span class="keyword">def </span>mf(owner, currentTime):
+<a name="l00085"></a>00085         <span class="comment">#бросок монеты</span>
+<a name="l00086"></a>00086         <span class="keywordflow">return</span> 1
+<a name="l00087"></a>00087     <span class="comment">#</span>
+<a name="l00088"></a>00088     <span class="keywordflow">for</span> tbl <span class="keywordflow">in</span> tables:
+<a name="l00089"></a>00089         logger.printLine(msg=3*<span class="stringliteral">&quot;*&quot;</span>+<span class="stringliteral">&quot; Table [%s] &quot;</span>%tbl[TITLE]+60*<span class="stringliteral">&quot;*&quot;</span>)
+<a name="l00090"></a>00090         first_tx=0 <span class="comment">#mf(None,None)</span>
+<a name="l00091"></a>00091         <span class="comment"># model</span>
+<a name="l00092"></a>00092         m = pyss_model.PyssModel()
+<a name="l00093"></a>00093         m.addFacility(facility_1)
+<a name="l00094"></a>00094         m.addTable(tbl)
+<a name="l00095"></a>00095         m.addSegment(
+<a name="l00096"></a>00096             segment.Segment()
+<a name="l00097"></a>00097             <span class="comment">#генерится см. mf()</span>
+<a name="l00098"></a>00098             .addBlock(generate.Generate(med_value=0, modificatorFunc=mf,first_tx=first_tx, max_amount=1000))
+<a name="l00099"></a>00099             .addBlock(tabulate.Tabulate(table=tbl,valFunc=valFunc_T_1))
+<a name="l00100"></a>00100             .addBlock(terminate.Terminate(deltaTerminate=0))
+<a name="l00101"></a>00101             )
+<a name="l00102"></a>00102         logger.info(str(m))
+<a name="l00103"></a>00103         m.start(terminationCount=MAX_TIME, maxTime=MAX_TIME)
+<a name="l00104"></a>00104     <span class="comment"># график занятости ОКУ</span>
+<a name="l00105"></a>00105     <span class="keyword">from</span> pyss <span class="keyword">import</span> plot_table
+<a name="l00106"></a>00106     pl=plot_table.PlotTable()
+<a name="l00107"></a>00107     pl.extend(tables)
+<a name="l00108"></a>00108     pl.plot()
+
+</pre></div></p>
+
+</div>
+</div>
+<hr/><h2>Переменные</h2>
+<a class="anchor" id="a70d903f05611d12790665a6f5e36f6bb"></a><!-- doxytag: member="binominal::DIRNAME_MODULE" ref="a70d903f05611d12790665a6f5e36f6bb" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="namespacebinominal.html#a70d903f05611d12790665a6f5e36f6bb">binominal::DIRNAME_MODULE</a> = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>См. определение в файле <a class="el" href="binominal_8py_source.html">binominal.py</a> строка <a class="el" href="binominal_8py_source.html#l00035">35</a></p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:13. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

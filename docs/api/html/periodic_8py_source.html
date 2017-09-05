@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл examples/periodic/periodic.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>examples/periodic/periodic.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="periodic_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespaceperiodic.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">periodic.py - Моделирование системы инвентаризации с периодической проверкой</span>
+<a name="l00006"></a>00006 <span class="stringliteral"></span>
+<a name="l00007"></a>00007 <span class="stringliteral">**Постановка проблемы**</span>
+<a name="l00008"></a>00008 <span class="stringliteral"></span>
+<a name="l00009"></a>00009 <span class="stringliteral">Контроль над объемом готовой продукции осуществляется с помощью системы проверок, </span>
+<a name="l00010"></a>00010 <span class="stringliteral">с интервалом, составляющим одну неделю. </span>
+<a name="l00011"></a>00011 <span class="stringliteral"></span>
+<a name="l00012"></a>00012 <span class="stringliteral">Начальный объем составляет 1000 единиц.</span>
+<a name="l00013"></a>00013 <span class="stringliteral"> </span>
+<a name="l00014"></a>00014 <span class="stringliteral">Ежедневная потребность в товарах составляет от 40 до 63 единиц продукции.</span>
+<a name="l00015"></a>00015 <span class="stringliteral"></span>
+<a name="l00016"></a>00016 <span class="stringliteral">Исходным значение объема продукции составляет 1000 единиц, </span>
+<a name="l00017"></a>00017 <span class="stringliteral">определение того, что был осуществлен заказ, </span>
+<a name="l00018"></a>00018 <span class="stringliteral">происходит в результате сравнения исходного значения объема продукции и текущего значения.</span>
+<a name="l00019"></a>00019 <span class="stringliteral"> </span>
+<a name="l00020"></a>00020 <span class="stringliteral">Если в текущий момент значение составляет 800 и более единиц, </span>
+<a name="l00021"></a>00021 <span class="stringliteral">то это значит, что на этой недели не поступали заказы.</span>
+<a name="l00022"></a>00022 <span class="stringliteral"> </span>
+<a name="l00023"></a>00023 <span class="stringliteral">Длительность недели, в рамках которой работает компании, составляет 5 дней.</span>
+<a name="l00024"></a>00024 <span class="stringliteral"> </span>
+<a name="l00025"></a>00025 <span class="stringliteral">Время доставки заказа равняется одной неделе.</span>
+<a name="l00026"></a>00026 <span class="stringliteral"></span>
+<a name="l00027"></a>00027 <span class="stringliteral">Необходимо смоделировать систему инвентаризации в течение 200 дней и определить, </span>
+<a name="l00028"></a>00028 <span class="stringliteral">не появится ли дефицит товаров.</span>
+<a name="l00029"></a>00029 <span class="stringliteral"></span>
+<a name="l00030"></a>00030 <span class="stringliteral">Условие задачи взято из &quot;Учебное руководство по системе GPSS World&quot;</span>
+<a name="l00031"></a>00031 <span class="stringliteral">; GPSS World Sample File - PERIODIC.GPS, by Gerard F. Cummings</span>
+<a name="l00032"></a>00032 <span class="stringliteral"></span>
+<a name="l00033"></a>00033 <span class="stringliteral">Дополнительно постоить график ежедневного объема продукции на складе.</span>
+<a name="l00034"></a>00034 <span class="stringliteral"></span>
+<a name="l00035"></a>00035 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keyword">import</span> sys
+<a name="l00038"></a>00038 <span class="keyword">import</span> os
+<a name="l00039"></a>00039 <span class="keyword">import</span> random
+<a name="l00040"></a>00040 <span class="keyword">import</span> unittest
+<a name="l00041"></a>00041 
+<a name="l00042"></a><a class="code" href="namespaceperiodic.html#aa377e46a9cbc80e43c8940b6467b2696">00042</a> DIRNAME_MODULE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))) + os.sep
+<a name="l00043"></a>00043 sys.path.append(DIRNAME_MODULE)
+<a name="l00044"></a>00044 sys.path.append(DIRNAME_MODULE + <span class="stringliteral">&quot;pyss&quot;</span> + os.sep)
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00047"></a>00047 <span class="keyword">from</span> pyss.pyss_model <span class="keyword">import</span> PyssModel
+<a name="l00048"></a>00048 <span class="keyword">from</span> pyss.segment <span class="keyword">import</span> Segment
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050 <span class="keyword">from</span> pyss <span class="keyword">import</span> generate 
+<a name="l00051"></a>00051 <span class="keyword">from</span> pyss.generate <span class="keyword">import</span> Generate
+<a name="l00052"></a>00052 <span class="keyword">from</span> pyss.terminate <span class="keyword">import</span> Terminate
+<a name="l00053"></a>00053 <span class="keyword">from</span> pyss <span class="keyword">import</span> logger
+<a name="l00054"></a>00054 <span class="keyword">from</span> pyss.table <span class="keyword">import</span> Table
+<a name="l00055"></a>00055 <span class="keyword">from</span> pyss.handle <span class="keyword">import</span> Handle
+<a name="l00056"></a>00056 <span class="keyword">from</span> pyss.enter <span class="keyword">import</span> Enter
+<a name="l00057"></a>00057 <span class="keyword">from</span> pyss.leave <span class="keyword">import</span> Leave
+<a name="l00058"></a>00058 <span class="keyword">from</span> pyss.storage <span class="keyword">import</span> Storage
+<a name="l00059"></a>00059 <span class="keyword">from</span> pyss.advance <span class="keyword">import</span> Advance
+<a name="l00060"></a>00060 <span class="keyword">from</span> pyss.assign <span class="keyword">import</span> Assign
+<a name="l00061"></a>00061 <span class="keyword">from</span> pyss.preempt <span class="keyword">import</span> Preempt
+<a name="l00062"></a>00062 <span class="keyword">from</span> pyss.g_return <span class="keyword">import</span> GReturn
+<a name="l00063"></a>00063 <span class="keyword">from</span> pyss.facility <span class="keyword">import</span> Facility
+<a name="l00064"></a>00064 <span class="keyword">from</span> pyss.seize <span class="keyword">import</span> Seize
+<a name="l00065"></a>00065 <span class="keyword">from</span> pyss.release <span class="keyword">import</span> Release
+<a name="l00066"></a>00066 <span class="keyword">from</span> pyss.transfer <span class="keyword">import</span> Transfer
+<a name="l00067"></a>00067 <span class="keyword">from</span> pyss.tabulate <span class="keyword">import</span> Tabulate
+<a name="l00068"></a>00068 <span class="keyword">from</span> pyss.test <span class="keyword">import</span> Test
+<a name="l00069"></a>00069 <span class="keyword">from</span> pyss.queue <span class="keyword">import</span> Queue
+<a name="l00070"></a>00070 <span class="keyword">from</span> pyss.depart <span class="keyword">import</span> Depart
+<a name="l00071"></a>00071 <span class="keyword">from</span> pyss.split <span class="keyword">import</span> Split
+<a name="l00072"></a>00072 <span class="keyword">from</span> pyss.test <span class="keyword">import</span> Test
+<a name="l00073"></a>00073 <span class="keyword">from</span> pyss.bprint <span class="keyword">import</span> Bprint
+<a name="l00074"></a>00074 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 <span class="keyword">from</span> pyss.func_discrete <span class="keyword">import</span> FuncDiscrete
+<a name="l00077"></a>00077 <span class="keyword">from</span> pyss.func_exponential <span class="keyword">import</span> Exponential
+<a name="l00078"></a>00078 <span class="keyword">from</span> pyss.plot_func <span class="keyword">import</span> PlotFunc
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080 <span class="keyword">from</span> pyss.simpleobject <span class="keyword">import</span> SimpleObject
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 
+<a name="l00083"></a><a class="code" href="namespaceperiodic.html#a8d5011f40a4596f878c612d6135ad69e">00083</a> <span class="keyword">def </span><a class="code" href="namespaceperiodic.html#a8d5011f40a4596f878c612d6135ad69e">main</a>():
+<a name="l00084"></a>00084     logger.info(<span class="stringliteral">&quot;-------------------------------------&quot;</span>)
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086     <span class="comment">### MODEL ----------------------------------</span>
+<a name="l00087"></a>00087     m = PyssModel()
+<a name="l00088"></a>00088     sgm = Segment(m, <span class="stringliteral">&quot;Periodic Review&quot;</span>)
+<a name="l00089"></a>00089     sgmDaily = Segment(m, label=<span class="stringliteral">&quot;The daily demand decrements quantity on hand&quot;</span>)    
+<a name="l00090"></a>00090     sgmMes = Segment(m, label=<span class="stringliteral">&quot;SEGM_MEASURE&quot;</span>)
+<a name="l00091"></a>00091     
+<a name="l00092"></a>00092     <span class="comment">#</span>
+<a name="l00093"></a>00093     m[OPTIONS].setAllFalse()
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095     <span class="comment">#-------------------------------</span>
+<a name="l00096"></a>00096     <span class="comment"># Время моделирования</span>
+<a name="l00097"></a>00097     MAX_TIME = 200
+<a name="l00098"></a>00098     <span class="comment">#-----------------------------</span>
+<a name="l00099"></a>00099     TARGET = 1000  <span class="comment"># Initial stock level</span>
+<a name="l00100"></a>00100     REORDER = 800  <span class="comment"># Reorder point</span>
+<a name="l00101"></a>00101     <span class="comment">#-------------------------------</span>
+<a name="l00102"></a>00102     STORAGE_NAME = <span class="stringliteral">&quot;Stock&quot;</span>
+<a name="l00103"></a>00103     STORAGE_SIZE = 10000
+<a name="l00104"></a>00104     
+<a name="l00105"></a>00105     <span class="comment"># сразу инициализируем initBusySize=TARGET</span>
+<a name="l00106"></a>00106     <span class="comment"># в примере GPSS, но нам не нужно</span>
+<a name="l00107"></a>00107     <span class="comment"># ****************************************************************</span>
+<a name="l00108"></a>00108     <span class="comment"># *******</span>
+<a name="l00109"></a>00109     <span class="comment"># * Initialize the inventory</span>
+<a name="l00110"></a>00110     <span class="comment"># GENERATE ,,,1,10 ;Set initial stock</span>
+<a name="l00111"></a>00111     <span class="comment"># ENTER Stock,Target ;Set init stock level=target</span>
+<a name="l00112"></a>00112     <span class="comment"># TERMINATE ;Xact is terminated</span>
+<a name="l00113"></a>00113     stor = Storage(m, storageName=STORAGE_NAME, storageSize=STORAGE_SIZE, initBusySize=TARGET)
+<a name="l00114"></a>00114     <span class="comment">#-----------</span>
+<a name="l00115"></a>00115     TABLE_NAME = <span class="stringliteral">&quot;Stock&quot;</span>
+<a name="l00116"></a>00116     <span class="keyword">def </span>tableArgFunc(owner, transact):
+<a name="l00117"></a>00117         <span class="keywordflow">return</span> stor.getBusySize()
+<a name="l00118"></a>00118     
+<a name="l00119"></a>00119     tbl = Table(m, tableName=TABLE_NAME, argFunc=tableArgFunc, limitUpFirst=100, widthInt=100, countInt=20)
+<a name="l00120"></a>00120     
+<a name="l00121"></a>00121     TABLE_NAME_MSR = <span class="stringliteral">&quot;store_by_time&quot;</span>
+<a name="l00122"></a>00122     PARAMETR_NAME = TABLE_NAME_MSR
+<a name="l00123"></a>00123     tblm = Table(m, tableName=TABLE_NAME_MSR, argFunc=<span class="keyword">lambda</span> o, t: m.getCurTime(), limitUpFirst=1, widthInt=1, countInt=MAX_TIME)
+<a name="l00124"></a>00124     <span class="comment"># не печатать таблицу</span>
+<a name="l00125"></a>00125     tblm[DISPLAYING] = <span class="keyword">False</span>
+<a name="l00126"></a>00126     <span class="comment">#--------------------------</span>
+<a name="l00127"></a>00127     <span class="keyword">def </span>generateFunc(owner, currentTime):
+<a name="l00128"></a>00128         <span class="keywordflow">return</span> 0
+<a name="l00129"></a>00129     <span class="comment">#-----------</span>
+<a name="l00130"></a>00130     <span class="comment"># Orderqty VARIABLE Target-S$Stock ;Order quantity</span>
+<a name="l00131"></a>00131     <span class="keyword">def </span>orderqty(o, t):
+<a name="l00132"></a>00132         <span class="keywordflow">return</span> TARGET - stor.getBusySize()
+<a name="l00133"></a>00133     <span class="comment"># Demand VARIABLE RN1@24+40 ;Daily demand</span>
+<a name="l00134"></a>00134     <span class="keyword">def </span>demand(o, t):
+<a name="l00135"></a>00135         <span class="keywordflow">return</span> 40 + random.randint(0, 23)
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137     <span class="comment">### MODEL --------------------------------------------------------------</span>
+<a name="l00138"></a>00138     <span class="comment">#------------------------  </span>
+<a name="l00139"></a>00139     <span class="comment"># так в примере      </span>
+<a name="l00140"></a>00140 <span class="comment">#     m.addSegment(</span>
+<a name="l00141"></a>00141 <span class="comment">#         segment.Segment(label=&quot;Initialization&quot;,options_val=None)</span>
+<a name="l00142"></a>00142 <span class="comment">#         .addBlock(generate.Generate(1,modificatorFunc=None,first_tx=0, max_amount=1, priority=10,label=None))</span>
+<a name="l00143"></a>00143 <span class="comment">#         .addBlock(enter.Enter(storageName=STORAGE_NAME,funcBusySize=TARGET,label=None))</span>
+<a name="l00144"></a>00144 <span class="comment">#         .addBlock(terminate.Terminate(deltaTerminate=0)))</span>
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146     <span class="comment">#---------------------------</span>
+<a name="l00147"></a>00147     Generate(sgm, med_value=5, modificatorFunc=generateFunc, priority=1)
+<a name="l00148"></a>00148     Test(sgm, funcCondition=<span class="keyword">lambda</span> o, t:stor.getBusySize() &lt; REORDER, move2block=<span class="stringliteral">&quot;Skip&quot;</span>)
+<a name="l00149"></a>00149     Assign(sgm, parametrName=<span class="stringliteral">&quot;OrderQuantity&quot;</span>, modificatorFunc=orderqty)
+<a name="l00150"></a>00150     Bprint(sgm, outputFunc=<span class="keyword">lambda</span> owner, transact: <span class="stringliteral">&quot;OrderQuantity: %s&quot;</span> % 
+<a name="l00151"></a>00151            transact[<span class="stringliteral">&#39;OrderQuantity&#39;</span>])
+<a name="l00152"></a>00152     Advance(sgm, label=<span class="stringliteral">&quot;Custwait&quot;</span>, meanTime=5, modificatorFunc=<span class="keywordtype">None</span>)
+<a name="l00153"></a>00153     Enter(sgm, storageName=STORAGE_NAME, funcBusySize=<span class="keyword">lambda</span> o, t:t[<span class="stringliteral">&quot;OrderQuantity&quot;</span>])
+<a name="l00154"></a>00154     Terminate(sgm, deltaTerminate=0, label=<span class="stringliteral">&quot;Skip&quot;</span>)
+<a name="l00155"></a>00155     <span class="comment">#------------------------</span>
+<a name="l00156"></a>00156     Generate(sgmDaily, med_value=1, modificatorFunc=<span class="keywordtype">None</span>, priority=1)
+<a name="l00157"></a>00157     Assign(sgmDaily, parametrName=<span class="stringliteral">&quot;DailyDemand&quot;</span>, modificatorFunc=demand)
+<a name="l00158"></a>00158     Tabulate(sgmDaily, table=tbl, valFunc=tableArgFunc)
+<a name="l00159"></a>00159     Test(sgmDaily, funcCondition=<span class="keyword">lambda</span> o, t:stor.getBusySize() &gt;= t[<span class="stringliteral">&quot;DailyDemand&quot;</span>], move2block=<span class="stringliteral">&quot;Stokout&quot;</span>)
+<a name="l00160"></a>00160     Leave(sgmDaily, storageName=STORAGE_NAME, funcBusySize=<span class="keyword">lambda</span> o, t:t[<span class="stringliteral">&quot;DailyDemand&quot;</span>])
+<a name="l00161"></a>00161     Terminate(sgmDaily, deltaTerminate=0, label=<span class="stringliteral">&quot;Stokout&quot;</span>)
+<a name="l00162"></a>00162     <span class="comment">#--------------------</span>
+<a name="l00163"></a>00163     Generate(sgmMes, med_value=1, modificatorFunc=<span class="keywordtype">None</span>, priority=0)
+<a name="l00164"></a>00164     Assign(sgmMes, parametrName=PARAMETR_NAME, modificatorFunc=tableArgFunc)
+<a name="l00165"></a>00165     Tabulate(sgmMes, table=tblm, valFunc=<span class="keyword">lambda</span> o, t: stor.getBusySize())
+<a name="l00166"></a>00166     Terminate(sgmMes, deltaTerminate=0)
+<a name="l00167"></a>00167     
+<a name="l00168"></a>00168 <span class="comment"># * Definitions of non Block entities</span>
+<a name="l00169"></a>00169 <span class="comment"># RMULT 39941</span>
+<a name="l00170"></a>00170 <span class="comment"># Stock STORAGE 10000 ;Warehouse can hold 10000</span>
+<a name="l00171"></a>00171 <span class="comment"># Stock TABLE S$Stock,100,100,20 ;Table for inventory amts</span>
+<a name="l00172"></a>00172 <span class="comment"># Orderqty VARIABLE Target-S$Stock ;Order quantity</span>
+<a name="l00173"></a>00173 <span class="comment"># Demand VARIABLE RN1@24+40 ;Daily demand</span>
+<a name="l00174"></a>00174 <span class="comment"># Target EQU 1000 ;Initial stock level</span>
+<a name="l00175"></a>00175 <span class="comment"># Reorder EQU 800 ;Reorder point</span>
+<a name="l00176"></a>00176 <span class="comment"># ****************************************************************</span>
+<a name="l00177"></a>00177 <span class="comment"># *******</span>
+<a name="l00178"></a>00178 <span class="comment"># * The reorder process</span>
+<a name="l00179"></a>00179 <span class="comment"># GENERATE 5,,,,1 ;Review xact, Priority=1</span>
+<a name="l00180"></a>00180 <span class="comment"># TEST L S$Stock,Reorder,Skip ;Is stock &lt; Reorderpt</span>
+<a name="l00181"></a>00181 <span class="comment"># ASSIGN 2,V$Orderqty ;Parameter 2=Order quantity</span>
+<a name="l00182"></a>00182 <span class="comment"># Custwait ADVANCE 5 ;Lead time is 5 days</span>
+<a name="l00183"></a>00183 <span class="comment"># ENTER Stock,P2 ;Stock increases by P2</span>
+<a name="l00184"></a>00184 <span class="comment"># Skip TERMINATE ;Ordering xact is finished    </span>
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186 <span class="comment"># * The daily demand decrements quantity on hand</span>
+<a name="l00187"></a>00187 <span class="comment"># GENERATE 1 ;Daily demand Transaction</span>
+<a name="l00188"></a>00188 <span class="comment"># ASSIGN 1,V$Demand ;Parameter 1(P1)=daily demand</span>
+<a name="l00189"></a>00189 <span class="comment"># TABULATE Stock ;Record daily stock</span>
+<a name="l00190"></a>00190 <span class="comment"># TEST GE S$Stock,P1,Stockout ;Can order be filled</span>
+<a name="l00191"></a>00191 <span class="comment"># LEAVE Stock,P1 ;Remove demand from stock</span>
+<a name="l00192"></a>00192 <span class="comment"># TERMINATE 1 ;Daily timer</span>
+<a name="l00193"></a>00193 <span class="comment"># Stockout TERMINATE 1 ;Daily timer</span>
+<a name="l00194"></a>00194 <span class="comment"># ****************************************************************</span>
+<a name="l00195"></a>00195 <span class="comment"># *******</span>
+<a name="l00196"></a>00196 <span class="comment"># * Initialize the inventory</span>
+<a name="l00197"></a>00197 <span class="comment"># GENERATE ,,,1,10 ;Set initial stock</span>
+<a name="l00198"></a>00198 <span class="comment"># ENTER Stock,Target ;Set init stock level=target</span>
+<a name="l00199"></a>00199 <span class="comment"># TERMINATE ;Xact is terminated</span>
+<a name="l00200"></a>00200     
+<a name="l00201"></a>00201     <span class="comment">### ДИАГРАММЫ ----------------------</span>
+<a name="l00202"></a>00202     m.initPlotTable(title=<span class="stringliteral">&quot;Product store&quot;</span>)
+<a name="l00203"></a>00203     m.initPlotTransactLifeLine()
+<a name="l00204"></a>00204     m.initPlotStorageLifeLine()
+<a name="l00205"></a>00205     
+<a name="l00206"></a>00206     <span class="comment"># РАСЧЁТ --------------------------</span>
+<a name="l00207"></a>00207     logger.info(str(m))
+<a name="l00208"></a>00208     m.start(terminationCount=300, maxTime=MAX_TIME)
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210     <span class="comment"># ПОКАЗ КАРТИНОК ------------------------</span>
+<a name="l00211"></a>00211     m.getPlotSubsystem().plotByModules()
+<a name="l00212"></a>00212     m.getPlotSubsystem().show()
+<a name="l00213"></a>00213     
+<a name="l00214"></a>00214 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00215"></a>00215     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>
