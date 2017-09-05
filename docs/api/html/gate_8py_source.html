@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/gate.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/gate.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="gate_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1gate.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль блока, проверяющий состояния устройств, памятей, логических ключей</span>
+<a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00012"></a>00012 <span class="keyword">from</span> pyss.pyssobject <span class="keyword">import</span> PyssObject
+<a name="l00013"></a>00013 <span class="keyword">from</span> pyss.transact <span class="keyword">import</span> Transact
+<a name="l00014"></a>00014 <span class="keyword">from</span> pyss <span class="keyword">import</span> logger
+<a name="l00015"></a>00015 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00016"></a>00016 <span class="keyword">from</span> pyss.block <span class="keyword">import</span> Block
+<a name="l00017"></a>00017 <span class="keyword">from</span> pyss <span class="keyword">import</span> facility
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00020"></a>00020 
+<a name="l00021"></a><a class="code" href="classpyss_1_1gate_1_1_gate.html">00021</a> <span class="keyword">class </span><a class="code" href="classpyss_1_1gate_1_1_gate.html">Gate</a>(<a class="code" href="classpyss_1_1block_1_1_block.html">Block</a>):
+<a name="l00022"></a>00022     <span class="stringliteral">&quot;&quot;&quot;Блок, проверяющий состояния устройств, памятей, логических ключей</span>
+<a name="l00023"></a>00023 <span class="stringliteral">    </span>
+<a name="l00024"></a>00024 <span class="stringliteral">При работе в режиме отказа блок GATE не пропускает транзакты,</span>
+<a name="l00025"></a>00025 <span class="stringliteral">если соответствующий объект не находится в требуемом состоянии.</span>
+<a name="l00026"></a>00026 <span class="stringliteral"></span>
+<a name="l00027"></a>00027 <span class="stringliteral">Если же поставленное в блоке GATE условие удовлетворяется,</span>
+<a name="l00028"></a>00028 <span class="stringliteral">то активный транзакт входит в него и затем переходит к</span>
+<a name="l00029"></a>00029 <span class="stringliteral">следующему по порядку блоку.</span>
+<a name="l00030"></a>00030 <span class="stringliteral"></span>
+<a name="l00031"></a>00031 <span class="stringliteral">Args:</span>
+<a name="l00032"></a>00032 <span class="stringliteral">    ownerSegment=None - объект сегмента-владельца </span>
+<a name="l00033"></a>00033 <span class="stringliteral">    label=None - метка блока (см. block.py) </span>
+<a name="l00034"></a>00034 <span class="stringliteral">    condition - условие</span>
+<a name="l00035"></a>00035 <span class="stringliteral">        NU - устройство свободно (т.е. не используется),</span>
+<a name="l00036"></a>00036 <span class="stringliteral">        U - устройство не свободно (т.е. используется),</span>
+<a name="l00037"></a>00037 <span class="stringliteral">        NI - устройство не захвачено,</span>
+<a name="l00038"></a>00038 <span class="stringliteral">        I - устройство захвачено,</span>
+<a name="l00039"></a>00039 <span class="stringliteral">        SE - память пуста (все единицы памяти свободны),</span>
+<a name="l00040"></a>00040 <span class="stringliteral">        SNE - память не пуста,</span>
+<a name="l00041"></a>00041 <span class="stringliteral">        SF - память заполнена (все единицы заняты),</span>
+<a name="l00042"></a>00042 <span class="stringliteral">        SNF - память не заполнена,</span>
+<a name="l00043"></a>00043 <span class="stringliteral">        LR - ключ выключен,</span>
+<a name="l00044"></a>00044 <span class="stringliteral">        LS - ключ включен.    </span>
+<a name="l00045"></a>00045 <span class="stringliteral">    </span>
+<a name="l00046"></a>00046 <span class="stringliteral">    objectName - наименование объекта, м.б. facility, память, ключ.</span>
+<a name="l00047"></a>00047 <span class="stringliteral">        </span>
+<a name="l00048"></a>00048 <span class="stringliteral">    nextBlockLabel - метка блока, кода будет направлен транзакт если условие не выполняется</span>
+<a name="l00049"></a>00049 <span class="stringliteral">        Если параметр nextBlockLabel не задан, то проверка проводится в режиме отказа.</span>
+<a name="l00050"></a>00050 <span class="stringliteral">        Если результат этой проверки не будет &quot;истина&quot;,</span>
+<a name="l00051"></a>00051 <span class="stringliteral">        то транзакт помещается в список повторных попыток проверяемого объекта.</span>
+<a name="l00052"></a>00052 <span class="stringliteral">        Когда состояние любого из объектов меняется,</span>
+<a name="l00053"></a>00053 <span class="stringliteral">        заблокированный транзакт снова активизируется,</span>
+<a name="l00054"></a>00054 <span class="stringliteral">        повторяется проверка заданного блоком Gate условия.</span>
+<a name="l00055"></a>00055 <span class="stringliteral"></span>
+<a name="l00056"></a>00056 <span class="stringliteral">Например, блок</span>
+<a name="l00057"></a>00057 <span class="stringliteral"></span>
+<a name="l00058"></a>00058 <span class="stringliteral">gate.Gate(sgm, &quot;Again&quot;, condition=SNF,objectName=&quot;STORAGE_NAME&quot;,nextBlockLabel=&quot;Occupied&quot;)</span>
+<a name="l00059"></a>00059 <span class="stringliteral"></span>
+<a name="l00060"></a>00060 <span class="stringliteral">будет пропускать транзакты если память не заполнена, и направлять их в блок с меткой &quot;Occupied&quot;,</span>
+<a name="l00061"></a>00061 <span class="stringliteral">если память заполнена.</span>
+<a name="l00062"></a>00062 <span class="stringliteral"></span>
+<a name="l00063"></a>00063 <span class="stringliteral">Пример использования см.:</span>
+<a name="l00064"></a>00064 <span class="stringliteral">- examples/telephone/telephone.py</span>
+<a name="l00065"></a>00065 <span class="stringliteral"></span>
+<a name="l00066"></a>00066 <span class="stringliteral">Атрибуты блока Gate (в дополнение к атрибутам block.Block):</span>
+<a name="l00067"></a>00067 <span class="stringliteral">bl = Test(...)</span>
+<a name="l00068"></a>00068 <span class="stringliteral">bl[FUNC_CONDITION] - функция вычисления условия, сигнатура: bool f(transact)</span>
+<a name="l00069"></a>00069 <span class="stringliteral">bl[TO_BLOCK_LABEL] - метка блока, к которому будет направляться транзакт, </span>
+<a name="l00070"></a>00070 <span class="stringliteral">                     если условие не будет выполняться</span>
+<a name="l00071"></a>00071 <span class="stringliteral">bl[firstBlock_4365643] - кеш, внутреннее использование</span>
+<a name="l00072"></a>00072 <span class="stringliteral">bl[secBlock_4365643] - кеш, внутреннее использование</span>
+<a name="l00073"></a>00073 <span class="stringliteral">    </span>
+<a name="l00074"></a>00074 <span class="stringliteral">Может быть заменён на блок Test или Transfer.</span>
+<a name="l00075"></a>00075 <span class="stringliteral">    </span>
+<a name="l00076"></a>00076 <span class="stringliteral">    &quot;&quot;&quot;</span>
+<a name="l00077"></a>00077    
+<a name="l00078"></a><a class="code" href="classpyss_1_1gate_1_1_gate.html#a8696e1cda1025c27732e33b3f6c77a6d">00078</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1gate_1_1_gate.html#a8696e1cda1025c27732e33b3f6c77a6d">__init__</a>(self, ownerSegment=None, label=None, condition=None, objectName=None, nextBlockLabel=None):
+<a name="l00079"></a>00079         <span class="comment"># #modificatorFunc is function(parametrName)</span>
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081         <span class="comment"># pylint:disable=too-many-arguments</span>
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083         super(Gate, self).__init__(GATE, label=label, ownerSegment=ownerSegment)
+<a name="l00084"></a>00084         map(pyssobject.raiseIsTrue, [condition <span class="keywordflow">not</span> <span class="keywordflow">in</span> [U, NU, NI, I, SE, SNE, SF, SNF, LR, LS], objectName <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> objectName.strip() == <span class="stringliteral">&quot;&quot;</span>])
+<a name="l00085"></a>00085         self[CONDITION] = condition
+<a name="l00086"></a>00086         self[NEXT_BLOCK_LABEL] = nextBlockLabel
+<a name="l00087"></a>00087         <span class="comment"># may be facility, память, ключ</span>
+<a name="l00088"></a>00088         self[OBJECT_NAME] = objectName
+<a name="l00089"></a>00089         self[TEMP_KEYS] = <span class="keywordtype">None</span>
+<a name="l00090"></a>00090         self[firstBlock_4365643] = <span class="keywordtype">None</span>
+<a name="l00091"></a>00091         self[secBlock_4365643] = <span class="keywordtype">None</span>
+<a name="l00092"></a>00092 
+<a name="l00093"></a><a class="code" href="classpyss_1_1gate_1_1_gate.html#aa27aadf1f763965490b7d9fdefa40ca4">00093</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1gate_1_1_gate.html#aa27aadf1f763965490b7d9fdefa40ca4">_refreshCash</a>(self):
+<a name="l00094"></a>00094         <span class="keywordflow">if</span> self[TEMP_KEYS] <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00095"></a>00095             <span class="keywordflow">if</span> self[CONDITION] <span class="keywordflow">in</span> [NU, U, NI, I]:
+<a name="l00096"></a>00096                 self[TEMP_KEYS] = self.getOwnerModel().findFacility(self[OBJECT_NAME])
+<a name="l00097"></a>00097             <span class="keywordflow">elif</span> self[CONDITION] <span class="keywordflow">in</span> [SE, SNE, SF, SNF]:
+<a name="l00098"></a>00098                 self[TEMP_KEYS] = self.getOwnerModel().getStorages()[self[OBJECT_NAME]]
+<a name="l00099"></a>00099             <span class="keywordflow">else</span>:
+<a name="l00100"></a>00100                 <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Not implemented [%s]&quot;</span> % self[CONDITION])
+<a name="l00101"></a>00101 
+<a name="l00102"></a><a class="code" href="classpyss_1_1gate_1_1_gate.html#a2de6edb1473d14bd0bc3fc053fb7b341">00102</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1gate_1_1_gate.html#a2de6edb1473d14bd0bc3fc053fb7b341">canEnter</a>(self, transact):
+<a name="l00103"></a>00103         <span class="keywordflow">if</span> self[OBJECT_NAME] <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:
+<a name="l00104"></a>00104             <span class="keywordflow">return</span> <span class="keyword">True</span>
+<a name="l00105"></a>00105         self.<a class="code" href="classpyss_1_1gate_1_1_gate.html#aa27aadf1f763965490b7d9fdefa40ca4">_refreshCash</a>()
+<a name="l00106"></a>00106         f = self[TEMP_KEYS]
+<a name="l00107"></a>00107         rv = <span class="keyword">False</span>
+<a name="l00108"></a>00108         <span class="keywordflow">if</span> self[CONDITION] == NU:
+<a name="l00109"></a>00109             <span class="keywordflow">if</span> f.isFree():
+<a name="l00110"></a>00110                 rv = <span class="keyword">True</span>
+<a name="l00111"></a>00111         <span class="keywordflow">elif</span> self[CONDITION] == U:
+<a name="l00112"></a>00112             <span class="keywordflow">if</span> <span class="keywordflow">not</span> f.isFree():
+<a name="l00113"></a>00113                 rv = <span class="keyword">True</span>
+<a name="l00114"></a>00114         <span class="keywordflow">elif</span> self[CONDITION] == NI:
+<a name="l00115"></a>00115             <span class="keywordflow">if</span> <span class="keywordflow">not</span> f.isNotAccess():
+<a name="l00116"></a>00116                 rv = <span class="keyword">True</span>
+<a name="l00117"></a>00117         <span class="keywordflow">elif</span> self[CONDITION] == I:
+<a name="l00118"></a>00118             <span class="keywordflow">if</span> f.isNotAccess():
+<a name="l00119"></a>00119                 rv = <span class="keyword">True</span>
+<a name="l00120"></a>00120         <span class="comment"># TODO</span>
+<a name="l00121"></a>00121         <span class="keywordflow">elif</span> self[CONDITION] == SE:
+<a name="l00122"></a>00122             rv = f.storageEmpty()
+<a name="l00123"></a>00123         <span class="keywordflow">elif</span> self[CONDITION] == SNE:
+<a name="l00124"></a>00124             rv = f.storageNotEmpty()
+<a name="l00125"></a>00125         <span class="keywordflow">elif</span> self[CONDITION] == SF:
+<a name="l00126"></a>00126             rv = f.storageFull()
+<a name="l00127"></a>00127         <span class="keywordflow">elif</span> self[CONDITION] == SNF:
+<a name="l00128"></a>00128             rv = f.storageNotFull()
+<a name="l00129"></a>00129         <span class="keywordflow">else</span>:
+<a name="l00130"></a>00130             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Not known condition&quot;</span>)
+<a name="l00131"></a>00131         <span class="keywordflow">return</span> rv
+<a name="l00132"></a>00132 
+<a name="l00133"></a><a class="code" href="classpyss_1_1gate_1_1_gate.html#a4d6e56deb4632551d62d91edad2fe83d">00133</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1gate_1_1_gate.html#a4d6e56deb4632551d62d91edad2fe83d">handleCanNotEnter</a>(self, transact):
+<a name="l00134"></a>00134         <span class="comment"># # При работе в режиме отказа блок GATE не пропускает транзакты,</span>
+<a name="l00135"></a>00135         f = self[TEMP_KEYS]
+<a name="l00136"></a>00136         <span class="keywordflow">if</span> self[CONDITION] <span class="keywordflow">in</span> [NU, U, NI, I, SE, SNE, SF, SNF]:
+<a name="l00137"></a>00137             f.moveToRetryAttempList(transact)
+<a name="l00138"></a>00138         <span class="keywordflow">else</span>:
+<a name="l00139"></a>00139             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Not known condition&quot;</span>)
+<a name="l00140"></a>00140 
+<a name="l00141"></a><a class="code" href="classpyss_1_1gate_1_1_gate.html#abb50c05f1044b9677a60207d34b337ad">00141</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1gate_1_1_gate.html#abb50c05f1044b9677a60207d34b337ad">transactInner</a>(self, currentTime, transact=None):
+<a name="l00142"></a>00142         <span class="comment"># # calc modificatorFunc on current transact[self[PARAMETR_NAME]]</span>
+<a name="l00143"></a>00143         <span class="comment"># and set new value to transact[self[PARAMETR_NAME]]</span>
+<a name="l00144"></a>00144         <span class="keywordflow">if</span> <span class="keywordflow">not</span> self[firstBlock_4365643]:
+<a name="l00145"></a>00145             block = self.findBlockByLabel(self[NEXT_BLOCK_LABEL])
+<a name="l00146"></a>00146             <span class="keywordflow">if</span> block <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00147"></a>00147                 <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Block not found, label is [%s]&quot;</span> % self[NEXT_BLOCK_LABEL])
+<a name="l00148"></a>00148             self[firstBlock_4365643] = block
+<a name="l00149"></a>00149             self[secBlock_4365643] = self[BLOCK_NEXT]
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151         <span class="comment"># pylint:disable=unused-argument</span>
+<a name="l00152"></a>00152         self.<a class="code" href="classpyss_1_1gate_1_1_gate.html#aa27aadf1f763965490b7d9fdefa40ca4">_refreshCash</a>()
+<a name="l00153"></a>00153         block = self[secBlock_4365643]
+<a name="l00154"></a>00154         <span class="keywordflow">if</span> self[OBJECT_NAME]:
+<a name="l00155"></a>00155             <span class="keywordflow">if</span> self[CONDITION] == NU:
+<a name="l00156"></a>00156                 <span class="keywordflow">if</span> <span class="keywordflow">not</span> self[TEMP_KEYS].isFree():
+<a name="l00157"></a>00157                     <span class="comment"># если условие ложно</span>
+<a name="l00158"></a>00158                     block = self[firstBlock_4365643]
+<a name="l00159"></a>00159             <span class="keywordflow">elif</span> self[CONDITION] == U:
+<a name="l00160"></a>00160                 <span class="keywordflow">if</span> self[TEMP_KEYS].isFree():
+<a name="l00161"></a>00161                     <span class="comment"># если условие ложно</span>
+<a name="l00162"></a>00162                     block = self[firstBlock_4365643]
+<a name="l00163"></a>00163             <span class="keywordflow">elif</span> self[CONDITION] == SNF:
+<a name="l00164"></a>00164                 <span class="comment"># если не полный, то к secBlock_4365643</span>
+<a name="l00165"></a>00165                 <span class="comment"># иначе к firstBlock_4365643</span>
+<a name="l00166"></a>00166                 <span class="keywordflow">if</span> self[TEMP_KEYS].storageFull():
+<a name="l00167"></a>00167                     <span class="comment"># если условие ложно</span>
+<a name="l00168"></a>00168                     block = self[firstBlock_4365643]
+<a name="l00169"></a>00169             <span class="keywordflow">elif</span> self[CONDITION] == SF:
+<a name="l00170"></a>00170                 <span class="comment"># если полный, то к secBlock_4365643</span>
+<a name="l00171"></a>00171                 <span class="comment"># иначе, если не полный, к firstBlock_4365643</span>
+<a name="l00172"></a>00172                 <span class="keywordflow">if</span> self[TEMP_KEYS].storageNotFull():
+<a name="l00173"></a>00173                     <span class="comment"># если условие ложно</span>
+<a name="l00174"></a>00174                     block = self[firstBlock_4365643]
+<a name="l00175"></a>00175             <span class="keywordflow">else</span>:
+<a name="l00176"></a>00176                 <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Not known condition&quot;</span>)
+<a name="l00177"></a>00177         <span class="keywordflow">else</span>:
+<a name="l00178"></a>00178             <span class="keywordflow">pass</span>
+<a name="l00179"></a>00179         self[BLOCK_NEXT] = block
+<a name="l00180"></a>00180         <span class="keywordflow">return</span> transact
+<a name="l00181"></a>00181 
+<a name="l00182"></a>00182 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00183"></a><a class="code" href="namespacepyss_1_1gate.html#a2de12d2bbdc8e78235c2ae00635a065f">00183</a>     <span class="keyword">def </span><a class="code" href="namespacepyss_1_1gate.html#a2de12d2bbdc8e78235c2ae00635a065f">main</a>():
+<a name="l00184"></a>00184         <span class="keywordflow">print</span> <span class="stringliteral">&quot;?&quot;</span>
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

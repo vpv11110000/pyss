@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/facility.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/facility.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="facility_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1facility.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль объекта &quot;устройства&quot;</span>
+<a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00011"></a>00011 <span class="keyword">from</span> pyss.pyssstateobject <span class="keyword">import</span> PyssStateObject
+<a name="l00012"></a>00012 <span class="keyword">from</span> pyss <span class="keyword">import</span> logger
+<a name="l00013"></a>00013 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00014"></a>00014 
+<a name="l00015"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html">00015</a> <span class="keyword">class </span><a class="code" href="classpyss_1_1facility_1_1_facility.html">Facility</a>(<a class="code" href="classpyss_1_1pyssstateobject_1_1_pyss_state_object.html">PyssStateObject</a>):
+<a name="l00016"></a>00016     <span class="stringliteral">&quot;&quot;&quot;Объект Facility предназначен для представления одноканального устройства.</span>
+<a name="l00017"></a>00017 <span class="stringliteral"></span>
+<a name="l00018"></a>00018 <span class="stringliteral">Объект Facility добавляется в модель при прохождении транзактом</span>
+<a name="l00019"></a>00019 <span class="stringliteral">блоков seize.Seize, preempt.Preempt, а также методом addFacility.</span>
+<a name="l00020"></a>00020 <span class="stringliteral"></span>
+<a name="l00021"></a>00021 <span class="stringliteral">Можно назначать обработчики изменения состояния (см. PyssStateObject).</span>
+<a name="l00022"></a>00022 <span class="stringliteral">Под значением старого состояния понимается старое значение self[STATE].</span>
+<a name="l00023"></a>00023 <span class="stringliteral"></span>
+<a name="l00024"></a>00024 <span class="stringliteral"></span>
+<a name="l00025"></a>00025 <span class="stringliteral">Устройство может находиться в состояниях:</span>
+<a name="l00026"></a>00026 <span class="stringliteral">    STATE_FREE - устройство свободно</span>
+<a name="l00027"></a>00027 <span class="stringliteral">    STATE_BUSY - устройство занято</span>
+<a name="l00028"></a>00028 <span class="stringliteral">    STATE_NOT_ACCESS - устройство не доступно</span>
+<a name="l00029"></a>00029 <span class="stringliteral"></span>
+<a name="l00030"></a>00030 <span class="stringliteral">Владельцем Facility является модель.</span>
+<a name="l00031"></a>00031 <span class="stringliteral"></span>
+<a name="l00032"></a>00032 <span class="stringliteral">Args:</span>
+<a name="l00033"></a>00033 <span class="stringliteral">    ownerModel=None - объект модели-владельца </span>
+<a name="l00034"></a>00034 <span class="stringliteral">    facilityName - строка с наименованием одноканального устройства</span>
+<a name="l00035"></a>00035 <span class="stringliteral"></span>
+<a name="l00036"></a>00036 <span class="stringliteral">Например, строка</span>
+<a name="l00037"></a>00037 <span class="stringliteral"></span>
+<a name="l00038"></a>00038 <span class="stringliteral">facility.Facility(facilityName=&quot;F_1&quot;)</span>
+<a name="l00039"></a>00039 <span class="stringliteral"></span>
+<a name="l00040"></a>00040 <span class="stringliteral">создаёт объект одноканальное устройство c именем F_1.</span>
+<a name="l00041"></a>00041 <span class="stringliteral"></span>
+<a name="l00042"></a>00042 <span class="stringliteral">Особенности см. tests/test_preempt_return.py</span>
+<a name="l00043"></a>00043 <span class="stringliteral"></span>
+<a name="l00044"></a>00044 <span class="stringliteral">См. также seize.py, preempt.py, release.py</span>
+<a name="l00045"></a>00045 <span class="stringliteral"></span>
+<a name="l00046"></a>00046 <span class="stringliteral">Атрибуты объекта Facility (в дополнение к атрибутам pyssobject.PyssObject):</span>
+<a name="l00047"></a>00047 <span class="stringliteral">f = Facility(...)</span>
+<a name="l00048"></a>00048 <span class="stringliteral">f[FACILITY_NAME] - имя одноканального устройства.</span>
+<a name="l00049"></a>00049 <span class="stringliteral">f[STATE] - текущее состояние одноканального устройства (м.б. STATE_FREE, STATE_BUSY, STATE_NOT_ACCESS).</span>
+<a name="l00050"></a>00050 <span class="stringliteral">f[TIME_BUSY_START] - метка времени занятия устройства</span>
+<a name="l00051"></a>00051 <span class="stringliteral">f[TIME_NOT_ACCESS_START] - метка времени недоступности устройства</span>
+<a name="l00052"></a>00052 <span class="stringliteral">f[LISTTIMES] - список длительностей интервалов занятия устройства</span>
+<a name="l00053"></a>00053 <span class="stringliteral">f[COUNT_BUSY] - количество фактов занятий устройства</span>
+<a name="l00054"></a>00054 <span class="stringliteral">f[COUNT_NOT_ACCESS] - количество фактов недоступности устройства</span>
+<a name="l00055"></a>00055 <span class="stringliteral">f[LISTTIMES_NOT_ACCESS] - список длительностей интервалов недоступности устройства</span>
+<a name="l00056"></a>00056 <span class="stringliteral">f[UTIL] - суммарное время использования устройства (сумма всех элементов f[LISTTIMES])</span>
+<a name="l00057"></a>00057 <span class="stringliteral">f[RETRY] - РЕЗЕРВ</span>
+<a name="l00058"></a>00058 <span class="stringliteral">f[DELAY] - РЕЗЕРВ</span>
+<a name="l00059"></a>00059 <span class="stringliteral">f[ON_STATE_CHANGE] - список функций-обработчиков изменения состояния устройства</span>
+<a name="l00060"></a>00060 <span class="stringliteral">f[RETRY_ATTEMP_LIST] - список повторных попыток - список транзактов, ожидающих изменения состояния ОКУ</span>
+<a name="l00061"></a>00061 <span class="stringliteral">f[LISTPREEMPT] - список прерванных транзактов на обработке устройством</span>
+<a name="l00062"></a>00062 <span class="stringliteral">f[LISTTRANSACT]=[] - список транзактов на устройстве</span>
+<a name="l00063"></a>00063 <span class="stringliteral">f[TRANSACT]=None - транзакт на обработке устройством в текущий момент времени</span>
+<a name="l00064"></a>00064 <span class="stringliteral">f[LIFE_TIME_LIST] - список меток времени и состояний активности ОКУ</span>
+<a name="l00065"></a>00065 <span class="stringliteral"></span>
+<a name="l00066"></a>00066 <span class="stringliteral">    &quot;&quot;&quot;</span>
+<a name="l00067"></a>00067 
+<a name="l00068"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#ad6c41c7fd0714ef33f7e2c1ed490f5f0">00068</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#ad6c41c7fd0714ef33f7e2c1ed490f5f0">__init__</a>(self, ownerModel=None, facilityName=None):
+<a name="l00069"></a>00069         <span class="comment"># # state (STATE_FREE or STATE_BUSY or STATE_NOT_ACCESS)</span>
+<a name="l00070"></a>00070         super(Facility, self).__init__(FACILITY, owner=ownerModel)
+<a name="l00071"></a>00071         map(pyssobject.raiseIsTrue, [facilityName <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> facilityName == <span class="stringliteral">&quot;&quot;</span>])
+<a name="l00072"></a>00072         self[FACILITY_NAME] = facilityName
+<a name="l00073"></a>00073         self[STATE] = STATE_FREE
+<a name="l00074"></a>00074         self[TIME_BUSY_START] = <span class="keywordtype">None</span>
+<a name="l00075"></a>00075         self[TIME_NOT_ACCESS_START] = <span class="keywordtype">None</span>
+<a name="l00076"></a>00076         self[LISTTIMES] = []
+<a name="l00077"></a>00077         self[LISTTIMES_NOT_ACCESS] = []
+<a name="l00078"></a>00078         self[COUNT_BUSY] = 0
+<a name="l00079"></a>00079         self[COUNT_NOT_ACCESS] = 0
+<a name="l00080"></a>00080         self[UTIL] = 0
+<a name="l00081"></a>00081         self[RETRY] = 0
+<a name="l00082"></a>00082         self[DELAY] = 0
+<a name="l00083"></a>00083         <span class="comment"># список повторных попыток - список транзактов, ожидающих изменения состояния ОКУ.</span>
+<a name="l00084"></a>00084         self[RETRY_ATTEMP_LIST] = []
+<a name="l00085"></a>00085         <span class="comment"># список прерванных транзактов на обработке устройством</span>
+<a name="l00086"></a>00086         self[LISTPREEMPT] = []
+<a name="l00087"></a>00087         <span class="comment"># список транзактов на устройстве</span>
+<a name="l00088"></a>00088         self[LISTTRANSACT] = []
+<a name="l00089"></a>00089         <span class="comment"># текущий обрабатываемый транзакт</span>
+<a name="l00090"></a>00090         self[TRANSACT] = <span class="keywordtype">None</span>
+<a name="l00091"></a>00091         self[LIFE_TIME_LIST] = [{START:0, STATE:self[STATE]}]
+<a name="l00092"></a>00092         ownerModel.addFacility(self)
+<a name="l00093"></a>00093 
+<a name="l00094"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#a34d3c5a28fd30059abb12fd2ac3d1c3e">00094</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#a34d3c5a28fd30059abb12fd2ac3d1c3e">setLifeState</a>(self, dstState=None, timeTick=None):
+<a name="l00095"></a>00095         <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00096"></a>00096 <span class="stringliteral">        Args:</span>
+<a name="l00097"></a>00097 <span class="stringliteral">            dstState=None - LIFE_STATES = [ACTIVED, PREEMPTED, DELAYED, TRANSACT_DELETED]</span>
+<a name="l00098"></a>00098 <span class="stringliteral">            timeTick=None - метка времени</span>
+<a name="l00099"></a>00099 <span class="stringliteral">        &quot;&quot;&quot;</span>
+<a name="l00100"></a>00100         
+<a name="l00101"></a>00101         self[STATE] = dstState
+<a name="l00102"></a>00102         <span class="keywordflow">if</span> timeTick <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00103"></a>00103             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;timeTick is None&quot;</span>)
+<a name="l00104"></a>00104         <span class="keywordflow">if</span> dstState <span class="keywordflow">not</span> <span class="keywordflow">in</span> LIFE_STATES_FACILITY:
+<a name="l00105"></a>00105             logger.warn(<span class="stringliteral">&quot;dstState not in [ACTIVED,PREEMPTED,DELAYED,TRANSACT_DELETED]&quot;</span>)
+<a name="l00106"></a>00106         <span class="keywordflow">if</span> self[LIFE_TIME_LIST][-1][STATE] != dstState:
+<a name="l00107"></a>00107             self[LIFE_TIME_LIST].append({START:timeTick, STATE:dstState})
+<a name="l00108"></a>00108             
+<a name="l00109"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#a3101ffa987e111f63dbb6956446b5693">00109</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#a3101ffa987e111f63dbb6956446b5693">toFree</a>(self, currentTime, transact):
+<a name="l00110"></a>00110         oldState = self[STATE]
+<a name="l00111"></a>00111         self.<a class="code" href="classpyss_1_1facility_1_1_facility.html#a34d3c5a28fd30059abb12fd2ac3d1c3e">setLifeState</a>(dstState=STATE_FREE, timeTick=currentTime)
+<a name="l00112"></a>00112         <span class="comment"># remove transact if it not preempted</span>
+<a name="l00113"></a>00113         <span class="keywordflow">if</span> self[TRANSACT] == transact:
+<a name="l00114"></a>00114             self[LISTTRANSACT].remove(transact)
+<a name="l00115"></a>00115             self[TRANSACT] = <span class="keywordtype">None</span>
+<a name="l00116"></a>00116         <span class="keywordflow">else</span>:
+<a name="l00117"></a>00117             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;Attemp to free facility by not same transact [%s]-[%s]&quot;</span> % (str(self[TRANSACT]), str(transact)))
+<a name="l00118"></a>00118         a = self[TIME_BUSY_START]
+<a name="l00119"></a>00119         <span class="keywordflow">if</span> a <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:
+<a name="l00120"></a>00120             t = currentTime - a
+<a name="l00121"></a>00121             self[UTIL] += t
+<a name="l00122"></a>00122             self[LISTTIMES].append(t)
+<a name="l00123"></a>00123             self[TIME_BUSY_START] = <span class="keywordtype">None</span>
+<a name="l00124"></a>00124         a = self[TIME_NOT_ACCESS_START]
+<a name="l00125"></a>00125         <span class="keywordflow">if</span> a <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:
+<a name="l00126"></a>00126             t = currentTime - a
+<a name="l00127"></a>00127             <span class="keywordflow">if</span> self[TIME_BUSY_START] <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00128"></a>00128                 self[UTIL] += t
+<a name="l00129"></a>00129             self[LISTTIMES_NOT_ACCESS].append(t)
+<a name="l00130"></a>00130             self[TIME_NOT_ACCESS_START] = <span class="keywordtype">None</span>
+<a name="l00131"></a>00131         self.fireHandlerOnStateChange(oldState)
+<a name="l00132"></a>00132 
+<a name="l00133"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#ae26fda7e6ec77b7d12a4edd94f08f075">00133</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#ae26fda7e6ec77b7d12a4edd94f08f075">isFree</a>(self):
+<a name="l00134"></a>00134         <span class="comment"># # свободен и не в обработке прерывания</span>
+<a name="l00135"></a>00135         <span class="keywordflow">return</span> self[STATE] == STATE_FREE
+<a name="l00136"></a>00136 
+<a name="l00137"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#a19dd64511a4afa155a233adf25addd81">00137</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#a19dd64511a4afa155a233adf25addd81">isBusy</a>(self):
+<a name="l00138"></a>00138         <span class="comment"># # либо занят, либо в обработке прерывания</span>
+<a name="l00139"></a>00139         <span class="keywordflow">return</span> self[STATE] == STATE_BUSY
+<a name="l00140"></a>00140 
+<a name="l00141"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#ab945fb7c084fdf57e43db24089668fa3">00141</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#ab945fb7c084fdf57e43db24089668fa3">toBusy</a>(self, currentTime, transact):
+<a name="l00142"></a>00142         oldState = self[STATE]
+<a name="l00143"></a>00143         self.<a class="code" href="classpyss_1_1facility_1_1_facility.html#a34d3c5a28fd30059abb12fd2ac3d1c3e">setLifeState</a>(dstState=STATE_BUSY, timeTick=currentTime)
+<a name="l00144"></a>00144         <span class="comment"># self[LISTTRANSACT].append(transact)</span>
+<a name="l00145"></a>00145         self[TIME_BUSY_START] = currentTime
+<a name="l00146"></a>00146         self[TIME_NOT_ACCESS_START] = <span class="keywordtype">None</span>
+<a name="l00147"></a>00147         self[COUNT_BUSY] += 1
+<a name="l00148"></a>00148         self.fireHandlerOnStateChange(oldState)
+<a name="l00149"></a>00149         self[TRANSACT] = transact
+<a name="l00150"></a>00150         self[LISTTRANSACT].append(transact)
+<a name="l00151"></a>00151 
+<a name="l00152"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#ab68e87929b103fbf66f65523019c2438">00152</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#ab68e87929b103fbf66f65523019c2438">canPreempt</a>(self, forTransact):
+<a name="l00153"></a>00153         <span class="comment"># isPreempt</span>
+<a name="l00154"></a>00154         <span class="comment"># forTransact is not None: транзакт, для которого определяется</span>
+<a name="l00155"></a>00155         <span class="comment"># состояние прерывания</span>
+<a name="l00156"></a>00156         pyssobject.raiseIsNone(forTransact)
+<a name="l00157"></a>00157         <span class="keywordflow">if</span> self[TRANSACT]:
+<a name="l00158"></a>00158             <span class="comment"># приоритет обрабатываемого транзакта меньше</span>
+<a name="l00159"></a>00159             <span class="comment"># приоритета входящего</span>
+<a name="l00160"></a>00160             <span class="keywordflow">return</span> self[TRANSACT][PR] &lt;= forTransact[PR]
+<a name="l00161"></a>00161         <span class="keywordflow">else</span>:
+<a name="l00162"></a>00162             <span class="keywordflow">return</span> <span class="keyword">True</span>
+<a name="l00163"></a>00163 
+<a name="l00164"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#a48efbf9cee22638527a267c824e39811">00164</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#a48efbf9cee22638527a267c824e39811">toPreempt</a>(self, currentTime, transact):
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166         <span class="comment"># pylint: disable=unused-argument</span>
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168         <span class="comment"># # в обработку прерывания</span>
+<a name="l00169"></a>00169         <span class="comment"># замена обрабатываемого транзакта на новый</span>
+<a name="l00170"></a>00170         <span class="keywordflow">if</span> self[TRANSACT]:
+<a name="l00171"></a>00171             t = self[TRANSACT]
+<a name="l00172"></a>00172             d = t[SCHEDULED_TIME]
+<a name="l00173"></a>00173             <span class="comment"># number that&#39;s bigger than all others</span>
+<a name="l00174"></a>00174             t[SCHEDULED_TIME] = float(<span class="stringliteral">&#39;inf&#39;</span>)
+<a name="l00175"></a>00175             <span class="comment"># остаток времени обработки</span>
+<a name="l00176"></a>00176             t[REMAIND_TIME] = d - currentTime
+<a name="l00177"></a>00177             t.setLifeState(delayed=<span class="keyword">True</span>, dstState=PREEMPTED, timeTick=self.getOwner().getCurTime())
+<a name="l00178"></a>00178             self[LISTPREEMPT].append(t)
+<a name="l00179"></a>00179         self[TRANSACT] = transact
+<a name="l00180"></a>00180         <span class="comment"># эти транзакты на устройстве</span>
+<a name="l00181"></a>00181         self[LISTTRANSACT].append(transact)
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183         oldState = self[STATE]
+<a name="l00184"></a>00184         self.<a class="code" href="classpyss_1_1facility_1_1_facility.html#a34d3c5a28fd30059abb12fd2ac3d1c3e">setLifeState</a>(dstState=STATE_NOT_ACCESS, timeTick=currentTime)
+<a name="l00185"></a>00185         <span class="comment"># self[LISTTRANSACT].append(transact)</span>
+<a name="l00186"></a>00186         <span class="comment"># self[TIME_BUSY_START]</span>
+<a name="l00187"></a>00187         self[TIME_NOT_ACCESS_START] = currentTime
+<a name="l00188"></a>00188         self[COUNT_NOT_ACCESS] += 1
+<a name="l00189"></a>00189         self.fireHandlerOnStateChange(oldState)
+<a name="l00190"></a>00190 
+<a name="l00191"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#a86d36de18ce19ff3c6105bcaa8943f0b">00191</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#a86d36de18ce19ff3c6105bcaa8943f0b">toReturn</a>(self, currentTime, transact):
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193         <span class="comment"># pylint: disable=unused-argument</span>
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195         <span class="comment"># # из обработки прерывания</span>
+<a name="l00196"></a>00196         oldTransact = <span class="keywordtype">None</span>
+<a name="l00197"></a>00197         <span class="keywordflow">if</span> self[LISTPREEMPT]:
+<a name="l00198"></a>00198             oldTransact = self[LISTPREEMPT].pop()
+<a name="l00199"></a>00199         <span class="keywordflow">if</span> oldTransact:
+<a name="l00200"></a>00200             <span class="comment"># обработка закончится (с учётом остатка времени обработки) в</span>
+<a name="l00201"></a>00201             oldTransact[SCHEDULED_TIME] = currentTime + oldTransact[REMAIND_TIME]
+<a name="l00202"></a>00202 
+<a name="l00203"></a>00203             oldState = self[STATE]
+<a name="l00204"></a>00204             self.<a class="code" href="classpyss_1_1facility_1_1_facility.html#a34d3c5a28fd30059abb12fd2ac3d1c3e">setLifeState</a>(dstState=STATE_BUSY, timeTick=currentTime)
+<a name="l00205"></a>00205             self[LISTTRANSACT].remove(transact)
+<a name="l00206"></a>00206             self[TRANSACT] = oldTransact
+<a name="l00207"></a>00207             <span class="comment"># self[LISTTRANSACT].append(transact)</span>
+<a name="l00208"></a>00208             <span class="comment"># self[TIME_BUSY_START]</span>
+<a name="l00209"></a>00209             a = self[TIME_NOT_ACCESS_START]
+<a name="l00210"></a>00210             <span class="keywordflow">if</span> a <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:
+<a name="l00211"></a>00211                 tm = currentTime - a
+<a name="l00212"></a>00212                 self[LISTTIMES_NOT_ACCESS].append(tm)
+<a name="l00213"></a>00213                 self[TIME_NOT_ACCESS_START] = <span class="keywordtype">None</span>
+<a name="l00214"></a>00214             self.fireHandlerOnStateChange(oldState)
+<a name="l00215"></a>00215         <span class="keywordflow">else</span>:
+<a name="l00216"></a>00216             self.<a class="code" href="classpyss_1_1facility_1_1_facility.html#a3101ffa987e111f63dbb6956446b5693">toFree</a>(currentTime, transact)
+<a name="l00217"></a>00217 
+<a name="l00218"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#af3e4529c18774b3af6e85332704f73c1">00218</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#af3e4529c18774b3af6e85332704f73c1">isNotAccess</a>(self, currentTime):
+<a name="l00219"></a>00219         <span class="comment"># pylint: disable=unused-argument</span>
+<a name="l00220"></a>00220         <span class="keywordflow">return</span> self[STATE] == STATE_NOT_ACCESS
+<a name="l00221"></a>00221 
+<a name="l00222"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#a966e03920f9f00473b8a71817f12e16a">00222</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#a966e03920f9f00473b8a71817f12e16a">toNotAccess</a>(self, currentTime):
+<a name="l00223"></a>00223         oldState = self[STATE]
+<a name="l00224"></a>00224         self.<a class="code" href="classpyss_1_1facility_1_1_facility.html#a34d3c5a28fd30059abb12fd2ac3d1c3e">setLifeState</a>(dstState=STATE_NOT_ACCESS, timeTick=currentTime)
+<a name="l00225"></a>00225         self[TIME_NOT_ACCESS_START] = currentTime
+<a name="l00226"></a>00226         self[TIME_BUSY_START] = <span class="keywordtype">None</span>
+<a name="l00227"></a>00227         self[COUNT_NOT_ACCESS] += 1
+<a name="l00228"></a>00228         self.fireHandlerOnStateChange(oldState)
+<a name="l00229"></a>00229 
+<a name="l00230"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#aca7719f23133b17bf2cc6b4f1d99afc2">00230</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#aca7719f23133b17bf2cc6b4f1d99afc2">moveToRetryAttempList</a>(self, transact):
+<a name="l00231"></a>00231         <span class="keywordflow">if</span> transact <span class="keywordflow">not</span> <span class="keywordflow">in</span> self[RETRY_ATTEMP_LIST]:
+<a name="l00232"></a>00232             self[OWNER].getCel().remove(transact)
+<a name="l00233"></a>00233             self[RETRY_ATTEMP_LIST].append(transact)
+<a name="l00234"></a>00234 
+<a name="l00235"></a><a class="code" href="classpyss_1_1facility_1_1_facility.html#a86a9296a68fd382504993ec6ff0a46f6">00235</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1facility_1_1_facility.html#a86a9296a68fd382504993ec6ff0a46f6">moveToCel</a>(self, transact):
+<a name="l00236"></a>00236         <span class="keywordflow">if</span> transact <span class="keywordflow">in</span> self[RETRY_ATTEMP_LIST]:
+<a name="l00237"></a>00237             self[RETRY_ATTEMP_LIST].remove(transact)
+<a name="l00238"></a>00238             self[OWNER].getCel().put(transact)
+<a name="l00239"></a>00239 
+<a name="l00240"></a>00240 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00241"></a><a class="code" href="namespacepyss_1_1facility.html#a5d667389dd89a90bb557618be9058339">00241</a>     <span class="keyword">def </span><a class="code" href="namespacepyss_1_1facility.html#a5d667389dd89a90bb557618be9058339">main</a>():
+<a name="l00242"></a>00242         <span class="keywordflow">print</span> <span class="stringliteral">&quot;?&quot;</span>
+<a name="l00243"></a>00243 
+<a name="l00244"></a>00244     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

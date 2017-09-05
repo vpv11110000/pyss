@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/qtable.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/qtable.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="qtable_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1qtable.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль реализации объекта таблицы статистики для очереди</span>
+<a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00011"></a>00011 <span class="keyword">from</span> pyss.pyssownerobject <span class="keyword">import</span> PyssOwnerObject
+<a name="l00012"></a>00012 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00013"></a>00013 
+<a name="l00014"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html">00014</a> <span class="keyword">class </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html">Qtable</a>(<a class="code" href="classpyss_1_1pyssownerobject_1_1_pyss_owner_object.html">PyssOwnerObject</a>):
+<a name="l00015"></a>00015     <span class="stringliteral">&quot;&quot;&quot;Объект Qtable предназначен для получения распределения времени пребывания транзакта в очереди.</span>
+<a name="l00016"></a>00016 <span class="stringliteral"></span>
+<a name="l00017"></a>00017 <span class="stringliteral">При использовании Qtable информация в таблицу заносится автоматически при обработке транзакта в блоках Depart.</span>
+<a name="l00018"></a>00018 <span class="stringliteral"></span>
+<a name="l00019"></a>00019 <span class="stringliteral">Транзакт проходя блок Queue отмечает в атрибуте Queue[LISTTRANSACT][transact[NUM]] время вхождения в Queue.</span>
+<a name="l00020"></a>00020 <span class="stringliteral"></span>
+<a name="l00021"></a>00021 <span class="stringliteral">Далее транзакт проходя блок Depart инициирует вычисление времени нахождения в очереди Queue (атрибут Queue[LISTTRANSACT][transact[NUM]]) и учёт этого времени в Qtable. После этого атрибут Queue[LISTTRANSACT][transact[NUM]]) удалается.</span>
+<a name="l00022"></a>00022 <span class="stringliteral"></span>
+<a name="l00023"></a>00023 <span class="stringliteral">По окончании моделирования собранная в таблице информация выводится в стандартном отчете GPSS.</span>
+<a name="l00024"></a>00024 <span class="stringliteral"></span>
+<a name="l00025"></a>00025 <span class="stringliteral">Объект Qtable добавляется в модель с помощью метода PyssModel.addQtable.</span>
+<a name="l00026"></a>00026 <span class="stringliteral"></span>
+<a name="l00027"></a>00027 <span class="stringliteral">Объекту Qtable присваивается атрибут label: QTABLE+&quot;_&quot;+queueName.</span>
+<a name="l00028"></a>00028 <span class="stringliteral"></span>
+<a name="l00029"></a>00029 <span class="stringliteral">Args:</span>
+<a name="l00030"></a>00030 <span class="stringliteral">    ownerModel=None - объект модели-владельца</span>
+<a name="l00031"></a>00031 <span class="stringliteral">    queueName - имя очереди</span>
+<a name="l00032"></a>00032 <span class="stringliteral">    limitUpFirst=None - верхний предел первого частотного интервала</span>
+<a name="l00033"></a>00033 <span class="stringliteral">    widthInt=None - ширина частотного интервала</span>
+<a name="l00034"></a>00034 <span class="stringliteral">    countInt=None - число частотных интервалов (положительное целое число)</span>
+<a name="l00035"></a>00035 <span class="stringliteral"></span>
+<a name="l00036"></a>00036 <span class="stringliteral">Владельцем QTable является модель.</span>
+<a name="l00037"></a>00037 <span class="stringliteral"></span>
+<a name="l00038"></a>00038 <span class="stringliteral">Например, объект</span>
+<a name="l00039"></a>00039 <span class="stringliteral"></span>
+<a name="l00040"></a>00040 <span class="stringliteral">qtable.Qtable(queueName=&quot;QUEUE_1&quot;, limitUpFirst=1, widthInt=1, countInt=20)</span>
+<a name="l00041"></a>00041 <span class="stringliteral"></span>
+<a name="l00042"></a>00042 <span class="stringliteral">создаст объект ведения статистики времени пребывания транзакта в очереди.</span>
+<a name="l00043"></a>00043 <span class="stringliteral"></span>
+<a name="l00044"></a>00044 <span class="stringliteral">Множество объектов qtable.Qtable хранится в pyss_model.PyssModel().qtableList.</span>
+<a name="l00045"></a>00045 <span class="stringliteral"></span>
+<a name="l00046"></a>00046 <span class="stringliteral">Пример использования см. tests/test_queue.py.</span>
+<a name="l00047"></a>00047 <span class="stringliteral"></span>
+<a name="l00048"></a>00048 <span class="stringliteral">См. также queue.py и depart.py (занятие и освобождение очереди)</span>
+<a name="l00049"></a>00049 <span class="stringliteral"></span>
+<a name="l00050"></a>00050 <span class="stringliteral">Атрибуты объекта Qtable (в дополнение к атрибутам block.Block):</span>
+<a name="l00051"></a>00051 <span class="stringliteral">bl = Qtable(...)</span>
+<a name="l00052"></a>00052 <span class="stringliteral">bl[QUEUE_NAME] - имя объекта (queue.Queue) очереди</span>
+<a name="l00053"></a>00053 <span class="stringliteral">bl[TITLE] - дубль: имя объекта (queue.Queue) очереди</span>
+<a name="l00054"></a>00054 <span class="stringliteral">bl[DISPLAYING] - true - отображать результат обработки данных таблицы</span>
+<a name="l00055"></a>00055 <span class="stringliteral">bl[LIMITUPFIRST] - верхний предел первого частотного интервала</span>
+<a name="l00056"></a>00056 <span class="stringliteral">bl[WIDTHINT] - ширина частотного интервала</span>
+<a name="l00057"></a>00057 <span class="stringliteral">bl[COUNTINT] - число частотных интервалов (положительное целое число)</span>
+<a name="l00058"></a>00058 <span class="stringliteral">bl[TOTAL] - общее число транзактов, прошедшее через очередь</span>
+<a name="l00059"></a>00059 <span class="stringliteral">bl[INTERVALS] - интервалы статистики</span>
+<a name="l00060"></a>00060 <span class="stringliteral">bl[MIN_BOUND] - левая граница первого интервала</span>
+<a name="l00061"></a>00061 <span class="stringliteral">bl[MAX_BOUND] - правая граница последнего интервала</span>
+<a name="l00062"></a>00062 <span class="stringliteral"></span>
+<a name="l00063"></a>00063 <span class="stringliteral">    &quot;&quot;&quot;</span>
+<a name="l00064"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a150089dc70450550553ed306efcc764d">00064</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a150089dc70450550553ed306efcc764d">__init__</a>(self, ownerModel=None, queueName=None, limitUpFirst=None, widthInt=None, countInt=None):
+<a name="l00065"></a>00065         <span class="comment"># # таблица</span>
+<a name="l00066"></a>00066         <span class="comment">#</span>
+<a name="l00067"></a>00067         <span class="comment"># limitUpFirst is None - вся область определения, счётчик в self[TOTAL]</span>
+<a name="l00068"></a>00068         <span class="comment">#</span>
+<a name="l00069"></a>00069         <span class="comment"># limitUpFirst is not None and countInt == 0 - область значений разделена</span>
+<a name="l00070"></a>00070         <span class="comment">#   на две подобласти: до limitUpFirst (счётчик в self[INTERVALS][NEGATIVE_INFINITY])</span>
+<a name="l00071"></a>00071         <span class="comment">#   и после limitUpFirst, включая границу (счётчик в self[INTERVALS][POSITIVE_INFINITY])</span>
+<a name="l00072"></a>00072         <span class="comment">#</span>
+<a name="l00073"></a>00073         <span class="comment"># limitUpFirst is not None and countInt &gt; 0 - область значений разделена:</span>
+<a name="l00074"></a>00074         <span class="comment">#    [NEGATIVE_INFINITY,self[MIN_BOUND]) - счётчик в self[INTERVALS][NEGATIVE_INFINITY]</span>
+<a name="l00075"></a>00075         <span class="comment">#    [self[MIN_BOUND],limitUpFirst) - счётчик в self[LIST][0]</span>
+<a name="l00076"></a>00076         <span class="comment">#    ...</span>
+<a name="l00077"></a>00077         <span class="comment">#    [MIN_BOUND+widthInt*(countInt-1),MIN_BOUND+widthInt*countInt) - счётчик в self[LIST][countInt-1]</span>
+<a name="l00078"></a>00078         <span class="comment">#    [MIN_BOUND+widthInt*countInt,POSITIVE_INFINITY) - счётчик в self[INTERVALS][POSITIVE_INFINITY]</span>
+<a name="l00079"></a>00079         <span class="comment">#</span>
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081         <span class="comment"># pylint: disable=too-many-arguments</span>
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083         super(Qtable, self).__init__(QTABLE, label=QTABLE + <span class="stringliteral">&quot;_&quot;</span> + queueName, owner=ownerModel)
+<a name="l00084"></a>00084         map(pyssobject.raiseIsTrue, [<span class="keywordflow">not</span> queueName])
+<a name="l00085"></a>00085         map(pyssobject.raiseIsTrue, [limitUpFirst <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> (widthInt <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> countInt <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>)])
+<a name="l00086"></a>00086         map(pyssobject.raiseIsTrue, [limitUpFirst <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> (countInt <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> (countInt == 0 <span class="keywordflow">and</span> widthInt <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>) <span class="keywordflow">or</span> (countInt &gt; 0 <span class="keywordflow">and</span> (widthInt <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> widthInt == 0)))])
+<a name="l00087"></a>00087         <span class="comment">#</span>
+<a name="l00088"></a>00088         self[QUEUE_NAME] = queueName
+<a name="l00089"></a>00089         self[TITLE] = queueName
+<a name="l00090"></a>00090         self[LIMITUPFIRST] = limitUpFirst
+<a name="l00091"></a>00091         self[WIDTHINT] = widthInt
+<a name="l00092"></a>00092         self[COUNTINT] = countInt
+<a name="l00093"></a>00093         self[TOTAL] = 0
+<a name="l00094"></a>00094         self[INTERVALS] = {}
+<a name="l00095"></a>00095         self[MIN_BOUND] = <span class="keywordtype">None</span>
+<a name="l00096"></a>00096         self[MAX_BOUND] = <span class="keywordtype">None</span>
+<a name="l00097"></a>00097         self[LIST] = []
+<a name="l00098"></a>00098         <span class="keywordflow">if</span> limitUpFirst <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00099"></a>00099             self[ACTION_FUNC] = self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a3880e485565b2ffefd80a250df919217">writeToIntervalsFunctionDomainFull</a>
+<a name="l00100"></a>00100             self[ACTION_VIEW] = self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a7042d0b2c34b41db58894ecd8a99f486">table2strFunctionDomainFull</a>
+<a name="l00101"></a>00101         <span class="keywordflow">elif</span> limitUpFirst <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> countInt == 0:
+<a name="l00102"></a>00102             self[ACTION_FUNC] = self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a316219369233492ecd6443994687e503">writeToIntervalsFunctionDomainHalf</a>
+<a name="l00103"></a>00103             self[ACTION_VIEW] = self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ab7118e1497dd65128217c3c1a2ef9cb6">table2strFunctionDomainHalf</a>
+<a name="l00104"></a>00104         <span class="keywordflow">else</span>:
+<a name="l00105"></a>00105             self[MIN_BOUND] = limitUpFirst - widthInt
+<a name="l00106"></a>00106             self[MAX_BOUND] = self[MIN_BOUND] + countInt * widthInt
+<a name="l00107"></a>00107             self[ACTION_FUNC] = self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad65e236dcb314f08cdc371c21128bb96">writeToIntervals</a>
+<a name="l00108"></a>00108             self[ACTION_VIEW] = self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad5fb437559f94c0936aea43918a479bb">table2strInterv</a>
+<a name="l00109"></a>00109             <span class="keywordflow">while</span> countInt &gt; 0:
+<a name="l00110"></a>00110                 <span class="comment"># интервалы</span>
+<a name="l00111"></a>00111                 self[LIST].append(limitUpFirst)
+<a name="l00112"></a>00112                 self[INTERVALS][limitUpFirst] = 0
+<a name="l00113"></a>00113                 limitUpFirst += widthInt
+<a name="l00114"></a>00114                 countInt -= 1
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116         self[INTERVALS][POSITIVE_INFINITY] = 0
+<a name="l00117"></a>00117         self[INTERVALS][NEGATIVE_INFINITY] = 0
+<a name="l00118"></a>00118         self[DISPLAYING] = <span class="keyword">True</span>
+<a name="l00119"></a>00119         
+<a name="l00120"></a>00120         ownerModel.addQtable(self)
+<a name="l00121"></a>00121     
+<a name="l00122"></a>00122 
+<a name="l00123"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#aeeb4479406f74a70c52b480ca3669829">00123</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#aeeb4479406f74a70c52b480ca3669829">setDisplaying</a>(self, displaying=False):
+<a name="l00124"></a>00124         self[DISPLAYING] = displaying
+<a name="l00125"></a>00125         <span class="keywordflow">return</span> self
+<a name="l00126"></a>00126 
+<a name="l00127"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a3880e485565b2ffefd80a250df919217">00127</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a3880e485565b2ffefd80a250df919217">writeToIntervalsFunctionDomainFull</a>(self, x, y):
+<a name="l00128"></a>00128         <span class="keywordflow">pass</span>
+<a name="l00129"></a>00129 
+<a name="l00130"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a316219369233492ecd6443994687e503">00130</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a316219369233492ecd6443994687e503">writeToIntervalsFunctionDomainHalf</a>(self, x, y):
+<a name="l00131"></a>00131         <span class="keywordflow">if</span> x &lt; self[LIMITUPFIRST]:
+<a name="l00132"></a>00132             self[INTERVALS][NEGATIVE_INFINITY] += y
+<a name="l00133"></a>00133         <span class="keywordflow">else</span>:
+<a name="l00134"></a>00134             self[INTERVALS][POSITIVE_INFINITY] += y
+<a name="l00135"></a>00135 
+<a name="l00136"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad65e236dcb314f08cdc371c21128bb96">00136</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad65e236dcb314f08cdc371c21128bb96">writeToIntervals</a>(self, x, y):
+<a name="l00137"></a>00137         <span class="comment"># #</span>
+<a name="l00138"></a>00138         <span class="comment"># x - значение из области определения, ассоциируется с интервалом значений</span>
+<a name="l00139"></a>00139         <span class="comment">#     нижняя граница принадлежит, верхняя не принадлежит</span>
+<a name="l00140"></a>00140         <span class="comment"># y - значение из области значений, добавляется к счётчику</span>
+<a name="l00141"></a>00141         <span class="comment">#</span>
+<a name="l00142"></a>00142         <span class="keywordflow">if</span> x &lt; self[MIN_BOUND]:
+<a name="l00143"></a>00143             self[INTERVALS][NEGATIVE_INFINITY] += y
+<a name="l00144"></a>00144         <span class="keywordflow">elif</span> x &gt;= self[MAX_BOUND]:
+<a name="l00145"></a>00145             self[INTERVALS][POSITIVE_INFINITY] += y
+<a name="l00146"></a>00146         <span class="keywordflow">else</span>:
+<a name="l00147"></a>00147             l = self[LIST]
+<a name="l00148"></a>00148             <span class="keywordflow">for</span> z <span class="keywordflow">in</span> l:
+<a name="l00149"></a>00149                 <span class="keywordflow">if</span> x &lt; z:
+<a name="l00150"></a>00150                     self[INTERVALS][z] += y
+<a name="l00151"></a>00151                     <span class="keywordflow">break</span>
+<a name="l00152"></a>00152 
+<a name="l00153"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#aabecaa63d4fc55152d92133b4096d1f6">00153</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#aabecaa63d4fc55152d92133b4096d1f6">handle</a>(self, timeBusyOfQueue=None):
+<a name="l00154"></a>00154         <span class="keywordflow">if</span> timeBusyOfQueue <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00155"></a>00155             <span class="keywordflow">return</span>
+<a name="l00156"></a>00156         self[TOTAL] += 1
+<a name="l00157"></a>00157         self[ACTION_FUNC](timeBusyOfQueue, 1)
+<a name="l00158"></a>00158 
+<a name="l00159"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a7042d0b2c34b41db58894ecd8a99f486">00159</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a7042d0b2c34b41db58894ecd8a99f486">table2strFunctionDomainFull</a>(self):
+<a name="l00160"></a>00160         rv = <span class="stringliteral">&quot;Total: %d&quot;</span> % self[TOTAL] + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00161"></a>00161         rv += <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00162"></a>00162         <span class="keywordflow">return</span> rv
+<a name="l00163"></a>00163 
+<a name="l00164"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ac1dfc050f0c63db8dce4a83a9c359d61">00164</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ac1dfc050f0c63db8dce4a83a9c359d61">formatL</a>(self, x, y):
+<a name="l00165"></a>00165         <span class="comment"># pylint: disable=no-self-use</span>
+<a name="l00166"></a>00166         <span class="keywordflow">return</span> <span class="stringliteral">&quot;! %8s ! %8s !&quot;</span> % (<span class="stringliteral">&quot;&lt;%0.3f&quot;</span> % x, str(y))
+<a name="l00167"></a>00167 
+<a name="l00168"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad2449d9fc5b9e81f755467b4bfaa89fd">00168</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad2449d9fc5b9e81f755467b4bfaa89fd">formatG</a>(self, x, y):
+<a name="l00169"></a>00169         <span class="comment"># pylint: disable=no-self-use</span>
+<a name="l00170"></a>00170         <span class="keywordflow">return</span> <span class="stringliteral">&quot;! %8s ! %8s !&quot;</span> % (<span class="stringliteral">&quot;&gt;=%0.3f&quot;</span> % x, str(y))
+<a name="l00171"></a>00171 
+<a name="l00172"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ac71ced85281c604498e896bfe64f08da">00172</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ac71ced85281c604498e896bfe64f08da">formatF</a>(self, x0, x1, y):
+<a name="l00173"></a>00173         <span class="comment"># pylint: disable=no-self-use</span>
+<a name="l00174"></a>00174         <span class="keywordflow">return</span> <span class="stringliteral">&quot;! %8s ! %8s !&quot;</span> % (<span class="stringliteral">&quot;%0.3f-%0.3f&quot;</span> % (x0, x1), str(y))
+<a name="l00175"></a>00175 
+<a name="l00176"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ab7118e1497dd65128217c3c1a2ef9cb6">00176</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ab7118e1497dd65128217c3c1a2ef9cb6">table2strFunctionDomainHalf</a>(self):
+<a name="l00177"></a>00177         rv = <span class="stringliteral">&quot;!   Value  !  Count   !&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00178"></a>00178         rv += <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00179"></a>00179         key = self[LIMITUPFIRST]
+<a name="l00180"></a>00180         v = self[INTERVALS][NEGATIVE_INFINITY]
+<a name="l00181"></a>00181         rv += self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ac1dfc050f0c63db8dce4a83a9c359d61">formatL</a>(key, v) + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00182"></a>00182         v = self[INTERVALS][POSITIVE_INFINITY]
+<a name="l00183"></a>00183         rv += self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad2449d9fc5b9e81f755467b4bfaa89fd">formatG</a>(key, v) + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00184"></a>00184         rv += <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00185"></a>00185         rv += <span class="stringliteral">&quot;Total: %d&quot;</span> % self[TOTAL] + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00186"></a>00186         rv += <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00187"></a>00187         <span class="keywordflow">return</span> rv
+<a name="l00188"></a>00188 
+<a name="l00189"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad5fb437559f94c0936aea43918a479bb">00189</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad5fb437559f94c0936aea43918a479bb">table2strInterv</a>(self):
+<a name="l00190"></a>00190         rv = <span class="stringliteral">&quot;!   Value  !  Count   !&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00191"></a>00191         rv += <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00192"></a>00192         key = <span class="keywordtype">None</span>
+<a name="l00193"></a>00193         oldKey = self[MIN_BOUND]
+<a name="l00194"></a>00194         l = self[LIST]
+<a name="l00195"></a>00195         v = self[INTERVALS][NEGATIVE_INFINITY]
+<a name="l00196"></a>00196         rv += self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ac1dfc050f0c63db8dce4a83a9c359d61">formatL</a>(self[MIN_BOUND], v) + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00197"></a>00197         <span class="keywordflow">for</span> key <span class="keywordflow">in</span> l:
+<a name="l00198"></a>00198             v = self[INTERVALS][key]
+<a name="l00199"></a>00199             rv += self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ac71ced85281c604498e896bfe64f08da">formatF</a>(oldKey, key, v) + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00200"></a>00200             oldKey = key
+<a name="l00201"></a>00201         <span class="comment"># rv+=&quot;! %8s ! %8s !&quot;%(s,str(self[INTERVALS][POSITIVE_INFINITY]))+&quot;\n&quot;</span>
+<a name="l00202"></a>00202         v = self[INTERVALS][POSITIVE_INFINITY]
+<a name="l00203"></a>00203         rv += self.<a class="code" href="classpyss_1_1qtable_1_1_qtable.html#ad2449d9fc5b9e81f755467b4bfaa89fd">formatG</a>(self[MAX_BOUND], v) + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00204"></a>00204         rv += <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00205"></a>00205         rv += <span class="stringliteral">&quot;Total: %d&quot;</span> % self[TOTAL] + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00206"></a>00206         rv += <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00207"></a>00207         <span class="keywordflow">return</span> rv
+<a name="l00208"></a>00208 
+<a name="l00209"></a><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a32f13e8d614686cc823775330a94c940">00209</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1qtable_1_1_qtable.html#a32f13e8d614686cc823775330a94c940">table2str</a>(self):
+<a name="l00210"></a>00210         rv = <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00211"></a>00211         rv += <span class="stringliteral">&quot;Table: %s&quot;</span> % self[QUEUE_NAME] + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00212"></a>00212         rv += <span class="stringliteral">&quot;=======================&quot;</span> + <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00213"></a>00213         rv += self[ACTION_VIEW]()
+<a name="l00214"></a>00214         <span class="keywordflow">return</span> rv
+<a name="l00215"></a>00215 
+<a name="l00216"></a>00216 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00217"></a><a class="code" href="namespacepyss_1_1qtable.html#ad5aa030184e80a428b6964041b9c4b64">00217</a>     <span class="keyword">def </span><a class="code" href="namespacepyss_1_1qtable.html#ad5aa030184e80a428b6964041b9c4b64">main</a>():
+<a name="l00218"></a>00218         <span class="keywordflow">print</span> <span class="stringliteral">&quot;?&quot;</span>
+<a name="l00219"></a>00219 
+<a name="l00220"></a>00220     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

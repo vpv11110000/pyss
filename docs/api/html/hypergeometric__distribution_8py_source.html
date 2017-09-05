@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл other/hypergeometric_distribution.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>other/hypergeometric_distribution.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="hypergeometric__distribution_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacehypergeometric__distribution.html">00001</a> <span class="comment">##!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Две модели гипергеометрическое распределение (N=2 и N=40)</span>
+<a name="l00006"></a>00006 <span class="stringliteral"></span>
+<a name="l00007"></a>00007 <span class="stringliteral">Запуск:</span>
+<a name="l00008"></a>00008 <span class="stringliteral">    python ./hypergeometric_distribution.py</span>
+<a name="l00009"></a>00009 <span class="stringliteral"></span>
+<a name="l00010"></a>00010 <span class="stringliteral">Пример визуализации возникновения событий в соответствии с гипергеометрическим распределением.</span>
+<a name="l00011"></a>00011 <span class="stringliteral"></span>
+<a name="l00012"></a>00012 <span class="stringliteral">Гипергеометрическое распределение моделирует количество удачных выборок без возвращения из конечной совокупности.</span>
+<a name="l00013"></a>00013 <span class="stringliteral"></span>
+<a name="l00014"></a>00014 <span class="stringliteral">Его параметры:</span>
+<a name="l00015"></a>00015 <span class="stringliteral">- T (в модели константа T) - совокупность объектов</span>
+<a name="l00016"></a>00016 <span class="stringliteral">- D - количество объектов с заданным свойством в совокупности T</span>
+<a name="l00017"></a>00017 <span class="stringliteral">- n - количество объектов в выборке</span>
+<a name="l00018"></a>00018 <span class="stringliteral">- k - количество объектов с заданным свойством в выборке n</span>
+<a name="l00019"></a>00019 <span class="stringliteral"></span>
+<a name="l00020"></a>00020 <span class="stringliteral">См. https://ru.wikipedia.org/wiki/%D0%93%D0%B8%D0%BF%D0%B5%D1%80%D0%B3%D0%B5%D0%BE%D0%BC%D0%B5%D1%82%D1%80%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5</span>
+<a name="l00021"></a>00021 <span class="stringliteral"></span>
+<a name="l00022"></a>00022 <span class="stringliteral">ЦИТАТА:</span>
+<a name="l00023"></a>00023 <span class="stringliteral"></span>
+<a name="l00024"></a>00024 <span class="stringliteral">&quot;Классическим применением гипергеометрического распределения является выборка без возвращения. </span>
+<a name="l00025"></a>00025 <span class="stringliteral">Рассмотрим урну с двумя типами шаров: черными и белыми. </span>
+<a name="l00026"></a>00026 <span class="stringliteral">Определим вытягивание белого шара как успех, а черного как неудачу. </span>
+<a name="l00027"></a>00027 <span class="stringliteral">Если N является числом всех шаров в урне и D является числом белых шаров, </span>
+<a name="l00028"></a>00028 <span class="stringliteral">то N − D является числом черных шаров.</span>
+<a name="l00029"></a>00029 <span class="stringliteral">Теперь предположим, что в урне находятся WHITE = 5 белых и BLACK = 45 черных шаров. </span>
+<a name="l00030"></a>00030 <span class="stringliteral">Стоя рядом с урной, вы закрываете глаза и вытаскиваете 10 шаров.&quot;</span>
+<a name="l00031"></a>00031 <span class="stringliteral"></span>
+<a name="l00032"></a>00032 <span class="stringliteral">Модель показывает количество вытянутых белых шаров.</span>
+<a name="l00033"></a>00033 <span class="stringliteral">Белые шары моделируются числом 1.</span>
+<a name="l00034"></a>00034 <span class="stringliteral">Чёрные шары моделируются числом 0.</span>
+<a name="l00035"></a>00035 <span class="stringliteral"></span>
+<a name="l00036"></a>00036 <span class="stringliteral">Формируется 5 одинаковых моделей с 5 таблицами, собирающими факты возникновения событий.</span>
+<a name="l00037"></a>00037 <span class="stringliteral"></span>
+<a name="l00038"></a>00038 <span class="stringliteral">После моделирования выполняется построение графиков возникновения событий.</span>
+<a name="l00039"></a>00039 <span class="stringliteral"></span>
+<a name="l00040"></a>00040 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042 <span class="comment"># pylint: disable=line-too-long,missing-docstring,bad-whitespace</span>
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 <span class="keyword">import</span> sys
+<a name="l00045"></a>00045 <span class="keyword">import</span> os
+<a name="l00046"></a>00046 <span class="keyword">import</span> random
+<a name="l00047"></a>00047 <span class="keyword">import</span> math
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 <span class="keyword">import</span> os
+<a name="l00050"></a>00050 
+<a name="l00051"></a><a class="code" href="namespacehypergeometric__distribution.html#a92766823ad19cdaa918ca1cbe328ef5f">00051</a> DIRNAME_MODULE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))+os.sep
+<a name="l00052"></a>00052 sys.path.append(DIRNAME_MODULE)
+<a name="l00053"></a>00053 sys.path.append(DIRNAME_MODULE+<span class="stringliteral">&quot;pyss&quot;</span>+os.sep)
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="keyword">from</span> pyss <span class="keyword">import</span> generate
+<a name="l00056"></a>00056 <span class="keyword">from</span> pyss <span class="keyword">import</span> terminate
+<a name="l00057"></a>00057 <span class="keyword">from</span> pyss <span class="keyword">import</span> logger
+<a name="l00058"></a>00058 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00059"></a>00059 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyss_model
+<a name="l00060"></a>00060 <span class="keyword">from</span> pyss <span class="keyword">import</span> segment
+<a name="l00061"></a>00061 <span class="keyword">from</span> pyss <span class="keyword">import</span> table
+<a name="l00062"></a>00062 <span class="keyword">from</span> pyss <span class="keyword">import</span> tabulate
+<a name="l00063"></a>00063 <span class="keyword">from</span> pyss <span class="keyword">import</span> seize
+<a name="l00064"></a>00064 <span class="keyword">from</span> pyss <span class="keyword">import</span> release
+<a name="l00065"></a>00065 <span class="keyword">from</span> pyss <span class="keyword">import</span> advance
+<a name="l00066"></a>00066 <span class="keyword">from</span> pyss <span class="keyword">import</span> queue
+<a name="l00067"></a>00067 <span class="keyword">from</span> pyss <span class="keyword">import</span> depart
+<a name="l00068"></a>00068 <span class="keyword">from</span> pyss <span class="keyword">import</span> options
+<a name="l00069"></a>00069 <span class="keyword">from</span> pyss <span class="keyword">import</span> facility
+<a name="l00070"></a>00070 <span class="keyword">from</span> pyss <span class="keyword">import</span> components
+<a name="l00071"></a>00071 <span class="keyword">from</span> pyss <span class="keyword">import</span> segment_builder
+<a name="l00072"></a>00072 <span class="keyword">from</span> pyss <span class="keyword">import</span> bprint_blocks
+<a name="l00073"></a>00073 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00074"></a>00074 
+<a name="l00075"></a><a class="code" href="namespacehypergeometric__distribution.html#ac700f0a6783c22c887b8d7fd3a0e7c7d">00075</a> <span class="keyword">def </span><a class="code" href="namespacehypergeometric__distribution.html#ac700f0a6783c22c887b8d7fd3a0e7c7d">main</a>():
+<a name="l00076"></a>00076     logger.info(<span class="stringliteral">&quot;--- Гипергеометрические распределение ---&quot;</span>)
+<a name="l00077"></a>00077     random.seed()
+<a name="l00078"></a>00078     <span class="comment">#</span>
+<a name="l00079"></a>00079     options.flags.logTransactTrace = <span class="keyword">False</span>
+<a name="l00080"></a>00080     options.flags.reportTransactFamilies = <span class="keyword">False</span>
+<a name="l00081"></a>00081     options.flags.reportCel = <span class="keyword">False</span>
+<a name="l00082"></a>00082     <span class="comment">#</span>
+<a name="l00083"></a>00083     N=10
+<a name="l00084"></a>00084     WHITE = 5
+<a name="l00085"></a>00085     BLACK = 45
+<a name="l00086"></a>00086     <span class="comment"># совокупность</span>
+<a name="l00087"></a>00087     T=[0]*BLACK
+<a name="l00088"></a>00088     T.extend([1]*WHITE)
+<a name="l00089"></a>00089     <span class="keywordflow">print</span> T
+<a name="l00090"></a>00090     <span class="comment">#</span>
+<a name="l00091"></a>00091     MAX_TIME=24*4
+<a name="l00092"></a>00092     <span class="comment"># tables</span>
+<a name="l00093"></a>00093     <span class="keyword">def </span>argFunc_T_1(owner, transact):
+<a name="l00094"></a>00094         <span class="keywordflow">return</span> transact[TIME_CREATED]
+<a name="l00095"></a>00095     <span class="keyword">def </span>valFunc_T_1(owner, transact):
+<a name="l00096"></a>00096         l=[random.choice(T) <span class="keywordflow">for</span> x <span class="keywordflow">in</span> range(N)]
+<a name="l00097"></a>00097         <span class="keywordflow">print</span> <span class="stringliteral">&quot;Выбрано: %s&quot;</span>%str(l)
+<a name="l00098"></a>00098         <span class="keywordflow">return</span> sum(l)
+<a name="l00099"></a>00099     <span class="comment"># запускаем несколько раз на разных таблицах</span>
+<a name="l00100"></a>00100     <span class="comment"># всего 5 таблиц</span>
+<a name="l00101"></a>00101     TBL_COUNT=5
+<a name="l00102"></a>00102     tables = [table.Table(tableName=<span class="stringliteral">&quot;T_%d&quot;</span>%count, argFunc=argFunc_T_1, limitUpFirst=1, widthInt=1, countInt=MAX_TIME).setDisplaying(displaying=<span class="keyword">False</span>) <span class="keywordflow">for</span> count <span class="keywordflow">in</span> xrange(TBL_COUNT)]
+<a name="l00103"></a>00103     <span class="comment">#</span>
+<a name="l00104"></a>00104     <span class="keywordflow">for</span> tbl <span class="keywordflow">in</span> tables:
+<a name="l00105"></a>00105         logger.printLine(msg=3*<span class="stringliteral">&quot;*&quot;</span>+<span class="stringliteral">&quot; Table [%s] &quot;</span>%tbl[TITLE]+60*<span class="stringliteral">&quot;*&quot;</span>)
+<a name="l00106"></a>00106         first_tx=0 <span class="comment">#mf(None,None)</span>
+<a name="l00107"></a>00107         <span class="comment"># model</span>
+<a name="l00108"></a>00108         m = pyss_model.PyssModel()
+<a name="l00109"></a>00109         m.addTable(tbl)
+<a name="l00110"></a>00110         m.addSegment(
+<a name="l00111"></a>00111             segment.Segment()
+<a name="l00112"></a>00112             <span class="comment">#генерится см. mf()</span>
+<a name="l00113"></a>00113             .addBlock(generate.Generate(med_value=1, modificatorFunc=<span class="keywordtype">None</span>,first_tx=first_tx, max_amount=1000))
+<a name="l00114"></a>00114             .addBlock(tabulate.Tabulate(table=tbl,valFunc=valFunc_T_1))
+<a name="l00115"></a>00115             .addBlock(terminate.Terminate(deltaTerminate=0))
+<a name="l00116"></a>00116             )
+<a name="l00117"></a>00117         logger.info(str(m))
+<a name="l00118"></a>00118         m.start(terminationCount=MAX_TIME, maxTime=MAX_TIME)
+<a name="l00119"></a>00119     <span class="comment"># график занятости ОКУ</span>
+<a name="l00120"></a>00120     <span class="keyword">from</span> pyss <span class="keyword">import</span> plot_table
+<a name="l00121"></a>00121     pl=plot_table.PlotTable()
+<a name="l00122"></a>00122     pl.extend(tables)
+<a name="l00123"></a>00123     pl.plot()
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00126"></a>00126     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

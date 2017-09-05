@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/func_discrete.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/func_discrete.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="func__discrete_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1func__discrete.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль с дискретной функцией pyss</span>
+<a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">import</span> random
+<a name="l00011"></a>00011 <span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict
+<a name="l00012"></a>00012 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00013"></a>00013 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00014"></a>00014 
+<a name="l00015"></a><a class="code" href="classpyss_1_1func__discrete_1_1_func_discrete.html">00015</a> <span class="keyword">class </span><a class="code" href="classpyss_1_1func__discrete_1_1_func_discrete.html">FuncDiscrete</a>(dict):
+<a name="l00016"></a>00016     <span class="stringliteral">&quot;&quot;&quot;Дискретная функция распределения случайного события</span>
+<a name="l00017"></a>00017 <span class="stringliteral">    </span>
+<a name="l00018"></a>00018 <span class="stringliteral">Синтаксис:</span>
+<a name="l00019"></a>00019 <span class="stringliteral">discrete({&lt;правая граница суммарной частоты случайного события1&gt;:&lt;значение функции1&gt;,</span>
+<a name="l00020"></a>00020 <span class="stringliteral">          &lt;правая граница суммарной частоты случайного события2&gt;:&lt;значение функции2&gt;,</span>
+<a name="l00021"></a>00021 <span class="stringliteral">          ...})</span>
+<a name="l00022"></a>00022 <span class="stringliteral">    </span>
+<a name="l00023"></a>00023 <span class="stringliteral">&lt;значение функцииN&gt; - может быть числом или функцией без аргументов</span>
+<a name="l00024"></a>00024 <span class="stringliteral">     </span>
+<a name="l00025"></a>00025 <span class="stringliteral">Левая граница суммарной частоты случайного события не входит в интервал между </span>
+<a name="l00026"></a>00026 <span class="stringliteral">левой границей суммарной частоты случайного события и правой границей суммарной </span>
+<a name="l00027"></a>00027 <span class="stringliteral">частоты случайного события.</span>
+<a name="l00028"></a>00028 <span class="stringliteral">Правая граница интервала входит в интервал между </span>
+<a name="l00029"></a>00029 <span class="stringliteral">левой границей суммарной частоты случайного события и правой границей суммарной </span>
+<a name="l00030"></a>00030 <span class="stringliteral">частоты случайного события.</span>
+<a name="l00031"></a>00031 <span class="stringliteral"></span>
+<a name="l00032"></a>00032 <span class="stringliteral">Пусть событие А принимает упорядоченные по возрастанию вещественные значения.</span>
+<a name="l00033"></a>00033 <span class="stringliteral"></span>
+<a name="l00034"></a>00034 <span class="stringliteral">Тогда, относительная частота случайного события А:</span>
+<a name="l00035"></a>00035 <span class="stringliteral">Sotn = количество случайных событий А / общее количество испытаний</span>
+<a name="l00036"></a>00036 <span class="stringliteral"></span>
+<a name="l00037"></a>00037 <span class="stringliteral">Суммарная частота случайного события является суммой относительных частот </span>
+<a name="l00038"></a>00038 <span class="stringliteral">при значениях событий менее или равно значению события А.  </span>
+<a name="l00039"></a>00039 <span class="stringliteral"></span>
+<a name="l00040"></a>00040 <span class="stringliteral">Пример распределения суммарных частот:</span>
+<a name="l00041"></a>00041 <span class="stringliteral"></span>
+<a name="l00042"></a>00042 <span class="stringliteral">Интервал поступления транзактов  Относительная частота    Суммарная частота</span>
+<a name="l00043"></a>00043 <span class="stringliteral">2                                  0,10                        0,10</span>
+<a name="l00044"></a>00044 <span class="stringliteral">3                                  0,20                        0,30</span>
+<a name="l00045"></a>00045 <span class="stringliteral">4                                  0,40                        0,70</span>
+<a name="l00046"></a>00046 <span class="stringliteral">5                                  0,10                        0,80</span>
+<a name="l00047"></a>00047 <span class="stringliteral">6                                  0,20                        1,00</span>
+<a name="l00048"></a>00048 <span class="stringliteral"></span>
+<a name="l00049"></a>00049 <span class="stringliteral">Декларация функции:</span>
+<a name="l00050"></a>00050 <span class="stringliteral">fd = FuncDiscrete(randomGenerator=random.random, dictValues={.1:2,.3:3,.7:4,.8:5,1.0:6})</span>
+<a name="l00051"></a>00051 <span class="stringliteral"># или</span>
+<a name="l00052"></a>00052 <span class="stringliteral"># fd = FuncDiscrete(randomGenerator=random.random, dictValues={.1:lambda:2,.3:lambda:3,.7:lambda:4,.8:lambda:5,1.0:lambda:6})</span>
+<a name="l00053"></a>00053 <span class="stringliteral"></span>
+<a name="l00054"></a>00054 <span class="stringliteral">print fd.get()</span>
+<a name="l00055"></a>00055 <span class="stringliteral"></span>
+<a name="l00056"></a>00056 <span class="stringliteral">Пример, см. tests/test_func_discrete.py</span>
+<a name="l00057"></a>00057 <span class="stringliteral"></span>
+<a name="l00058"></a>00058 <span class="stringliteral">    &quot;&quot;&quot;</span>
+<a name="l00059"></a><a class="code" href="classpyss_1_1func__discrete_1_1_func_discrete.html#a53da1531c44d47ccc15b062aa30709c2">00059</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1func__discrete_1_1_func_discrete.html#a53da1531c44d47ccc15b062aa30709c2">__init__</a>(self, randomGenerator=random.random, dictValues=None):
+<a name="l00060"></a>00060         super(FuncDiscrete, self).__init__()
+<a name="l00061"></a>00061         map(pyssobject.raiseIsTrue, [<span class="keywordflow">not</span> dictValues])
+<a name="l00062"></a>00062         <span class="comment"># OrderedDict([(.1, 2), (.3, 3), (.7, 4), (.8, 5), (1,6)])</span>
+<a name="l00063"></a>00063         self[DICT_VALUES] = OrderedDict(sorted(dictValues.items(), key=<span class="keyword">lambda</span> t: t[0]))
+<a name="l00064"></a>00064         self[RANDOM_GENERATOR] = randomGenerator    
+<a name="l00065"></a>00065 
+<a name="l00066"></a><a class="code" href="classpyss_1_1func__discrete_1_1_func_discrete.html#af9df84d3734fa4481ea4e126ed07e6d7">00066</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1func__discrete_1_1_func_discrete.html#af9df84d3734fa4481ea4e126ed07e6d7">get</a>(self):
+<a name="l00067"></a>00067         r = self[RANDOM_GENERATOR]()
+<a name="l00068"></a>00068         <span class="keywordflow">for</span> key, value <span class="keywordflow">in</span> self[DICT_VALUES].iteritems():
+<a name="l00069"></a>00069             <span class="keywordflow">if</span> r &lt;= key:
+<a name="l00070"></a>00070                 <span class="keywordflow">if</span> pyssobject.isfunction(value):
+<a name="l00071"></a>00071                     <span class="keywordflow">return</span> value()
+<a name="l00072"></a>00072                 <span class="keywordflow">else</span>:
+<a name="l00073"></a>00073                     <span class="keywordflow">return</span> value
+<a name="l00074"></a>00074         <span class="comment"># fail</span>
+<a name="l00075"></a>00075         <span class="keywordflow">return</span> <span class="keywordtype">None</span>
+<a name="l00076"></a>00076         
+<a name="l00077"></a>00077 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00078"></a><a class="code" href="namespacepyss_1_1func__discrete.html#ad67ff16c4904de9e593aa72264d3bbda">00078</a>     <span class="keyword">def </span><a class="code" href="namespacepyss_1_1func__discrete.html#ad67ff16c4904de9e593aa72264d3bbda">main</a>():
+<a name="l00079"></a>00079         <span class="keywordflow">print</span> <span class="stringliteral">&quot;?&quot;</span>
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

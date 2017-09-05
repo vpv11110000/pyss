@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/logger.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/logger.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="logger_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1logger.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль журналирования</span>
+<a name="l00006"></a>00006 <span class="stringliteral"></span>
+<a name="l00007"></a>00007 <span class="stringliteral">Флаг SHOW_ON_DISPLAY управляет отображением на экране</span>
+<a name="l00008"></a>00008 <span class="stringliteral"></span>
+<a name="l00009"></a>00009 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="keyword">import</span> os
+<a name="l00014"></a>00014 <span class="keyword">import</span> sys
+<a name="l00015"></a>00015 <span class="keyword">from</span> xml.etree.ElementInclude <span class="keyword">import</span> include
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="comment"># флаг: True - отображать на экране</span>
+<a name="l00018"></a><a class="code" href="namespacepyss_1_1logger.html#aca3e9022a2558433d6afd3d9e96a065f">00018</a> SHOW_ON_DISPLAY = <span class="keyword">True</span>
+<a name="l00019"></a>00019 
+<a name="l00020"></a><a class="code" href="namespacepyss_1_1logger.html#ab5df89f75a65df5647d717d493e4d29a">00020</a> <span class="keyword">def </span><a class="code" href="namespacepyss_1_1logger.html#ab5df89f75a65df5647d717d493e4d29a">get_script_path</a>():
+<a name="l00021"></a>00021     <span class="keywordflow">return</span> os.path.dirname(os.path.realpath(sys.argv[0])) + <span class="stringliteral">&quot;/&quot;</span>
+<a name="l00022"></a>00022 
+<a name="l00023"></a><a class="code" href="namespacepyss_1_1logger.html#a18bf29cea97229eafd76c1afa9aeb53d">00023</a> DIRNAME = get_script_path()
+<a name="l00024"></a><a class="code" href="namespacepyss_1_1logger.html#ad8e689050e27f06e683c127e82776bcd">00024</a> FILENAME = DIRNAME + <span class="stringliteral">&quot;pyss.log&quot;</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a><a class="code" href="namespacepyss_1_1logger.html#a9efab28aa5830b81781ee197cc6991e7">00026</a> <span class="keyword">def </span><a class="code" href="namespacepyss_1_1logger.html#a9efab28aa5830b81781ee197cc6991e7">reset</a>():
+<a name="l00027"></a>00027     with open(FILENAME, <span class="stringliteral">&quot;wb&quot;</span>):
+<a name="l00028"></a>00028         <span class="keywordflow">pass</span>
+<a name="l00029"></a>00029 
+<a name="l00030"></a><a class="code" href="namespacepyss_1_1logger.html#a4af5597d5d33ef5e785a38f754802b8e">00030</a> <span class="keyword">def </span><a class="code" href="namespacepyss_1_1logger.html#a4af5597d5d33ef5e785a38f754802b8e">printLine</a>(msg=&quot;&quot;):
+<a name="l00031"></a>00031     with open(FILENAME, <span class="stringliteral">&quot;a&quot;</span>) <span class="keyword">as</span> f:
+<a name="l00032"></a>00032         f.write(msg + <span class="stringliteral">&quot;\n&quot;</span>)
+<a name="l00033"></a>00033     <span class="keywordflow">if</span> SHOW_ON_DISPLAY:
+<a name="l00034"></a>00034         display(msg)
+<a name="l00035"></a>00035 
+<a name="l00036"></a><a class="code" href="namespacepyss_1_1logger.html#aa92febee32a3bd0a4452ff77a8d0b631">00036</a> <span class="keyword">def </span><a class="code" href="namespacepyss_1_1logger.html#aa92febee32a3bd0a4452ff77a8d0b631">display</a>(msg=&quot;&quot;):
+<a name="l00037"></a>00037     sys.stdout.write(str(msg) + <span class="stringliteral">&#39;\n&#39;</span>)
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="namespacepyss_1_1logger.html#a525e3c485b699152df9cd351b1305c1f">00039</a> <span class="keyword">def </span><a class="code" href="namespacepyss_1_1logger.html#a525e3c485b699152df9cd351b1305c1f">info</a>(msg):
+<a name="l00040"></a>00040     with open(FILENAME, <span class="stringliteral">&quot;a&quot;</span>) <span class="keyword">as</span> f:
+<a name="l00041"></a>00041         f.write(msg + <span class="stringliteral">&quot;\n&quot;</span>)
+<a name="l00042"></a>00042     <span class="keywordflow">if</span> SHOW_ON_DISPLAY:
+<a name="l00043"></a>00043         display(msg)
+<a name="l00044"></a>00044 
+<a name="l00045"></a><a class="code" href="namespacepyss_1_1logger.html#a64d2be81b1d1641d6d348a0aa260965c">00045</a> <span class="keyword">def </span><a class="code" href="namespacepyss_1_1logger.html#a64d2be81b1d1641d6d348a0aa260965c">warn</a>(msg):
+<a name="l00046"></a>00046     with open(FILENAME, <span class="stringliteral">&quot;a&quot;</span>) <span class="keyword">as</span> f:
+<a name="l00047"></a>00047         f.write(<span class="stringliteral">&quot;WARN &quot;</span> + msg + <span class="stringliteral">&quot;\n&quot;</span>)
+<a name="l00048"></a>00048     <span class="keywordflow">if</span> SHOW_ON_DISPLAY:
+<a name="l00049"></a>00049         display(msg)
+<a name="l00050"></a>00050 
+<a name="l00051"></a><a class="code" href="namespacepyss_1_1logger.html#a893657e97c3af9b66acc83804809fcbd">00051</a> <span class="keyword">def </span><a class="code" href="namespacepyss_1_1logger.html#a893657e97c3af9b66acc83804809fcbd">dump</a>(obj, objName=&quot;obj&quot;, incl=None, excl=None):
+<a name="l00052"></a>00052     r = <span class="stringliteral">&quot;&quot;</span>
+<a name="l00053"></a>00053     l = sorted(dir(obj))
+<a name="l00054"></a>00054     <span class="keywordflow">for</span> attr <span class="keywordflow">in</span> l:
+<a name="l00055"></a>00055         <span class="keywordflow">if</span> (<span class="keywordflow">not</span> attr.startswith(<span class="stringliteral">&quot;_&quot;</span>)) <span class="keywordflow">and</span> (incl <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> attr <span class="keywordflow">in</span> incl) <span class="keywordflow">and</span> ((excl <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> attr <span class="keywordflow">not</span> <span class="keywordflow">in</span> excl)):
+<a name="l00056"></a>00056             <span class="keywordflow">if</span> r:
+<a name="l00057"></a>00057                 r += <span class="stringliteral">&quot;\n&quot;</span>
+<a name="l00058"></a>00058             r += <span class="stringliteral">&quot;%s.%s = %s&quot;</span> % (objName, attr, getattr(obj, attr))
+<a name="l00059"></a>00059     <span class="keywordflow">return</span> r
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00062"></a><a class="code" href="namespacepyss_1_1logger.html#acc7ffecbba3fc8fa4ffee9eec0dc6abf">00062</a>     <span class="keyword">def </span><a class="code" href="namespacepyss_1_1logger.html#acc7ffecbba3fc8fa4ffee9eec0dc6abf">main</a>():
+<a name="l00063"></a>00063         <span class="keywordflow">print</span> <span class="stringliteral">&quot;?&quot;</span>
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

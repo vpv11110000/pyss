@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Пространство имен hypergeometric_distribution</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li class="current"><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="namespacemembers.html"><span>Члены&nbsp;пространств&nbsp;имен</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Функции</a> &#124;
+<a href="#var-members">Переменные</a>  </div>
+  <div class="headertitle">
+<h1>Пространство имен hypergeometric_distribution</h1>  </div>
+</div>
+<div class="contents">
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehypergeometric__distribution.html#ac700f0a6783c22c887b8d7fd3a0e7c7d">main</a></td></tr>
+<tr><td colspan="2"><h2><a name="var-members"></a>
+Переменные</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehypergeometric__distribution.html#a92766823ad19cdaa918ca1cbe328ef5f">DIRNAME_MODULE</a> = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))</td></tr>
+</table>
+<hr/><h2>Функции</h2>
+<a class="anchor" id="ac700f0a6783c22c887b8d7fd3a0e7c7d"></a><!-- doxytag: member="hypergeometric_distribution::main" ref="ac700f0a6783c22c887b8d7fd3a0e7c7d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def hypergeometric_distribution::main </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>См. определение в файле <a class="el" href="hypergeometric__distribution_8py_source.html">hypergeometric_distribution.py</a> строка <a class="el" href="hypergeometric__distribution_8py_source.html#l00075">75</a></p>
+
+<p><div class="fragment"><pre class="fragment"><a name="l00076"></a>00076           :
+<a name="l00077"></a>00077     logger.info(<span class="stringliteral">&quot;--- Гипергеометрические распределение ---&quot;</span>)
+<a name="l00078"></a>00078     random.seed()
+<a name="l00079"></a>00079     <span class="comment">#</span>
+<a name="l00080"></a>00080     options.flags.logTransactTrace = <span class="keyword">False</span>
+<a name="l00081"></a>00081     options.flags.reportTransactFamilies = <span class="keyword">False</span>
+<a name="l00082"></a>00082     options.flags.reportCel = <span class="keyword">False</span>
+<a name="l00083"></a>00083     <span class="comment">#</span>
+<a name="l00084"></a>00084     N=10
+<a name="l00085"></a>00085     WHITE = 5
+<a name="l00086"></a>00086     BLACK = 45
+<a name="l00087"></a>00087     <span class="comment"># совокупность</span>
+<a name="l00088"></a>00088     T=[0]*BLACK
+<a name="l00089"></a>00089     T.extend([1]*WHITE)
+<a name="l00090"></a>00090     <span class="keywordflow">print</span> T
+<a name="l00091"></a>00091     <span class="comment">#</span>
+<a name="l00092"></a>00092     MAX_TIME=24*4
+<a name="l00093"></a>00093     <span class="comment"># tables</span>
+<a name="l00094"></a>00094     <span class="keyword">def </span>argFunc_T_1(owner, transact):
+<a name="l00095"></a>00095         <span class="keywordflow">return</span> transact[TIME_CREATED]
+<a name="l00096"></a>00096     <span class="keyword">def </span>valFunc_T_1(owner, transact):
+<a name="l00097"></a>00097         l=[random.choice(T) <span class="keywordflow">for</span> x <span class="keywordflow">in</span> range(N)]
+<a name="l00098"></a>00098         <span class="keywordflow">print</span> <span class="stringliteral">&quot;Выбрано: %s&quot;</span>%str(l)
+<a name="l00099"></a>00099         <span class="keywordflow">return</span> sum(l)
+<a name="l00100"></a>00100     <span class="comment"># запускаем несколько раз на разных таблицах</span>
+<a name="l00101"></a>00101     <span class="comment"># всего 5 таблиц</span>
+<a name="l00102"></a>00102     TBL_COUNT=5
+<a name="l00103"></a>00103     tables = [table.Table(tableName=<span class="stringliteral">&quot;T_%d&quot;</span>%count, argFunc=argFunc_T_1, limitUpFirst=1, widthInt=1, countInt=MAX_TIME).setDisplaying(displaying=<span class="keyword">False</span>) <span class="keywordflow">for</span> count <span class="keywordflow">in</span> xrange(TBL_COUNT)]
+<a name="l00104"></a>00104     <span class="comment">#</span>
+<a name="l00105"></a>00105     <span class="keywordflow">for</span> tbl <span class="keywordflow">in</span> tables:
+<a name="l00106"></a>00106         logger.printLine(msg=3*<span class="stringliteral">&quot;*&quot;</span>+<span class="stringliteral">&quot; Table [%s] &quot;</span>%tbl[TITLE]+60*<span class="stringliteral">&quot;*&quot;</span>)
+<a name="l00107"></a>00107         first_tx=0 <span class="comment">#mf(None,None)</span>
+<a name="l00108"></a>00108         <span class="comment"># model</span>
+<a name="l00109"></a>00109         m = pyss_model.PyssModel()
+<a name="l00110"></a>00110         m.addTable(tbl)
+<a name="l00111"></a>00111         m.addSegment(
+<a name="l00112"></a>00112             segment.Segment()
+<a name="l00113"></a>00113             <span class="comment">#генерится см. mf()</span>
+<a name="l00114"></a>00114             .addBlock(generate.Generate(med_value=1, modificatorFunc=<span class="keywordtype">None</span>,first_tx=first_tx, max_amount=1000))
+<a name="l00115"></a>00115             .addBlock(tabulate.Tabulate(table=tbl,valFunc=valFunc_T_1))
+<a name="l00116"></a>00116             .addBlock(terminate.Terminate(deltaTerminate=0))
+<a name="l00117"></a>00117             )
+<a name="l00118"></a>00118         logger.info(str(m))
+<a name="l00119"></a>00119         m.start(terminationCount=MAX_TIME, maxTime=MAX_TIME)
+<a name="l00120"></a>00120     <span class="comment"># график занятости ОКУ</span>
+<a name="l00121"></a>00121     <span class="keyword">from</span> pyss <span class="keyword">import</span> plot_table
+<a name="l00122"></a>00122     pl=plot_table.PlotTable()
+<a name="l00123"></a>00123     pl.extend(tables)
+<a name="l00124"></a>00124     pl.plot()
+
+</pre></div></p>
+
+</div>
+</div>
+<hr/><h2>Переменные</h2>
+<a class="anchor" id="a92766823ad19cdaa918ca1cbe328ef5f"></a><!-- doxytag: member="hypergeometric_distribution::DIRNAME_MODULE" ref="a92766823ad19cdaa918ca1cbe328ef5f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="namespacehypergeometric__distribution.html#a92766823ad19cdaa918ca1cbe328ef5f">hypergeometric_distribution::DIRNAME_MODULE</a> = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>См. определение в файле <a class="el" href="hypergeometric__distribution_8py_source.html">hypergeometric_distribution.py</a> строка <a class="el" href="hypergeometric__distribution_8py_source.html#l00051">51</a></p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:13. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

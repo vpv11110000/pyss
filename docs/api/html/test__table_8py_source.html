@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл tests/test_table.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>tests/test_table.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="test__table_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacetests_1_1test__table.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="comment"># pylint: disable=line-too-long,missing-docstring,bad-whitespace</span>
+<a name="l00005"></a>00005 
+<a name="l00006"></a>00006 <span class="keyword">import</span> sys
+<a name="l00007"></a>00007 <span class="keyword">import</span> os
+<a name="l00008"></a>00008 <span class="keyword">import</span> unittest
+<a name="l00009"></a>00009 <span class="keyword">import</span> random
+<a name="l00010"></a>00010 
+<a name="l00011"></a><a class="code" href="namespacetests_1_1test__table.html#a722a5fb5e016c530b530b809c80b437f">00011</a> DIRNAME_MODULE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))) + os.sep
+<a name="l00012"></a>00012 sys.path.append(DIRNAME_MODULE)
+<a name="l00013"></a>00013 sys.path.append(DIRNAME_MODULE + <span class="stringliteral">&quot;pyss&quot;</span> + os.sep)
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00016"></a>00016 <span class="keyword">from</span> pyss.pyss_model <span class="keyword">import</span> PyssModel
+<a name="l00017"></a>00017 <span class="keyword">from</span> pyss.segment <span class="keyword">import</span> Segment
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 <span class="keyword">from</span> pyss.generate <span class="keyword">import</span> Generate
+<a name="l00020"></a>00020 <span class="keyword">from</span> pyss.terminate <span class="keyword">import</span> Terminate
+<a name="l00021"></a>00021 <span class="keyword">from</span> pyss <span class="keyword">import</span> logger
+<a name="l00022"></a>00022 <span class="keyword">from</span> pyss.table <span class="keyword">import</span> Table
+<a name="l00023"></a>00023 <span class="keyword">from</span> pyss.handle <span class="keyword">import</span> Handle
+<a name="l00024"></a>00024 <span class="keyword">from</span> pyss.enter <span class="keyword">import</span> Enter
+<a name="l00025"></a>00025 <span class="keyword">from</span> pyss.leave <span class="keyword">import</span> Leave
+<a name="l00026"></a>00026 <span class="keyword">from</span> pyss.table <span class="keyword">import</span> Table
+<a name="l00027"></a>00027 <span class="keyword">from</span> pyss.advance <span class="keyword">import</span> Advance
+<a name="l00028"></a>00028 <span class="keyword">from</span> pyss.preempt <span class="keyword">import</span> Preempt
+<a name="l00029"></a>00029 <span class="keyword">from</span> pyss.g_return <span class="keyword">import</span> GReturn
+<a name="l00030"></a>00030 <span class="keyword">from</span> pyss.facility <span class="keyword">import</span> Facility
+<a name="l00031"></a>00031 <span class="keyword">from</span> pyss.seize <span class="keyword">import</span> Seize
+<a name="l00032"></a>00032 <span class="keyword">from</span> pyss.release <span class="keyword">import</span> Release
+<a name="l00033"></a>00033 <span class="keyword">from</span> pyss.transfer <span class="keyword">import</span> Transfer
+<a name="l00034"></a>00034 <span class="keyword">from</span> pyss.test <span class="keyword">import</span> Test
+<a name="l00035"></a>00035 <span class="keyword">from</span> pyss.queue <span class="keyword">import</span> Queue
+<a name="l00036"></a>00036 <span class="keyword">from</span> pyss.depart <span class="keyword">import</span> Depart
+<a name="l00037"></a>00037 <span class="keyword">from</span> pyss.split <span class="keyword">import</span> Split
+<a name="l00038"></a>00038 <span class="keyword">from</span> pyss.transact <span class="keyword">import</span> Transact
+<a name="l00039"></a>00039 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html">00041</a> <span class="keyword">class </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html">TestTable</a>(unittest.TestCase):
+<a name="l00042"></a>00042 
+<a name="l00043"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#adf6c55eff105cc2bc3ef4d16b9900c8b">00043</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#adf6c55eff105cc2bc3ef4d16b9900c8b">setUp</a>(self):
+<a name="l00044"></a>00044         <span class="keywordflow">pass</span>
+<a name="l00045"></a>00045 
+<a name="l00046"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#af5977b567e663f111e75ea57ed85d6ae">00046</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#af5977b567e663f111e75ea57ed85d6ae">tearDown</a>(self):
+<a name="l00047"></a>00047         <span class="keywordflow">pass</span>
+<a name="l00048"></a>00048     
+<a name="l00049"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a8d25d80e4f6134e5179b41bf59e8cfe4">00049</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a8d25d80e4f6134e5179b41bf59e8cfe4">test_init_001</a>(self):
+<a name="l00050"></a>00050         <span class="comment">#</span>
+<a name="l00051"></a>00051         with self.assertRaises(pyssobject.ErrorIsNone) <span class="keyword">as</span> context:
+<a name="l00052"></a>00052             Table(<span class="keywordtype">None</span>, tableName=<span class="stringliteral">&quot;T1&quot;</span>, argFunc=<span class="keyword">lambda</span> o, t: <span class="stringliteral">&quot;P1&quot;</span>, limitUpFirst=1.0, widthInt=1.0, countInt=20)
+<a name="l00053"></a>00053 
+<a name="l00054"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#abb991785403e31ea70eea9646154b263">00054</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#abb991785403e31ea70eea9646154b263">test_init_002</a>(self):
+<a name="l00055"></a>00055         m = PyssModel(optionz=<span class="keywordtype">None</span>)
+<a name="l00056"></a>00056         m[OPTIONS].setAllFalse()
+<a name="l00057"></a>00057         <span class="comment">#</span>
+<a name="l00058"></a>00058         Table(m, tableName=<span class="stringliteral">&quot;T1&quot;</span>, argFunc=<span class="keyword">lambda</span> o, t: <span class="stringliteral">&quot;P1&quot;</span>, limitUpFirst=1.0, widthInt=1.0, countInt=20)      
+<a name="l00059"></a>00059     
+<a name="l00060"></a>00060 
+<a name="l00061"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a577a3bf97668e55733bd46dadf9c7203">00061</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a577a3bf97668e55733bd46dadf9c7203">test_001</a>(self):
+<a name="l00062"></a>00062         logger.info(<span class="stringliteral">&quot;--- test_001 ----------------------------------&quot;</span>)
+<a name="l00063"></a>00063         m = PyssModel(optionz=<span class="keywordtype">None</span>)
+<a name="l00064"></a>00064         m[OPTIONS].setAllFalse()
+<a name="l00065"></a>00065         
+<a name="l00066"></a>00066         with self.assertRaises(Exception) <span class="keyword">as</span> e:
+<a name="l00067"></a>00067             Table(m, tableName=<span class="keywordtype">None</span>, argFunc=<span class="keywordtype">None</span>, limitUpFirst=<span class="keywordtype">None</span>, widthInt=<span class="keywordtype">None</span>, countInt=<span class="keywordtype">None</span>)
+<a name="l00068"></a>00068 
+<a name="l00069"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a0cf4adde47b109f81f4d8774fc988dcf">00069</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a0cf4adde47b109f81f4d8774fc988dcf">test_002</a>(self):
+<a name="l00070"></a>00070         logger.info(<span class="stringliteral">&quot;--- test_002 ----------------------------------&quot;</span>)
+<a name="l00071"></a>00071         m = PyssModel(optionz=<span class="keywordtype">None</span>)
+<a name="l00072"></a>00072         m[OPTIONS].setAllFalse()
+<a name="l00073"></a>00073         
+<a name="l00074"></a>00074         with self.assertRaises(Exception) <span class="keyword">as</span> e:
+<a name="l00075"></a>00075             Table(m, tableName=<span class="stringliteral">&quot;table_stat&quot;</span>, argFunc=<span class="stringliteral">&quot;P1&quot;</span>, limitUpFirst=1, widthInt=0, countInt=2)
+<a name="l00076"></a>00076 
+<a name="l00077"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a7e08609fa33a09c302d4907422e864ed">00077</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a7e08609fa33a09c302d4907422e864ed">test_003</a>(self):
+<a name="l00078"></a>00078         logger.info(<span class="stringliteral">&quot;--- test_003 ----------------------------------&quot;</span>)
+<a name="l00079"></a>00079         
+<a name="l00080"></a>00080         m = PyssModel(optionz=<span class="keywordtype">None</span>)
+<a name="l00081"></a>00081         m[OPTIONS].setAllFalse()
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083         <span class="keyword">def </span>argFunc(owner, transact):
+<a name="l00084"></a>00084             <span class="keywordflow">return</span> random.randint(1, 9)
+<a name="l00085"></a>00085         tbl = Table(m, tableName=<span class="stringliteral">&quot;table_stat&quot;</span>, argFunc=argFunc, limitUpFirst=<span class="keywordtype">None</span>, widthInt=<span class="keywordtype">None</span>, countInt=<span class="keywordtype">None</span>)
+<a name="l00086"></a>00086         timeCreated = 0
+<a name="l00087"></a>00087         <span class="keywordflow">while</span> timeCreated &lt; 1000:
+<a name="l00088"></a>00088             t = Transact(<span class="keywordtype">None</span>, timeCreated, priority=0)
+<a name="l00089"></a>00089             <span class="comment"># t[P1]=0.1</span>
+<a name="l00090"></a>00090             tbl.handleTransact(t, coef=1)
+<a name="l00091"></a>00091             timeCreated += 1
+<a name="l00092"></a>00092         logger.info(tbl.table2str())
+<a name="l00093"></a>00093 
+<a name="l00094"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a202785d59e111be82a571e256c0bc818">00094</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a202785d59e111be82a571e256c0bc818">test_004</a>(self):
+<a name="l00095"></a>00095         logger.info(<span class="stringliteral">&quot;--- test_004 ----------------------------------&quot;</span>)
+<a name="l00096"></a>00096         
+<a name="l00097"></a>00097         m = PyssModel(optionz=<span class="keywordtype">None</span>)
+<a name="l00098"></a>00098         m[OPTIONS].setAllFalse()
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100         ARGUMENT = <span class="stringliteral">&quot;ARGUMENT&quot;</span>
+<a name="l00101"></a>00101         <span class="keyword">def </span>argFunc(owner, tranzact):
+<a name="l00102"></a>00102             <span class="keywordflow">return</span> tranzact[ARGUMENT]
+<a name="l00103"></a>00103         tbl = Table(m, tableName=<span class="stringliteral">&quot;table_stat&quot;</span>, argFunc=argFunc, limitUpFirst=1.0, widthInt=1.0, countInt=10)
+<a name="l00104"></a>00104         
+<a name="l00105"></a>00105         <span class="keywordflow">for</span> timeCreated <span class="keywordflow">in</span> xrange(1, 7):
+<a name="l00106"></a>00106             t = Transact(<span class="keywordtype">None</span>, timeCreated, priority=0)
+<a name="l00107"></a>00107             t[NUM] = timeCreated
+<a name="l00108"></a>00108             t[ARGUMENT] = timeCreated % 7
+<a name="l00109"></a>00109             <span class="comment"># t[P1]=0.1</span>
+<a name="l00110"></a>00110             tbl.handleTransact(t, coef=1)
+<a name="l00111"></a>00111         
+<a name="l00112"></a>00112         self.assertEqual(tbl[INTERVALS][POSITIVE_INFINITY], 0, <span class="stringliteral">&quot;tbl[INTERVALS][POSITIVE_INFINITY], 0&quot;</span>)
+<a name="l00113"></a>00113         self.assertEqual(tbl[INTERVALS][NEGATIVE_INFINITY], 0, <span class="stringliteral">&quot;tbl[INTERVALS][NEGATIVE_INFINITY], 0&quot;</span>)
+<a name="l00114"></a>00114         
+<a name="l00115"></a>00115         self.assertListEqual(tbl[LIST], [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+<a name="l00116"></a>00116         l = tbl[LIST]
+<a name="l00117"></a>00117         <span class="keywordflow">for</span> z <span class="keywordflow">in</span> l:
+<a name="l00118"></a>00118             y = tbl[INTERVALS][z]
+<a name="l00119"></a>00119             <span class="keywordflow">if</span> (z&gt;1) <span class="keywordflow">and</span> (z &lt; 8):
+<a name="l00120"></a>00120                 self.assertEqual(y, 1, <span class="stringliteral">&quot;x=%f y=%f&quot;</span> % (z, y))
+<a name="l00121"></a>00121             <span class="keywordflow">else</span>:
+<a name="l00122"></a>00122                 self.assertEqual(y, 0)
+<a name="l00123"></a>00123 
+<a name="l00124"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#aac3fbeecd13df1679a14482b10517ff5">00124</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#aac3fbeecd13df1679a14482b10517ff5">test_005</a>(self):
+<a name="l00125"></a>00125         logger.info(<span class="stringliteral">&quot;--- test_005 ----------------------------------&quot;</span>)
+<a name="l00126"></a>00126         m = PyssModel(optionz=<span class="keywordtype">None</span>)
+<a name="l00127"></a>00127         m[OPTIONS].setAllFalse()
+<a name="l00128"></a>00128         
+<a name="l00129"></a>00129         <span class="keyword">def </span>argFunc(owner, transact):
+<a name="l00130"></a>00130             <span class="keywordflow">return</span> random.randint(1, 8)
+<a name="l00131"></a>00131         tbl = Table(m, tableName=<span class="stringliteral">&quot;table_stat&quot;</span>, argFunc=argFunc, limitUpFirst=2, widthInt=1, countInt=8)
+<a name="l00132"></a>00132         timeCreated = 0
+<a name="l00133"></a>00133         <span class="keywordflow">while</span> timeCreated &lt; 1000:
+<a name="l00134"></a>00134             t = Transact(<span class="keywordtype">None</span>, timeCreated, priority=0)
+<a name="l00135"></a>00135             <span class="comment"># t[P1]=0.1</span>
+<a name="l00136"></a>00136             tbl.handleTransact(t, coef=1)
+<a name="l00137"></a>00137             timeCreated += 1
+<a name="l00138"></a>00138         logger.info(tbl.table2str())
+<a name="l00139"></a>00139 
+<a name="l00140"></a><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a332eca0d5768be4f7905ba6c623d93af">00140</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__table_1_1_test_table.html#a332eca0d5768be4f7905ba6c623d93af">test_006</a>(self):
+<a name="l00141"></a>00141         logger.info(<span class="stringliteral">&quot;--- test_006 ----------------------------------&quot;</span>)
+<a name="l00142"></a>00142         m = PyssModel(optionz=<span class="keywordtype">None</span>)
+<a name="l00143"></a>00143         m[OPTIONS].setAllFalse()
+<a name="l00144"></a>00144         <span class="keyword">def </span>argFunc(owner, transact):
+<a name="l00145"></a>00145             <span class="keywordflow">return</span> random.randint(1, 2)
+<a name="l00146"></a>00146         tbl = Table(m, tableName=<span class="stringliteral">&quot;table_stat&quot;</span>, argFunc=argFunc, limitUpFirst=2, widthInt=1, countInt=1)
+<a name="l00147"></a>00147         timeCreated = 0
+<a name="l00148"></a>00148         <span class="keywordflow">while</span> timeCreated &lt; 1000:
+<a name="l00149"></a>00149             t = Transact(<span class="keywordtype">None</span>, timeCreated, priority=0)
+<a name="l00150"></a>00150             <span class="comment"># t[P1]=0.1</span>
+<a name="l00151"></a>00151             tbl.handleTransact(t, coef=1)
+<a name="l00152"></a>00152             timeCreated += 1
+<a name="l00153"></a>00153         logger.info(tbl.table2str())
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00156"></a>00156     unittest.main(module=<span class="stringliteral">&quot;test_table&quot;</span>)
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

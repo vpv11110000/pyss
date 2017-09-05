@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл pyss/queue_event_by_time.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>pyss/queue_event_by_time.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="queue__event__by__time_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacepyss_1_1queue__event__by__time.html">00001</a> <span class="comment"># #!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00005"></a>00005 <span class="stringliteral">Модуль с классом очереди транзактов, упорядоченной по времени</span>
+<a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment"># pylint: disable=line-too-long</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00011"></a>00011 
+<a name="l00012"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html">00012</a> <span class="keyword">class </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html">QueueEventByTime</a>(object):
+<a name="l00013"></a>00013     <span class="stringliteral">&quot;&quot;&quot;Очередь транзактов, упорядоченная по времени</span>
+<a name="l00014"></a>00014 <span class="stringliteral"></span>
+<a name="l00015"></a>00015 <span class="stringliteral">    Фактор упорядочивания определяется значением transact[SCHEDULED_TIME]</span>
+<a name="l00016"></a>00016 <span class="stringliteral"></span>
+<a name="l00017"></a>00017 <span class="stringliteral">    &quot;&quot;&quot;</span>
+<a name="l00018"></a>00018 
+<a name="l00019"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#ae4be8739da3c301ff604df9d12858e13">00019</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#ae4be8739da3c301ff604df9d12858e13">__init__</a>(self, reverse=False):
+<a name="l00020"></a>00020         <span class="keywordflow">if</span> reverse <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="keyword">True</span>, <span class="keyword">False</span>]:
+<a name="l00021"></a>00021             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;reverse must in [True, False]&quot;</span>)
+<a name="l00022"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">00022</a>         self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a> = []
+<a name="l00023"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a8a44f1506096e9e67b3864f0e7965eb6">00023</a>         self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a8a44f1506096e9e67b3864f0e7965eb6">reverse</a> = reverse
+<a name="l00024"></a>00024 
+<a name="l00025"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#aa61bf3d9159c99eb79473bcb99f8c20d">00025</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#aa61bf3d9159c99eb79473bcb99f8c20d">isEmpty</a>(self):
+<a name="l00026"></a>00026         <span class="keywordflow">return</span> len(self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>) == 0
+<a name="l00027"></a>00027 
+<a name="l00028"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a25603ce35846e37dcea9446ebb2d4ed2">00028</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a25603ce35846e37dcea9446ebb2d4ed2">put</a>(self, transact):
+<a name="l00029"></a>00029         <span class="keywordflow">if</span> transact[SCHEDULED_TIME] <span class="keywordflow">is</span> <span class="keywordtype">None</span>:
+<a name="l00030"></a>00030             <span class="keywordflow">raise</span> Exception(<span class="stringliteral">&quot;transact[SCHEDULED_TIME] is None&quot;</span>)
+<a name="l00031"></a>00031         self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>.append(transact)
+<a name="l00032"></a>00032 
+<a name="l00033"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a69c7f2f3c69824068c2b38ccf4e3064a">00033</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a69c7f2f3c69824068c2b38ccf4e3064a">_keyFunc</a>(self,t):
+<a name="l00034"></a>00034         <span class="keywordflow">return</span> t[SCHEDULED_TIME]
+<a name="l00035"></a>00035     
+<a name="l00036"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#aff3568f955a0b8bf98ff75284bd679e4">00036</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#aff3568f955a0b8bf98ff75284bd679e4">clear</a>(self):
+<a name="l00037"></a>00037         self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>[:] = []        
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a1e5b059a239a53a27806baa1760860a0">00039</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a1e5b059a239a53a27806baa1760860a0">first</a>(self):
+<a name="l00040"></a>00040         <span class="keywordflow">if</span> self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>:
+<a name="l00041"></a>00041             <span class="keywordflow">if</span> self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a8a44f1506096e9e67b3864f0e7965eb6">reverse</a> <span class="keywordflow">is</span> <span class="keyword">False</span>:
+<a name="l00042"></a>00042                 <span class="keywordflow">return</span> min(self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>, key=self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a69c7f2f3c69824068c2b38ccf4e3064a">_keyFunc</a>)
+<a name="l00043"></a>00043             <span class="keywordflow">else</span>:
+<a name="l00044"></a>00044                 <span class="keywordflow">return</span> max(self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>, key=self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a69c7f2f3c69824068c2b38ccf4e3064a">_keyFunc</a>)
+<a name="l00045"></a>00045         <span class="keywordflow">else</span>:
+<a name="l00046"></a>00046             <span class="keywordflow">return</span> <span class="keywordtype">None</span>
+<a name="l00047"></a>00047 
+<a name="l00048"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a02827a7a440b38241889206dae3b264d">00048</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a02827a7a440b38241889206dae3b264d">remove</a>(self, transact):
+<a name="l00049"></a>00049         <span class="keywordflow">if</span> transact <span class="keywordflow">in</span> self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>:
+<a name="l00050"></a>00050             self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>.remove(transact)
+<a name="l00051"></a>00051 
+<a name="l00052"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a86dd5cd5c627ef68017c25c5c8c68d85">00052</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a86dd5cd5c627ef68017c25c5c8c68d85">findByTime</a>(self, currentTime):
+<a name="l00053"></a>00053         rv = <span class="keywordtype">None</span>
+<a name="l00054"></a>00054         t = self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a1e5b059a239a53a27806baa1760860a0">first</a>()
+<a name="l00055"></a>00055         <span class="keywordflow">if</span> t:
+<a name="l00056"></a>00056             <span class="keywordflow">if</span> t[SCHEDULED_TIME] &lt;= currentTime:
+<a name="l00057"></a>00057                 rv = t
+<a name="l00058"></a>00058         <span class="keywordflow">return</span> rv
+<a name="l00059"></a>00059 
+<a name="l00060"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#aedd670e0d79f3e4ad583c80f82191e5a">00060</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#aedd670e0d79f3e4ad583c80f82191e5a">extractByTime</a>(self, currentTime):
+<a name="l00061"></a>00061         rv = self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a1e5b059a239a53a27806baa1760860a0">first</a>()
+<a name="l00062"></a>00062         <span class="keywordflow">if</span> rv:
+<a name="l00063"></a>00063             <span class="keywordflow">if</span> rv[SCHEDULED_TIME] &lt;= currentTime:
+<a name="l00064"></a>00064                 self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a02827a7a440b38241889206dae3b264d">remove</a>(rv)
+<a name="l00065"></a>00065             <span class="keywordflow">else</span>:
+<a name="l00066"></a>00066                 rv = <span class="keywordtype">None</span>
+<a name="l00067"></a>00067         <span class="keywordflow">return</span> rv
+<a name="l00068"></a>00068 
+<a name="l00069"></a><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a1c2fca68620e6e95dc8dbac157acb7cf">00069</a>     <span class="keyword">def </span><a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a1c2fca68620e6e95dc8dbac157acb7cf">__str__</a>(self):
+<a name="l00070"></a>00070         so = sorted(self.<a class="code" href="classpyss_1_1queue__event__by__time_1_1_queue_event_by_time.html#a629fbf866936a05284e2184e25c6da48">transactList</a>,
+<a name="l00071"></a>00071                     cmp=<span class="keyword">lambda</span> a, b:(-1 <span class="keywordflow">if</span> a[SCHEDULED_TIME] &lt; b[SCHEDULED_TIME] 
+<a name="l00072"></a>00072                                      <span class="keywordflow">else</span> 1 <span class="keywordflow">if</span> a[SCHEDULED_TIME] &lt; b[SCHEDULED_TIME] <span class="keywordflow">else</span> 0))
+<a name="l00073"></a>00073         s = <span class="stringliteral">&quot;\n&quot;</span>.join([str(t) <span class="keywordflow">for</span> t <span class="keywordflow">in</span> so])
+<a name="l00074"></a>00074         <span class="keywordflow">return</span> s
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00077"></a><a class="code" href="namespacepyss_1_1queue__event__by__time.html#ac10e6ad3796ff4f10d4cb5eed1125102">00077</a>     <span class="keyword">def </span><a class="code" href="namespacepyss_1_1queue__event__by__time.html#ac10e6ad3796ff4f10d4cb5eed1125102">main</a>():
+<a name="l00078"></a>00078         <span class="keywordflow">print</span> <span class="stringliteral">&quot;?&quot;</span>
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080     main()
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

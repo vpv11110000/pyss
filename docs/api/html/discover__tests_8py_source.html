@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл discover_tests.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>discover_tests.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="discover__tests_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacediscover__tests.html">00001</a> <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00002"></a>00002 
+<a name="l00003"></a>00003 <span class="keyword">import</span> os
+<a name="l00004"></a>00004 <span class="keyword">import</span> sys
+<a name="l00005"></a>00005 <span class="keyword">import</span> unittest
+<a name="l00006"></a>00006 
+<a name="l00007"></a><a class="code" href="namespacediscover__tests.html#a7174c2e06c7baaf4defba86b37c7a907">00007</a> <span class="keyword">def </span><a class="code" href="namespacediscover__tests.html#a7174c2e06c7baaf4defba86b37c7a907">additional_tests</a>():
+<a name="l00008"></a>00008     setup_file = sys.modules[<span class="stringliteral">&#39;__main__&#39;</span>].__file__
+<a name="l00009"></a>00009     setup_dir = os.path.abspath(os.path.dirname(setup_file))
+<a name="l00010"></a>00010     <span class="keywordflow">return</span> unittest.defaultTestLoader.discover(setup_dir)
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

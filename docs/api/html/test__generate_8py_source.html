@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PySS: Исходный файл tests/test_generate.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Создано системой Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Титульная&nbsp;страница</span></a></li>
+      <li><a href="namespaces.html"><span>Пространства&nbsp;имен</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>tests/test_generate.py</h1>  </div>
+</div>
+<div class="contents">
+<a href="test__generate_8py.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a><a class="code" href="namespacetests_1_1test__generate.html">00001</a> <span class="comment">##!/usr/bin/python</span>
+<a name="l00002"></a>00002 <span class="comment"># -*- coding: utf-8 -*-</span>
+<a name="l00003"></a>00003 
+<a name="l00004"></a>00004 <span class="keyword">import</span> sys
+<a name="l00005"></a>00005 <span class="keyword">import</span> os
+<a name="l00006"></a>00006 <span class="keyword">import</span> random
+<a name="l00007"></a>00007 <span class="keyword">import</span> unittest
+<a name="l00008"></a>00008 
+<a name="l00009"></a><a class="code" href="namespacetests_1_1test__generate.html#a4e2e3864351d79ca192e19800a4cca1c">00009</a> DIRNAME_MODULE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))) + os.sep
+<a name="l00010"></a>00010 sys.path.append(DIRNAME_MODULE)
+<a name="l00011"></a>00011 sys.path.append(DIRNAME_MODULE + <span class="stringliteral">&quot;pyss&quot;</span> + os.sep)
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="keyword">from</span> pyss.pyss_const <span class="keyword">import</span> *
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="keyword">from</span> pyss <span class="keyword">import</span> pyssobject
+<a name="l00016"></a>00016 <span class="keyword">from</span> pyss.pyss_model <span class="keyword">import</span> PyssModel
+<a name="l00017"></a>00017 <span class="keyword">from</span> pyss.segment <span class="keyword">import</span> Segment 
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 <span class="keyword">from</span> pyss.generate <span class="keyword">import</span> Generate
+<a name="l00020"></a>00020 <span class="keyword">from</span> pyss.terminate <span class="keyword">import</span> Terminate
+<a name="l00021"></a>00021 <span class="keyword">from</span> pyss.handle <span class="keyword">import</span> Handle
+<a name="l00022"></a>00022 <span class="keyword">from</span> pyss.advance <span class="keyword">import</span> Advance
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="keyword">from</span> pyss <span class="keyword">import</span> logger
+<a name="l00025"></a>00025 <span class="keyword">from</span> pyss <span class="keyword">import</span> options
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 
+<a name="l00028"></a><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html">00028</a> <span class="keyword">class </span><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html">TestGenerate</a>(unittest.TestCase):
+<a name="l00029"></a>00029 
+<a name="l00030"></a><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#a160c68329a1e59d8fdd06df30de3d52d">00030</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#a160c68329a1e59d8fdd06df30de3d52d">test_init_001</a>(self):
+<a name="l00031"></a>00031         <span class="comment">#</span>
+<a name="l00032"></a>00032         with self.assertRaises(pyssobject.ErrorIsNone) <span class="keyword">as</span> context:
+<a name="l00033"></a>00033             Generate(<span class="keywordtype">None</span>, med_value=1, modificatorFunc=<span class="keywordtype">None</span>, first_tx=0, max_amount=<span class="keywordtype">None</span>, priority=1)
+<a name="l00034"></a>00034 
+<a name="l00035"></a><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#a6234240ea1b3b540ea7f99c1e6ced5f5">00035</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#a6234240ea1b3b540ea7f99c1e6ced5f5">test_init_002</a>(self):
+<a name="l00036"></a>00036         m = PyssModel(optionz=<span class="keywordtype">None</span>)
+<a name="l00037"></a>00037         m[OPTIONS].setAllFalse()
+<a name="l00038"></a>00038         sgm = Segment(m)
+<a name="l00039"></a>00039         <span class="comment">#</span>
+<a name="l00040"></a>00040         Generate(sgm, med_value=1, modificatorFunc=<span class="keywordtype">None</span>, first_tx=0, max_amount=<span class="keywordtype">None</span>, priority=1)   
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     <span class="comment">#@unittest.skip(&quot;test_generate_001&quot;)</span>
+<a name="l00043"></a><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#a8c13dc365aca2eb413417579703db1a4">00043</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#a8c13dc365aca2eb413417579703db1a4">test_generate_001</a>(self):
+<a name="l00044"></a>00044         logger.info(<span class="stringliteral">&quot;--- test_generate_001 ----------------------------------&quot;</span>)
+<a name="l00045"></a>00045         
+<a name="l00046"></a>00046         <span class="comment">### MODEL ------------------------</span>
+<a name="l00047"></a>00047         m = PyssModel()
+<a name="l00048"></a>00048         sgm = Segment(m)
+<a name="l00049"></a>00049         <span class="comment">#</span>
+<a name="l00050"></a>00050         
+<a name="l00051"></a>00051         g = Generate(sgm, med_value=1,
+<a name="l00052"></a>00052                      modificatorFunc=<span class="keywordtype">None</span>,
+<a name="l00053"></a>00053                      first_tx=0,max_amount=5,
+<a name="l00054"></a>00054                      priority=0)
+<a name="l00055"></a>00055         logger.info(str(g))
+<a name="l00056"></a>00056         currentTime=0
+<a name="l00057"></a>00057         maxTime = 10
+<a name="l00058"></a>00058         deltaTime=1        
+<a name="l00059"></a>00059         <span class="keywordflow">while</span> currentTime&lt;maxTime:
+<a name="l00060"></a>00060             logger.info(<span class="stringliteral">&quot;Time: [%d]&quot;</span>%currentTime)
+<a name="l00061"></a>00061             <span class="keywordflow">if</span> currentTime&lt;5:
+<a name="l00062"></a>00062                 self.assertTrue(g[ENABLED])
+<a name="l00063"></a>00063             <span class="keywordflow">else</span>:
+<a name="l00064"></a>00064                 self.assertFalse(g[ENABLED])
+<a name="l00065"></a>00065             t=g.generateTransact(currentTime)
+<a name="l00066"></a>00066             <span class="keywordflow">if</span> currentTime&lt;4:
+<a name="l00067"></a>00067                 self.assertTrue(g[ENABLED])
+<a name="l00068"></a>00068             <span class="keywordflow">else</span>:
+<a name="l00069"></a>00069                 self.assertFalse(g[ENABLED])
+<a name="l00070"></a>00070             <span class="keywordflow">if</span> currentTime&lt;5:
+<a name="l00071"></a>00071                 self.assertTrue(bool(t))
+<a name="l00072"></a>00072             <span class="keywordflow">else</span>:
+<a name="l00073"></a>00073                 self.assertEqual(t, <span class="keywordtype">None</span>)
+<a name="l00074"></a>00074             logger.info(str(t))
+<a name="l00075"></a>00075             currentTime+=deltaTime
+<a name="l00076"></a>00076         logger.info(<span class="stringliteral">&quot;--- STOP test_generate_001 -----&quot;</span>)
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078     <span class="comment">#@unittest.skip(&quot;test_generate_002&quot;)</span>
+<a name="l00079"></a><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#af187d52201f27b110642eec130c5e521">00079</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#af187d52201f27b110642eec130c5e521">test_generate_002</a>(self):
+<a name="l00080"></a>00080         logger.info(<span class="stringliteral">&quot;--- test_generate_002 ----------------------------------&quot;</span>)
+<a name="l00081"></a>00081         <span class="comment">### MODEL ------------------------</span>
+<a name="l00082"></a>00082         m = PyssModel()
+<a name="l00083"></a>00083         sgm = Segment(m)
+<a name="l00084"></a>00084         <span class="comment">#</span>
+<a name="l00085"></a>00085         g = Generate(sgm, med_value=2,
+<a name="l00086"></a>00086                      modificatorFunc=<span class="keywordtype">None</span>,
+<a name="l00087"></a>00087                      first_tx=0,
+<a name="l00088"></a>00088                      max_amount=5,
+<a name="l00089"></a>00089                      priority=0,
+<a name="l00090"></a>00090                      label=<span class="keywordtype">None</span>)
+<a name="l00091"></a>00091         logger.info(str(g))
+<a name="l00092"></a>00092         currentTime=0
+<a name="l00093"></a>00093         maxTime = 20
+<a name="l00094"></a>00094         deltaTime=1
+<a name="l00095"></a>00095         countGenetatedTransact=0
+<a name="l00096"></a>00096         <span class="keywordflow">while</span> currentTime&lt;maxTime:
+<a name="l00097"></a>00097             logger.info(<span class="stringliteral">&quot;Time: [%d]&quot;</span>%currentTime)
+<a name="l00098"></a>00098             <span class="keywordflow">if</span> currentTime&lt;9:
+<a name="l00099"></a>00099                 self.assertTrue(g[ENABLED])
+<a name="l00100"></a>00100             <span class="keywordflow">else</span>:
+<a name="l00101"></a>00101                 self.assertFalse(g[ENABLED])
+<a name="l00102"></a>00102             t=g.generateTransact(currentTime)
+<a name="l00103"></a>00103             <span class="keywordflow">if</span> currentTime&lt;8:
+<a name="l00104"></a>00104                 self.assertTrue(g[ENABLED])
+<a name="l00105"></a>00105             <span class="keywordflow">else</span>:
+<a name="l00106"></a>00106                 self.assertFalse(g[ENABLED])
+<a name="l00107"></a>00107             
+<a name="l00108"></a>00108             <span class="keywordflow">if</span> currentTime&lt;9 <span class="keywordflow">and</span> (currentTime % 2)==0:
+<a name="l00109"></a>00109                 self.assertTrue(bool(t))
+<a name="l00110"></a>00110                 countGenetatedTransact+=1
+<a name="l00111"></a>00111             <span class="keywordflow">else</span>:
+<a name="l00112"></a>00112                 self.assertEqual(t, <span class="keywordtype">None</span>)
+<a name="l00113"></a>00113             logger.info(str(t))
+<a name="l00114"></a>00114             currentTime+=deltaTime
+<a name="l00115"></a>00115         self.assertEqual(countGenetatedTransact, 5)
+<a name="l00116"></a>00116         logger.info(<span class="stringliteral">&quot;--- STOP test_generate_002 ------------&quot;</span>)
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118     <span class="comment">#@unittest.skip(&quot;test_generate_003&quot;)</span>
+<a name="l00119"></a><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#ac9cc1913b60d555d92df82db14c62947">00119</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#ac9cc1913b60d555d92df82db14c62947">test_generate_003</a>(self):
+<a name="l00120"></a>00120         logger.info(<span class="stringliteral">&quot;--- test_generate_003 ----------------------------------&quot;</span>)
+<a name="l00121"></a>00121         <span class="comment">### MODEL ------------------------</span>
+<a name="l00122"></a>00122         m = PyssModel()
+<a name="l00123"></a>00123         sgm = Segment(m)
+<a name="l00124"></a>00124         <span class="comment">#</span>
+<a name="l00125"></a>00125         g = Generate(sgm, med_value=<span class="keywordtype">None</span>,
+<a name="l00126"></a>00126                      modificatorFunc=<span class="keywordtype">None</span>,
+<a name="l00127"></a>00127                      first_tx=3,
+<a name="l00128"></a>00128                      max_amount=1,
+<a name="l00129"></a>00129                      priority=0,
+<a name="l00130"></a>00130                      label=<span class="keywordtype">None</span>)
+<a name="l00131"></a>00131         logger.info(str(g))
+<a name="l00132"></a>00132         currentTime=0
+<a name="l00133"></a>00133         maxTime = 20
+<a name="l00134"></a>00134         deltaTime=1
+<a name="l00135"></a>00135         result_CountGenetatedTransact=0
+<a name="l00136"></a>00136         result_first_tx=<span class="keywordtype">None</span>
+<a name="l00137"></a>00137         
+<a name="l00138"></a>00138         <span class="keywordflow">while</span> currentTime&lt;maxTime:
+<a name="l00139"></a>00139             logger.info(<span class="stringliteral">&quot;Time: [%d]&quot;</span>%currentTime)
+<a name="l00140"></a>00140             t=g.generateTransact(currentTime)
+<a name="l00141"></a>00141             
+<a name="l00142"></a>00142             <span class="keywordflow">if</span> currentTime==3:
+<a name="l00143"></a>00143                 self.assertTrue(bool(t))
+<a name="l00144"></a>00144                 result_CountGenetatedTransact+=1
+<a name="l00145"></a>00145                 result_first_tx=currentTime
+<a name="l00146"></a>00146             <span class="keywordflow">else</span>:
+<a name="l00147"></a>00147                 self.assertEqual(t, <span class="keywordtype">None</span>)
+<a name="l00148"></a>00148             logger.info(str(t))
+<a name="l00149"></a>00149             currentTime+=deltaTime
+<a name="l00150"></a>00150         self.assertEqual(result_CountGenetatedTransact, 1)
+<a name="l00151"></a>00151         self.assertEqual(result_first_tx, 3)
+<a name="l00152"></a>00152         logger.info(<span class="stringliteral">&quot;--- STOP test_generate_003 ------------&quot;</span>)
+<a name="l00153"></a>00153 
+<a name="l00154"></a><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#aeae59a4841bd4f7ab99d11a0c19d238e">00154</a>     <span class="keyword">def </span><a class="code" href="classtests_1_1test__generate_1_1_test_generate.html#aeae59a4841bd4f7ab99d11a0c19d238e">test_generate_004</a>(self):
+<a name="l00155"></a>00155         logger.info(<span class="stringliteral">&quot;--- test_generate_004 ----------------------------------&quot;</span>)
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157         <span class="comment">### MODEL ------------------------</span>
+<a name="l00158"></a>00158         m = PyssModel()
+<a name="l00159"></a>00159         sgm = Segment(m)
+<a name="l00160"></a>00160         <span class="comment">#</span>
+<a name="l00161"></a>00161         m[OPTIONS].setAllFalse()
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163         MAX_TIME = 20
+<a name="l00164"></a>00164         <span class="comment">#</span>
+<a name="l00165"></a>00165         LIST_OF_TIMES=[1.1,2.1,3.1]
+<a name="l00166"></a>00166         <span class="comment"># FOR TEST</span>
+<a name="l00167"></a>00167         list_all_transact=[]
+<a name="l00168"></a>00168         <span class="keyword">def </span>funcTransactTo_list_all_transact(owner,transact):
+<a name="l00169"></a>00169             <span class="comment"># складируем транзакты в список</span>
+<a name="l00170"></a>00170             list_all_transact.append(transact)
+<a name="l00171"></a>00171             
+<a name="l00172"></a>00172         <span class="comment"># MODEL ----------------------------</span>
+<a name="l00173"></a>00173         Generate(sgm, med_value=<span class="keywordtype">None</span>,
+<a name="l00174"></a>00174                  modificatorFunc=LIST_OF_TIMES,
+<a name="l00175"></a>00175                  first_tx=<span class="keywordtype">None</span>,
+<a name="l00176"></a>00176                  max_amount=<span class="keywordtype">None</span>,
+<a name="l00177"></a>00177                  priority=0,
+<a name="l00178"></a>00178                  label=<span class="keywordtype">None</span>)
+<a name="l00179"></a>00179         Handle(sgm, handlerFunc=funcTransactTo_list_all_transact)
+<a name="l00180"></a>00180         Terminate(sgm, deltaTerminate=1)
+<a name="l00181"></a>00181         
+<a name="l00182"></a>00182         <span class="comment"># ЗАПУСК --------------------------------------------        </span>
+<a name="l00183"></a>00183         m.start(terminationCount=15, maxTime=MAX_TIME)
+<a name="l00184"></a>00184         
+<a name="l00185"></a>00185         <span class="comment"># ТЕСТЫ ----------------------</span>
+<a name="l00186"></a>00186         self.assertEqual(len(list_all_transact),3)
+<a name="l00187"></a>00187         <span class="keywordflow">for</span> t <span class="keywordflow">in</span> list_all_transact: 
+<a name="l00188"></a>00188             <span class="keywordflow">print</span> str([<span class="stringliteral">&quot;%s:%s&quot;</span>%(k,t[k]) 
+<a name="l00189"></a>00189                        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> t.keys() <span class="keywordflow">if</span> k 
+<a name="l00190"></a>00190                        <span class="keywordflow">in</span> [TIME_CREATED,TERMINATED_TIME]])                
+<a name="l00191"></a>00191 
+<a name="l00192"></a>00192             <span class="keywordflow">if</span> t[NUM]==1:
+<a name="l00193"></a>00193                 self.assertEqual(t[TIME_CREATED], LIST_OF_TIMES[0])
+<a name="l00194"></a>00194             <span class="keywordflow">elif</span> t[NUM]==2:
+<a name="l00195"></a>00195                 self.assertEqual(t[TIME_CREATED], LIST_OF_TIMES[1])
+<a name="l00196"></a>00196             <span class="keywordflow">elif</span> t[NUM]==3:
+<a name="l00197"></a>00197                 self.assertEqual(t[TIME_CREATED], LIST_OF_TIMES[2])
+<a name="l00198"></a>00198                 
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200 <span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:
+<a name="l00201"></a>00201     unittest.main(module=<span class="stringliteral">&quot;test_generate&quot;</span>)
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Документация по PySS. Последние изменения: Tue Sep 5 2017 17:26:12. Создано системой&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>
