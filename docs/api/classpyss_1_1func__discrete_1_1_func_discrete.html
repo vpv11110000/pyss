@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PySS: Класс pyss.func_discrete.FuncDiscrete</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">PySS
+   &#160;<span id="projectnumber">0.1-dev</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classpyss_1_1func__discrete_1_1_func_discrete.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="classpyss_1_1func__discrete_1_1_func_discrete-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle">
+<div class="title">Класс pyss.func_discrete.FuncDiscrete</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Граф наследования:pyss.func_discrete.FuncDiscrete:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classpyss_1_1func__discrete_1_1_func_discrete.png" usemap="#pyss.func_5Fdiscrete.FuncDiscrete_map" alt=""/>
+  <map id="pyss.func_5Fdiscrete.FuncDiscrete_map" name="pyss.func_5Fdiscrete.FuncDiscrete_map">
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:aaa4c0400bccbe2594605eee3a13d60b1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyss_1_1func__discrete_1_1_func_discrete.html#aaa4c0400bccbe2594605eee3a13d60b1">__init__</a> (self, randomGenerator=random.random, dictValues=None)</td></tr>
+<tr class="separator:aaa4c0400bccbe2594605eee3a13d60b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1468388c621230d99f34d252f90772a5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyss_1_1func__discrete_1_1_func_discrete.html#a1468388c621230d99f34d252f90772a5">get</a> (self)</td></tr>
+<tr class="separator:a1468388c621230d99f34d252f90772a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><pre class="fragment">Дискретная функция распределения случайного события
+
+Синтаксис:
+discrete({&lt;правая граница суммарной частоты случайного события1&gt;:&lt;значение функции1&gt;,
+      &lt;правая граница суммарной частоты случайного события2&gt;:&lt;значение функции2&gt;,
+      ...})
+
+&lt;значение функцииN&gt; - может быть числом или функцией без аргументов
+ 
+Левая граница суммарной частоты случайного события не входит в интервал между 
+левой границей суммарной частоты случайного события и правой границей суммарной 
+частоты случайного события.
+Правая граница интервала входит в интервал между 
+левой границей суммарной частоты случайного события и правой границей суммарной 
+частоты случайного события.
+
+Пусть событие А принимает упорядоченные по возрастанию вещественные значения.
+
+Тогда, относительная частота случайного события А:
+Sotn = количество случайных событий А / общее количество испытаний
+
+Суммарная частота случайного события является суммой относительных частот 
+при значениях событий менее или равно значению события А.  
+
+Пример распределения суммарных частот:
+
+Интервал поступления транзактов  Относительная частота    Суммарная частота
+2                                  0,10                        0,10
+3                                  0,20                        0,30
+4                                  0,40                        0,70
+5                                  0,10                        0,80
+6                                  0,20                        1,00
+
+Декларация функции:
+fd = FuncDiscrete(randomGenerator=random.random, dictValues={.1:2,.3:3,.7:4,.8:5,1.0:6})
+# или
+# fd = FuncDiscrete(randomGenerator=random.random, dictValues={.1:lambda:2,.3:lambda:3,.7:lambda:4,.8:lambda:5,1.0:lambda:6})
+
+print fd.get()
+
+Пример, см. tests/test_func_discrete.py</pre> 
+<p class="definition">См. определение в файле <a class="el" href="func__discrete_8py_source.html">func_discrete.py</a> строка <a class="el" href="func__discrete_8py_source.html#l00015">15</a></p>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
+<a id="aaa4c0400bccbe2594605eee3a13d60b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa4c0400bccbe2594605eee3a13d60b1">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyss.func_discrete.FuncDiscrete.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>randomGenerator</em> = <code>random.random</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dictValues</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="func__discrete_8py_source.html">func_discrete.py</a> строка <a class="el" href="func__discrete_8py_source.html#l00059">59</a></p>
+<div class="fragment"><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">def </span>__init__(self, randomGenerator=random.random, dictValues=None):</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        super(FuncDiscrete, self).__init__()</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        map(pyssobject.raiseIsTrue, [<span class="keywordflow">not</span> dictValues])</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment"># OrderedDict([(.1, 2), (.3, 3), (.7, 4), (.8, 5), (1,6)])</span></div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        self[DICT_VALUES] = OrderedDict(sorted(dictValues.items(), key=<span class="keyword">lambda</span> t: t[0]))</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        self[RANDOM_GENERATOR] = randomGenerator    </div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div></div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="a1468388c621230d99f34d252f90772a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1468388c621230d99f34d252f90772a5">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyss.func_discrete.FuncDiscrete.get </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="func__discrete_8py_source.html">func_discrete.py</a> строка <a class="el" href="func__discrete_8py_source.html#l00066">66</a></p>
+<div class="fragment"><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">def </span>get(self):</div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        r = self[RANDOM_GENERATOR]()</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">for</span> key, value <span class="keywordflow">in</span> self[DICT_VALUES].iteritems():</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keywordflow">if</span> r &lt;= key:</div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                <span class="keywordflow">if</span> pyssobject.isfunction(value):</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    <span class="keywordflow">return</span> value()</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                <span class="keywordflow">else</span>:</div><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                    <span class="keywordflow">return</span> value</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="comment"># fail</span></div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        </div></div><!-- fragment -->
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>pyss/<a class="el" href="func__discrete_8py_source.html">func_discrete.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacepyss.html">pyss</a></li><li class="navelem"><a class="el" href="namespacepyss_1_1func__discrete.html">func_discrete</a></li><li class="navelem"><a class="el" href="classpyss_1_1func__discrete_1_1_func_discrete.html">FuncDiscrete</a></li>
+    <li class="footer">Документация по PySS. Последние изменения: Вт 5 Сен 2017 18:18:21. Создано системой
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
+</body>
+</html>

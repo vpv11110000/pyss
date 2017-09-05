@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PySS: Исходный файл tests/test_func_discrete.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">PySS
+   &#160;<span id="projectnumber">0.1-dev</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('test__func__discrete_8py_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">test_func_discrete.py</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="test__func__discrete_8py.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__func__discrete.html">    1</a></span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> sys</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">import</span> os</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> random</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">import</span> unittest</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__func__discrete.html#a36f5c0fc79934bb783e56ee680314a57">    9</a></span>&#160;DIRNAME_MODULE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))) + os.sep</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;sys.path.append(DIRNAME_MODULE)</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;sys.path.append(DIRNAME_MODULE + <span class="stringliteral">&quot;pyss&quot;</span> + os.sep)</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">from</span> pyss <span class="keyword">import</span> func_discrete</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">from</span> <a class="code" href="namespacepyss_1_1pyss__const.html">pyss.pyss_const</a> <span class="keyword">import</span> *</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">from</span> <a class="code" href="namespacepyss_1_1statisticalseries.html">pyss.statisticalseries</a> <span class="keyword">import</span> StatisticalSeries,approx_equal</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html">TestFuncDiscrete</a>(unittest.TestCase):</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a7c31619c966575d92e6aeeeda56d21b5">   19</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a7c31619c966575d92e6aeeeda56d21b5">setUp</a>(self):</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keywordflow">pass</span></div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a4a1fc0f550a3ef190209a070c3cf1cc3">   22</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a4a1fc0f550a3ef190209a070c3cf1cc3">tearDown</a>(self):</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordflow">pass</span></div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a3681b58b25cf2b824261c46a897f66af">   25</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a3681b58b25cf2b824261c46a897f66af">test_001</a>(self):</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        ss=<a class="code" href="classpyss_1_1statisticalseries_1_1_statistical_series.html">StatisticalSeries</a>()</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="comment"># суммарные частоты</span></div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        fd = <a class="code" href="classpyss_1_1func__discrete_1_1_func_discrete.html">func_discrete.FuncDiscrete</a>(randomGenerator=random.random, dictValues={.1:2,.3:3,.7:4,.8:5,1.0:6})</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> xrange(1,300000):</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            x=fd.get()</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            ss.append(x, count=1)</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        c=ss.count()</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">for</span> x,y <span class="keywordflow">in</span> ss[DATA].iteritems():</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="comment"># относительные частоты</span></div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            f=float(y)/c</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&quot;x=%f, y=%f&quot;</span>%(x,f)</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">if</span> <a class="code" href="namespacepyss_1_1statisticalseries.html#a40316bc6e79e1d3d14d8802244ad363f">approx_equal</a>(x, 2.0, tol=.001):</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                self.assertAlmostEqual(f, .1, places=2)</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">elif</span> <a class="code" href="namespacepyss_1_1statisticalseries.html#a40316bc6e79e1d3d14d8802244ad363f">approx_equal</a>(x, 3.0, tol=.001):</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                self.assertAlmostEqual(f, .2, places=2)</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">elif</span> <a class="code" href="namespacepyss_1_1statisticalseries.html#a40316bc6e79e1d3d14d8802244ad363f">approx_equal</a>(x, 4.0, tol=.001):</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                self.assertAlmostEqual(f, .4, places=2)</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">elif</span> <a class="code" href="namespacepyss_1_1statisticalseries.html#a40316bc6e79e1d3d14d8802244ad363f">approx_equal</a>(x, 5.0, tol=.001):</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                self.assertAlmostEqual(f, .1, places=2)</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">elif</span> <a class="code" href="namespacepyss_1_1statisticalseries.html#a40316bc6e79e1d3d14d8802244ad363f">approx_equal</a>(x, 6.0, tol=.001):</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                self.assertAlmostEqual(f, .2, places=2)</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:</div><div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__func__discrete.html#a642740bc87ca6f417f7855275bbc0fba">   49</a></span>&#160;    unittest.main(module=<span class="stringliteral">&quot;test_func_discrete&quot;</span>)</div><div class="ttc" id="namespacepyss_1_1statisticalseries_html_a40316bc6e79e1d3d14d8802244ad363f"><div class="ttname"><a href="namespacepyss_1_1statisticalseries.html#a40316bc6e79e1d3d14d8802244ad363f">pyss.statisticalseries.approx_equal</a></div><div class="ttdeci">def approx_equal(a, b, tol=0.001)</div><div class="ttdef"><b>Definition:</b> <a href="statisticalseries_8py_source.html#l00011">statisticalseries.py:11</a></div></div>
+<div class="ttc" id="classpyss_1_1func__discrete_1_1_func_discrete_html"><div class="ttname"><a href="classpyss_1_1func__discrete_1_1_func_discrete.html">pyss.func_discrete.FuncDiscrete</a></div><div class="ttdef"><b>Definition:</b> <a href="func__discrete_8py_source.html#l00015">func_discrete.py:15</a></div></div>
+<div class="ttc" id="classtests_1_1test__func__discrete_1_1_test_func_discrete_html_a4a1fc0f550a3ef190209a070c3cf1cc3"><div class="ttname"><a href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a4a1fc0f550a3ef190209a070c3cf1cc3">tests.test_func_discrete.TestFuncDiscrete.tearDown</a></div><div class="ttdeci">def tearDown(self)</div><div class="ttdef"><b>Definition:</b> <a href="test__func__discrete_8py_source.html#l00022">test_func_discrete.py:22</a></div></div>
+<div class="ttc" id="classpyss_1_1statisticalseries_1_1_statistical_series_html"><div class="ttname"><a href="classpyss_1_1statisticalseries_1_1_statistical_series.html">pyss.statisticalseries.StatisticalSeries</a></div><div class="ttdef"><b>Definition:</b> <a href="statisticalseries_8py_source.html#l00016">statisticalseries.py:16</a></div></div>
+<div class="ttc" id="classtests_1_1test__func__discrete_1_1_test_func_discrete_html"><div class="ttname"><a href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html">tests.test_func_discrete.TestFuncDiscrete</a></div><div class="ttdef"><b>Definition:</b> <a href="test__func__discrete_8py_source.html#l00017">test_func_discrete.py:17</a></div></div>
+<div class="ttc" id="namespacepyss_1_1pyss__const_html"><div class="ttname"><a href="namespacepyss_1_1pyss__const.html">pyss.pyss_const</a></div><div class="ttdef"><b>Definition:</b> <a href="pyss__const_8py_source.html#l00001">pyss_const.py:1</a></div></div>
+<div class="ttc" id="namespacepyss_1_1statisticalseries_html"><div class="ttname"><a href="namespacepyss_1_1statisticalseries.html">pyss.statisticalseries</a></div><div class="ttdef"><b>Definition:</b> <a href="statisticalseries_8py_source.html#l00001">statisticalseries.py:1</a></div></div>
+<div class="ttc" id="classtests_1_1test__func__discrete_1_1_test_func_discrete_html_a7c31619c966575d92e6aeeeda56d21b5"><div class="ttname"><a href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a7c31619c966575d92e6aeeeda56d21b5">tests.test_func_discrete.TestFuncDiscrete.setUp</a></div><div class="ttdeci">def setUp(self)</div><div class="ttdef"><b>Definition:</b> <a href="test__func__discrete_8py_source.html#l00019">test_func_discrete.py:19</a></div></div>
+<div class="ttc" id="classtests_1_1test__func__discrete_1_1_test_func_discrete_html_a3681b58b25cf2b824261c46a897f66af"><div class="ttname"><a href="classtests_1_1test__func__discrete_1_1_test_func_discrete.html#a3681b58b25cf2b824261c46a897f66af">tests.test_func_discrete.TestFuncDiscrete.test_001</a></div><div class="ttdeci">def test_001(self)</div><div class="ttdef"><b>Definition:</b> <a href="test__func__discrete_8py_source.html#l00025">test_func_discrete.py:25</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="test__func__discrete_8py.html">test_func_discrete.py</a></li>
+    <li class="footer">Документация по PySS. Последние изменения: Вт 5 Сен 2017 18:18:20. Создано системой
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
+</body>
+</html>

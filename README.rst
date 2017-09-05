@@ -43,7 +43,7 @@ Requirements
 
 1. `API`_ документация.
 
-.. _`API`: docs/api/html/index.html
+.. _`API`: docs/api
 
 
 ==================

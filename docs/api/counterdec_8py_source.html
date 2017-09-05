@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PySS: Исходный файл pyss/counterdec.py</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">PySS
+   &#160;<span id="projectnumber">0.1-dev</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('counterdec_8py_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">counterdec.py</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="counterdec_8py.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="namespacepyss_1_1counterdec.html">    1</a></span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="stringliteral">&quot;&quot;&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="stringliteral">Модуль класса счётчик</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="stringliteral">&quot;&quot;&quot;</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classpyss_1_1counterdec_1_1_counter_dec.html">    8</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html">CounterDec</a>(object):</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Счётчик декрементный</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="stringliteral"></span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="stringliteral">    Args:</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="stringliteral">        initValue - начальное значение сётчика</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="stringliteral"></span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div><div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classpyss_1_1counterdec_1_1_counter_dec.html#aa6dea27276bd30ea627ae87166c700d5">   15</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#aa6dea27276bd30ea627ae87166c700d5">__init__</a>(self, initValue):</div><div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">   16</a></span>&#160;        self.<a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">value</a>=initValue</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classpyss_1_1counterdec_1_1_counter_dec.html#a81db53cce30c7650a6c954b44f975988">   18</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a81db53cce30c7650a6c954b44f975988">dec</a>(self,delta=0):</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        self.<a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">value</a>-=delta</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keywordflow">if</span> self.<a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">value</a>&lt;0:</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            self.<a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">value</a>=0</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordflow">return</span> self.<a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#ab0827706a978b908877c4cd88c6d28df">isEmpty</a>()</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div><div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classpyss_1_1counterdec_1_1_counter_dec.html#ab0827706a978b908877c4cd88c6d28df">   24</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#ab0827706a978b908877c4cd88c6d28df">isEmpty</a>(self):</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordflow">return</span> self.<a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">value</a>&lt;=0</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div><div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classpyss_1_1counterdec_1_1_counter_dec.html#a7f3cb5efe247720509a2feb6150e48f4">   27</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a7f3cb5efe247720509a2feb6150e48f4">reset</a>(self,initValue):</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        self.<a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">value</a>=initValue</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classpyss_1_1counterdec_1_1_counter_dec.html#a0f6b0a8cb30079b37616d8ab9ac86634">   30</a></span>&#160;    <span class="keyword">def </span><a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a0f6b0a8cb30079b37616d8ab9ac86634">__str__</a>(self):</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;GpssCounter.value=%d&quot;</span>%self.<a class="code" href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">value</a></div><div class="ttc" id="classpyss_1_1counterdec_1_1_counter_dec_html_a7f3cb5efe247720509a2feb6150e48f4"><div class="ttname"><a href="classpyss_1_1counterdec_1_1_counter_dec.html#a7f3cb5efe247720509a2feb6150e48f4">pyss.counterdec.CounterDec.reset</a></div><div class="ttdeci">def reset(self, initValue)</div><div class="ttdef"><b>Definition:</b> <a href="counterdec_8py_source.html#l00027">counterdec.py:27</a></div></div>
+<div class="ttc" id="classpyss_1_1counterdec_1_1_counter_dec_html_ab0827706a978b908877c4cd88c6d28df"><div class="ttname"><a href="classpyss_1_1counterdec_1_1_counter_dec.html#ab0827706a978b908877c4cd88c6d28df">pyss.counterdec.CounterDec.isEmpty</a></div><div class="ttdeci">def isEmpty(self)</div><div class="ttdef"><b>Definition:</b> <a href="counterdec_8py_source.html#l00024">counterdec.py:24</a></div></div>
+<div class="ttc" id="classpyss_1_1counterdec_1_1_counter_dec_html_a0f6b0a8cb30079b37616d8ab9ac86634"><div class="ttname"><a href="classpyss_1_1counterdec_1_1_counter_dec.html#a0f6b0a8cb30079b37616d8ab9ac86634">pyss.counterdec.CounterDec.__str__</a></div><div class="ttdeci">def __str__(self)</div><div class="ttdef"><b>Definition:</b> <a href="counterdec_8py_source.html#l00030">counterdec.py:30</a></div></div>
+<div class="ttc" id="classpyss_1_1counterdec_1_1_counter_dec_html"><div class="ttname"><a href="classpyss_1_1counterdec_1_1_counter_dec.html">pyss.counterdec.CounterDec</a></div><div class="ttdoc">!/usr/bin/python -*- coding: utf-8 -*- </div><div class="ttdef"><b>Definition:</b> <a href="counterdec_8py_source.html#l00008">counterdec.py:8</a></div></div>
+<div class="ttc" id="classpyss_1_1counterdec_1_1_counter_dec_html_a81db53cce30c7650a6c954b44f975988"><div class="ttname"><a href="classpyss_1_1counterdec_1_1_counter_dec.html#a81db53cce30c7650a6c954b44f975988">pyss.counterdec.CounterDec.dec</a></div><div class="ttdeci">def dec(self, delta=0)</div><div class="ttdef"><b>Definition:</b> <a href="counterdec_8py_source.html#l00018">counterdec.py:18</a></div></div>
+<div class="ttc" id="classpyss_1_1counterdec_1_1_counter_dec_html_aa6dea27276bd30ea627ae87166c700d5"><div class="ttname"><a href="classpyss_1_1counterdec_1_1_counter_dec.html#aa6dea27276bd30ea627ae87166c700d5">pyss.counterdec.CounterDec.__init__</a></div><div class="ttdeci">def __init__(self, initValue)</div><div class="ttdef"><b>Definition:</b> <a href="counterdec_8py_source.html#l00015">counterdec.py:15</a></div></div>
+<div class="ttc" id="classpyss_1_1counterdec_1_1_counter_dec_html_a6937a7a917951d43f4d277fa4fea4ffd"><div class="ttname"><a href="classpyss_1_1counterdec_1_1_counter_dec.html#a6937a7a917951d43f4d277fa4fea4ffd">pyss.counterdec.CounterDec.value</a></div><div class="ttdeci">value</div><div class="ttdef"><b>Definition:</b> <a href="counterdec_8py_source.html#l00016">counterdec.py:16</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_00149498a555f6eb7ce90e5c46a97adb.html">pyss</a></li><li class="navelem"><a class="el" href="counterdec_8py.html">counterdec.py</a></li>
+    <li class="footer">Документация по PySS. Последние изменения: Вт 5 Сен 2017 18:18:20. Создано системой
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
+</body>
+</html>
