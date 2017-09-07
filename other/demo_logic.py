@@ -1,17 +1,9 @@
-##!/usr/bin/python
+# #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
 Запуск:
-    python ./bernoulli.py
-
-Пример визуализации возникновения событий в соответствии с распределением вероятности Бернулли.
-
-Каждую единицу времени моделируется бросок симметричной монеты. Орёл - 0, Решка - 1.
-
-Формируется 5 одинаковых моделей с 5 таблицами, собирающими факты возникновения событий.
-
-После моделирования выполняется построение графиков возникновения событий.
+    python ./demo_logic.py
 
 """
 
@@ -66,16 +58,14 @@ from pyss.func_discrete import FuncDiscrete
 from pyss.func_exponential import Exponential
 from pyss.func_normal import Normal
 from pyss.plot_func import PlotFunc
+from pyss import logic
+from pyss.logic import Logic
 
 from pyss.simpleobject import SimpleObject
 
 
-def main():
-    logger.info("--- Распределение Бернулли ---")
-    random.seed()
-
-    def valFunc_T_1(owner, transact):
-        return random.choice([0,1])
+def buildModel():
+    logger.info("-------------------------------------")
     
     ### MODEL ----------------------------------
     m = PyssModel()
@@ -83,44 +73,50 @@ def main():
     
     #
     m[OPTIONS].setAllFalse()
-    m[OPTIONS].printResult = True       
-
-
-    #
-    MAX_TIME=20
-    # tables
-    F_1="F_1"
-    def argFunc_T_1(owner, transact):
-        return transact[TIME_CREATED]
-
-    TBL_COUNT=5
-    tables = Table(m,
-                   tableName="T_1",
-                   argFunc=argFunc_T_1,
-                   limitUpFirst=1,
-                   widthInt=1,
-                   countInt=MAX_TIME).setDisplaying(displaying=False)
-
-    #
-    def mf(owner, currentTime):
-        #бросок монеты
-        return 1
-    BERNOULLI="Bernoulli"
+    m[OPTIONS].printResult = True    
     
-    #генерится см. mf()
-    Generate(sgm, med_value=0, modificatorFunc=mf,first_tx=0, max_amount=1000)
-    Tabulate(sgm, table=m.getTables()[0],valFunc=valFunc_T_1)
-    Terminate(sgm, deltaTerminate=0)
-    #
-    m.initPlotTable(title=BERNOULLI)
+    #---------
+    LK1 = "LK1"
+    LK2 = "LK2"
+    LogicObject(m, logicObjectName=LK1, initialState=False)
+    LogicObject(m, logicObjectName=LK2, initialState=True)
     
-    #
-    m.start(terminationCount=MAX_TIME, maxTime=MAX_TIME)
+    #-----------------------------
+    Generate(sgm,
+             med_value=1,
+             max_amount=100,
+             priority=1)
+
+    Logic(sgm, actionFunc=logic.invert, logicObjectName=LK1)
+    Logic(sgm, actionFunc=logic.invert, logicObjectName=LK2)
+    Terminate(sgm, deltaTerminate=1)
+
+    return m
+
+def main():
+    logger.info("-------------------------------------")
     
-    #
-    m.plotByModulesAndSave(BERNOULLI)
+    #-------------------------------
+    # Время моделирования
+    MAX_TIME = 10
+
+    ### MODEL ----------------------------------
+    m = buildModel()
+    
+    ### КАРТИНКИ ----------------------
+    # таблицы
+#     m.initPlotTable()
+#     m.initPlotQueueLifeLine()
+    m.initPlotLogicObjectLifeLine()
+    
+    # РАСЧЁТ --------------------------
+    m.start(terminationCount=100, maxTime=MAX_TIME)
+
+    # ПОКАЗ КАРТИНОК ------------------------
+    # m.getPlotSubsystem().plotByModules()
+    # m.getPlotSubsystem().show()
+    m.plotByModulesAndSave("demo_logic")
     m.plotByModulesAndShow()
-
-
+        
 if __name__ == '__main__':
     main()

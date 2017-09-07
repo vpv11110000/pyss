@@ -156,8 +156,9 @@ class TestPreemptReturn(unittest.TestCase):
                 tB.append(transact)
 
         # функция проверки условия
-        def checkTest(o, transact):
-            if transact[LABEL] == TRANSACT_B:
+        def checkTest(o):
+            t=m.getCurrentTransact()
+            if t[LABEL] == TRANSACT_B:
                 return False
             return True
 

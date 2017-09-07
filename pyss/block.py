@@ -8,7 +8,7 @@
 # pylint: disable=line-too-long
 
 from pyss.pyssownerobject import PyssOwnerObject
-from pyss import logger
+from pyss import logger, pyssobject
 from pyss.pyss_const import *
 
 class Block(PyssOwnerObject):
@@ -112,8 +112,7 @@ bl[BLOCK_PREV]=None - предыдущий блок в модели, может 
     def transactOut(self, transact):
         self[CURRENT_COUNT] -= 1
         if self[CURRENT_COUNT] <0:
-            # TODO УБРАТЬ
-            print "BAD"
+            raise pyssobject.ErrorBadAlgorithm("Block.transactOut")
         self.moveToNextBlock(transact)
 
     def getOwnerSegment(self):

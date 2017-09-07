@@ -1,4 +1,3 @@
-# #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -211,8 +210,8 @@ bl[ENABLED] - флаг, если True, то блок может формиров
                 else:
                     self[NEXT_TIME] = None
             r = Transact(self, currentTime, priority=self[PRIORITY]())
-            r[NUM]=self.getOwnerModel().transactNumber.buildObjectNumber()
-            # r[TRACK].append(tuple(currentTime,self))
+            r[NUM] = self.getOwnerModel().transactNumber.buildObjectNumber()
+            r[TRACK].append((currentTime, self))
             r[HANDLED] = True
             r[BLOCK_NEXT] = None
             self[COUNT_TRANSACT] += 1
@@ -228,8 +227,8 @@ bl[ENABLED] - флаг, если True, то блок может формиров
         if tr:
             self[ENTRY_COUNT] += 1
             self[CURRENT_COUNT] += 1
-            sgm=self.getOwnerSegment()
-            m=self.getOwnerModel()
+            sgm = self.getOwnerSegment()
+            m = self.getOwnerModel()
             m.getCel().put(tr)
             # pylint: disable=unsubscriptable-object
             if sgm[OPTIONS]:
@@ -274,15 +273,12 @@ bl[ENABLED] - флаг, если True, то блок может формиров
 def buildForListTimes(ownerSegment, label=None, listOfTimes=None, priority=None):
     if listOfTimes is None:
         raise pyssobject.ErrorIsNone("listOfTimes don't is None")
-    return Generate(ownerSegment, label=label, med_value=None, 
-                    modificatorFunc=listOfTimes, 
-                    first_tx=None, 
-                    max_amount=None, 
+    return Generate(ownerSegment, label=label, med_value=None,
+                    modificatorFunc=listOfTimes,
+                    first_tx=None,
+                    max_amount=None,
                     priority=priority
                     )        
 
 if __name__ == '__main__':
-    def main():
-        print "?"
-
-    main()
+    pass

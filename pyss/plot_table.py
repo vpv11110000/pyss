@@ -1,4 +1,3 @@
-# #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -110,7 +109,4 @@ Args:
             f += 1
 
 if __name__ == '__main__':
-    def main():
-        print "?"
-
-    main()
+    pass

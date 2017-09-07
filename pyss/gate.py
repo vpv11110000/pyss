@@ -31,10 +31,10 @@ Args:
     ownerSegment=None - объект сегмента-владельца 
     label=None - метка блока (см. block.py) 
     condition - условие
-        GATE_NOT_USED или NU - устройство свободно (т.е. не используется),
-        GATE_USED или U - устройство не свободно (т.е. используется),
-        GATE_NOT_INTERRUPTED или NI - устройство не захвачено,
-        GATE_INTERRUPTED или I - устройство захвачено,
+        GATE_FACILITY_NOT_USED или NU - устройство свободно (т.е. не используется),
+        GATE_FACILITY_USED или U - устройство не свободно (т.е. используется),
+        GATE_FACILITY_NOT_INTERRUPTED или NI - устройство не захвачено,
+        GATE_FACILITY_INTERRUPTED или I - устройство захвачено,
         GATE_STORAGE_EMPTY или SE - память пуста (все единицы памяти свободны),
         GATE_STORAGE_NOT_EMPTY или SNE - память не пуста,
         GATE_STORAGE_FULL или SF - память заполнена (все единицы заняты),
@@ -64,12 +64,13 @@ gate.Gate(sgm, "Again", condition=SNF,objectName="STORAGE_NAME",nextBlockLabel="
 
 Атрибуты блока Gate (в дополнение к атрибутам block.Block):
 bl = Test(...)
-bl[FUNC_CONDITION] - функция вычисления условия, сигнатура: bool f(transact)
-bl[TO_BLOCK_LABEL] - метка блока, к которому будет направляться транзакт, 
+bl[CONDITION] - функция вычисления условия, сигнатура: bool f(transact)
+bl[NEXT_BLOCK_LABEL] - метка блока, к которому будет направляться транзакт, 
                      если условие не будет выполняться
-bl[firstBlock_4365643] - кеш, внутреннее использование
-bl[secBlock_4365643] - кеш, внутреннее использование
-    
+bl[OBJECT_NAME] - наименование объекта, м.б. facility, память, ключ.
+self[TEMP_KEYS] - внутреннее использование (контролируемый объект)
+self[KEY_FOR_DELAYED_LIST] - ключ данных в списке задержанных транзактов
+
 Может быть заменён на блок Test или Transfer.
     
     """
@@ -81,15 +82,12 @@ bl[secBlock_4365643] - кеш, внутреннее использование
 
         super(Gate, self).__init__(GATE, label=label, ownerSegment=ownerSegment)
         map(pyssobject.raiseIsTrue, [condition not in [U, NU, NI, I, SE, SNE, SF, SNF, LR, LS], objectName is None or objectName.strip() == ""])
-        if nextBlockLabel is None:
-            raise pyssobject.ErrorNotImplemented("Ограничение текущей версии (не допускается nextBlockLabel is None)")
         self[CONDITION] = condition
         self[NEXT_BLOCK_LABEL] = nextBlockLabel
         # may be facility, память, ключ
         self[OBJECT_NAME] = objectName
         self[TEMP_KEYS] = None
-        self[firstBlock_4365643] = None
-        self[secBlock_4365643] = None
+        self[KEY_FOR_DELAYED_LIST] = None
 
     def _refreshCash(self):
         if self[TEMP_KEYS] is None:
@@ -97,10 +95,14 @@ bl[secBlock_4365643] - кеш, внутреннее использование
                 self[TEMP_KEYS] = self.getOwnerModel().findFacility(self[OBJECT_NAME])
             elif self[CONDITION] in [SE, SNE, SF, SNF]:
                 self[TEMP_KEYS] = self.getOwnerModel().getStorages()[self[OBJECT_NAME]]
+            elif self[CONDITION] in [LS, LR]:
+                self[TEMP_KEYS] = self.getOwnerModel().getLogicObject()[self[OBJECT_NAME]]
             else:
                 raise Exception("Not implemented [%s]" % self[CONDITION])
+            # TODO ДЕЛАТЬ обработчик изменения состояния
 
     def _calcCondition(self):
+        """Проверка выполнения условия на контролируемом объекте"""
         self._refreshCash()
         f = self[TEMP_KEYS]
         rv = False
@@ -130,35 +132,56 @@ bl[secBlock_4365643] - кеш, внутреннее использование
         return rv
 
     def canEnter(self, transact):
-        rv = False
         if self[NEXT_BLOCK_LABEL] is not None:
             return True
-        # TODO Gate.canEnter 
-        return rv
+        #
+        b = self._calcCondition()
+        transact[RESULT_TEST_BLOCK] = b
+        return b
+    
+    def _buildKeyForDelayedList(self):
+        if self[KEY_FOR_DELAYED_LIST] is None:
+            self[KEY_FOR_DELAYED_LIST] = "$$" + self.getOwner()[ENTITY_TYPE] + "_" + str(self.getOwner()[NUM]) + "_" + self[ENTITY_TYPE] + "_" + str(self[NUM]) 
+        return self[KEY_FOR_DELAYED_LIST]
 
     def handleCanNotEnter(self, transact):
         # # При работе в режиме отказа блок GATE не пропускает транзакты,
         
         # TODO Gate.handleCanNotEnter 
 
-        f = self[TEMP_KEYS]
-        if self[CONDITION] in [NU, U, NI, I, SE, SNE, SF, SNF]:
-            f.moveToRetryAttempList(transact)
-        else:
-            raise Exception("Not known condition")
+        # если задан атрибут self[NEXT_BLOCK_LABEL], 
+        #    то транзакт переходит в указанный в параметре блок (см. transactInner);
+        # если атрибут self[NEXT_BLOCK_LABEL] не задан, то транзакт задерживается в предыдущем блоке.
+        if self[NEXT_BLOCK_LABEL] is None:
+            k = self._buildKeyForDelayedList()
+            m = self.getOwnerModel()
+            if k not in m.getDelayedList():
+                def onStateChange(obj, oldState):
+                    b = self._calcCondition()
+                    if b:
+                        while True:
+                            t = m.extractFromDelayedListFirst(k)
+                            if t is None:
+                                break
+                            m.getCel().put(t)
+                self[TEMP_KEYS].addHandlerOnStateChange(handlerName=k, handler=onStateChange)    
+            m.appendToDelayedList(k, transact)
+        transact[RESULT_TEST_BLOCK] = None
+
 
     def transactInner(self, currentTime, transact=None):
-        
+        c = self._calcCondition()
         if self[NEXT_BLOCK_LABEL] is not None:
-            c = self._calcCondition()
             if not c:
                 block = self.findBlockByLabel(self[NEXT_BLOCK_LABEL])
             else:
                 block = self[BLOCK_NEXT]
-                
+        else:
+            if c is True:
+                block = self[BLOCK_NEXT]
+            else:
+                raise pyssobject.ErrorBadAlgorithm("Gate().transactInner")
         transact[BLOCK_NEXT] = block
-                
-        # TODO Gate.transactInner 
         return transact
 
 if __name__ == '__main__':

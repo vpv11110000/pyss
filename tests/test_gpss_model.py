@@ -47,7 +47,7 @@ class TestPyssModel(unittest.TestCase):
 #          'initBlocksFromSegments', 'initDelayedListForKey', 'initPlotFacilityLifeLine', 
 #          'initPlotStorageLifeLine', 'initPlotTable', 'initPlotTransactLifeLine', 
 #          'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'logTransactTrace', 
-#          'moveFromDelayedList_KEY_TEST_BLOCK_IF_NOT_CAN_ENTER_toCel', 
+#          'moveFromDelayedListForKey_toCel', 
 #          'moveTransactFromFelToCel', 'plotSubsystem', 'pop', 'popitem', 
 #          'printHeader', 'printResult', 'qtableList', 'run', 'setCurrentSegment', 
 #          'setCurrentTime', 'setCurrentTransact', 'setdefault', 'setlabel', 'start', 

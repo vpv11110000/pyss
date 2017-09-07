@@ -44,7 +44,7 @@ class PyssStateObject(PyssOwnerObject):
         if handlerName is None:
             raise pyssobject.ErrorIsNone("handlerName is None")
         
-        if handler.__name__ not in self[ON_STATE_CHANGE].keys():
+        if handlerName not in self[ON_STATE_CHANGE].keys():
             self[ON_STATE_CHANGE][handlerName] = handler
         
     def removeHandlerOnStateChange(self, handlerName):

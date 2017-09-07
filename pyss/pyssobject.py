@@ -40,6 +40,10 @@ class ErrorQueueObjectExists(Exception):
 class ErrorNotImplemented(Exception):
     pass
 
+class ErrorBadAlgorithm(Exception):
+    """Не корректный алгоритм - требуется доработка"""
+    pass
+
 class TerminationCounterIsEmpty(Exception):
     pass
 

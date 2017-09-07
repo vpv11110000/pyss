@@ -9,7 +9,15 @@
 
 from pyss.pyss_const import *
 
+def transact_compare_by_created_time(x, y):
+    return x[TIME_CREATED] - y[TIME_CREATED]
+
 class QueueEventPriorities(object):
+    """Очередь событий с приоритетами
+    
+    self.keys - упорядоченный список приоритетов
+    self.items - dict {<приоритет>:[<транзакт 1>, <транзакт 2>, <транзакт 3>, ...]}
+    """
     def __init__(self, reverse=True):
         # # reverse = True - в порядке убывания
         self.keys = []
@@ -30,6 +38,7 @@ class QueueEventPriorities(object):
         if p not in self.items:
             self.items[p] = []
         self.items[p].append(transact)
+        self.items[p] = sorted(self.items[p], cmp=transact_compare_by_created_time)
         # self.items[p]=sorted(self.items[p], key = lambda t:t[NUM])
 
     def insertFirst(self, transact):

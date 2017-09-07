@@ -94,10 +94,11 @@ class TestTest(unittest.TestCase):
         # исходное состояние, переменная модели с названием "транзакт №3 прошёл блок Test"
         m.variables["транзакт №3 прошёл блок Test"] = False
         # функция проверки условия
-        def checkTest(o, transact):
-            if transact[NUM] == 2:
+        def checkTest(o):
+            t=m.getCurrentTransact()
+            if t[NUM] == 2:
                 return m.variables["транзакт №3 прошёл блок Test"]
-            elif transact[NUM] == 3:
+            elif t[NUM] == 3:
                 m.variables["транзакт №3 прошёл блок Test"] = True
             return True
                 
@@ -120,7 +121,8 @@ class TestTest(unittest.TestCase):
             if t[NUM] == 1:
                 self.assertEqual(t.strTrack(), "[0]:[1]:[GENERATE]; [0]:[2]:[HANDLE]; [0]:[3]:[TEST]; [0]:[4]:[TERMINATE]")
             elif t[NUM] == 2:
-                self.assertEqual(t.strTrack(), "[1]:[1]:[GENERATE]; [1]:[2]:[HANDLE]; [2]:[2]:[HANDLE]; [2]:[3]:[TEST]; [2]:[4]:[TERMINATE]")
+                expected="[1]:[1]:[GENERATE]; [1]:[2]:[HANDLE]; [2]:[3]:[TEST]; [2]:[4]:[TERMINATE]"
+                self.assertEqual(t.strTrack(), expected)
             elif t[NUM] == 3:
                 self.assertEqual(t.strTrack(), "[2]:[1]:[GENERATE]; [2]:[2]:[HANDLE]; [2]:[3]:[TEST]; [2]:[4]:[TERMINATE]")
         
@@ -156,9 +158,10 @@ class TestTest(unittest.TestCase):
             list_all_transact.append(transact)
         
         # функция проверки условия
-        def checkTest(o, transact):
+        def checkTest(o):
             # направляет транзакт с NUM равным 2 в блок с меткой "ALT"
-            if transact[NUM] in [2]:
+            t=m.getCurrentTransact()
+            if t[NUM] in [2]:
                 return False
             else:
                 return True

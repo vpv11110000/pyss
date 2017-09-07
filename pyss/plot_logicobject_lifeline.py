@@ -11,40 +11,33 @@ from pyss import statisticalseries
 from pyss.pyssownerobject import PyssOwnerObject
 from pyss import pyssobject
 
-class PlotStorageLifeLine(PyssOwnerObject):
-    """Формирование графической диаграммы для линий жизни МКУ
+class PlotLogicObjectLifeLine(PyssOwnerObject):
+    """Формирование графической диаграммы для линий жизни логических ключей (ЛК)
     
 Args:
     ownerModel=None - объект модели-владельца 
-    stor=None - МКУ или список блоков МКУ
+    logicObjectList=None - список объектов ЛК
     title - заголовок диаграммы
-    funcAnnotate - функция анноторирования линии жизни МКУ. 
-                   По умолчанию: lambda stor:stor[STORAGE_NAME]
      
     """
     
-    def __init__(self, ownerModel=None, stor=None, title=None, funcAnnotate=None):
-        super(PlotStorageLifeLine, self).__init__(PLOT_MODULE, label=None, owner=ownerModel)
+    def __init__(self, ownerModel=None, logicObjectList=None, title=None):
+        super(PlotLogicObjectLifeLine, self).__init__(PLOT_MODULE, label=None, owner=ownerModel)
         self.attr = {}
-        self.storages = []
-        if stor:
-            self.storages.append(tuple([stor, title]))
-        self.attr[TITLE] = title
-        if funcAnnotate is None:
-            self.attr[FUNC_ANNOTATE] = lambda stor:stor[STORAGE_NAME]   
-        else:     
-            self.attr[FUNC_ANNOTATE] = funcAnnotate
-        #ownerModel.addPlotModule(self)
+        self.logicObjects = []
+        if logicObjectList:
+            for o in logicObjectList: 
+                self.logicObjects.append(tuple([o, "%s%s" % (title, o[LOGIC_OBJECT_NAME])]))
+        else:
+            raise pyssobject.ErrorInvalidArg("logicObjectList must be list")
+        self.attr[TITLE] = title if title is not None else ""
+
+        # ownerModel.addPlotModule(self)
         ownerModel.plotSubsystem.append(self)
         
-    def append(self, stor, title=None):
-        num = len(self.storages) + 1
-        if title:
-            self.storages.append(tuple([stor, "Storage %d. " % num + title]))
-        elif TITLE in stor:
-            self.storages.append(tuple([stor, "Storage %d. " % num + stor[TITLE]]))
-        else:
-            self.storages.append(tuple([stor, "Storage %d" % num]))
+    def append(self, logicObject, title=None):
+        num = len(self.logicObjects) + 1
+        self.logicObjects.append(tuple([logicObject, "%s%s" % (title, logicObject[LOGIC_OBJECT_NAME])]))
 
     def convertToLifeLine(self, lifeTimeList):
         # список пар "start","state"
@@ -63,12 +56,12 @@ Args:
     def plotOnFigure(self, figure, funcAnnotate=None):
         
         f = 1
-        l = len(self.storages)
-        for (stor, title) in self.storages:
+        l = len(self.logicObjects)
+        for (o, title) in self.logicObjects:
             subplot = figure.add_subplot(l, 1, f)
             if title:
                 subplot.title.set_text(title)
-            tt = self.convertToLifeLine(stor[LIFE_TIME_LIST])
+            tt = self.convertToLifeLine(o[LIFE_TIME_LIST])
             x = []
             y = []
             for ttt in tt:
@@ -85,15 +78,6 @@ Args:
                 subplot.plot([x, x], [oldY, oldY], color='g', lw=1, marker='.')
                 oldX = x
                 oldY = y
-#             for xx in list(set(x)):
-#                 subplot.axvline(x=xx, dashes=[1, 1], color='#dddddd')
-#             for yy in list(set(y)):
-#                 subplot.axhline(y=yy, dashes=[1, 1], color='#dddddd')
-#                 subplot.annotate("%.3f" % (yy),
-#                                  xy=(x[0], yy),
-#                                  xycoords='data',
-#                                  xytext=(0, 2),
-#                                  textcoords='offset points',)
             f += 1        
 
 if __name__ == '__main__':

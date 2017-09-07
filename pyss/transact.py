@@ -1,4 +1,3 @@
-# #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -172,13 +171,13 @@ tr[LIFE_TIME_LIST]=[] - метка времени перехода транза�
 
     def strTrackDebug(self):
         """Вывод элементов <время>:<номер или метка блока>:<тип блока>"""
-        l = ["            [%s]:[%s]:[%s]" % (('%f' % ct).rstrip('0').rstrip('.'), "%d/%s"%(r[NUM],r[LABEL]) if r[LABEL] else str(r[NUM]), r[ENTITY_TYPE]) for ct, r in self[TRACK]]
-        s = reduce((lambda x, y: x + ";\n" + y), l[:-1])
-        s+="\nlast block: "+l[-1].lstrip()
+        l = ["            [%s]:[%s]:[%s]" % (('%f' % ct).rstrip('0').rstrip('.'), "%d/%s" % (r[NUM], r[LABEL]) if r[LABEL] else str(r[NUM]), r[ENTITY_TYPE]) for ct, r in self[TRACK]]
+        if len(l)>1:
+            s = reduce((lambda x, y: x + ";\n" + y), l[:-1])
+        else:
+            s = ""
+        s += "\nlast block: " + l[-1].lstrip()
         return s 
 
 if __name__ == '__main__':
-    def main():
-        print "?"
-
-    main()
+    pass

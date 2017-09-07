@@ -16,6 +16,7 @@ OPTIONS = "OPT"
 
 BEFORE_BLOCK = "BEFORE_BLOCK"
 AFTER_BLOCK = "AFTER_BLOCK"
+BLOCK_TESTS = "BLOCK_TESTS"
 
 ALL = "$$ALL"
 
@@ -319,6 +320,7 @@ secBlock_4365643 = "__secBlock_4365643"
 TEMP_VALUE = "_$$F312$"
 # inner
 TEMP_KEYS = "_$$T72$"
+KEY_FOR_DELAYED_LIST="keyForDelayedList"
 
 #
 ASSIGN = "ASSIGN"
@@ -338,17 +340,17 @@ GATE = "GATE"
 # В поле операции блока GATE записывается слово GATE и через пробел - символ проверяемого условия.
 # Существует десять условий, которые проверяются в блоке GATE для оборудования:
 # NU - устройство свободно (т.е. не используется),
-GATE_NOT_USED = "NOT_USED"
-NU = GATE_NOT_USED
+GATE_FACILITY_NOT_USED = "NOT_USED"
+NU = GATE_FACILITY_NOT_USED
 # U - устройство не свободно (т.е. используется),
-GATE_USED = "U"
-U = GATE_USED
+GATE_FACILITY_USED = "U"
+U = GATE_FACILITY_USED
 # NI - устройство не захвачено,
-GATE_NOT_INTERRUPTED = "NI"
-NI = GATE_NOT_INTERRUPTED
+GATE_FACILITY_NOT_INTERRUPTED = "NI"
+NI = GATE_FACILITY_NOT_INTERRUPTED
 # I - устройство захвачено,
-GATE_INTERRUPTED = "I"
-I = GATE_INTERRUPTED
+GATE_FACILITY_INTERRUPTED = "I"
+I = GATE_FACILITY_INTERRUPTED
 # SE - память пуста (все единицы памяти свободны),
 GATE_STORAGE_EMPTY = "SE"
 SE = GATE_STORAGE_EMPTY

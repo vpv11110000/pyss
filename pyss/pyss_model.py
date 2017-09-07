@@ -4,10 +4,13 @@
 # pylint: disable=line-too-long
 
 import random
-from pyss import pyssobject, plot_subsystem, counterdec
+from pyss import pyssobject, plot_subsystem, counterdec, \
+    plot_logicobject_lifeline
 from pyss.pyssobject import ErrorSegmentExists, ErrorQueueObjectExists, ObjectNumber
 from pyss.pyssownerobject import PyssOwnerObject
-from pyss import plot_table, plot_storage_lifeline, plot_queue_lifeline
+from pyss import plot_table 
+from pyss import plot_storage_lifeline
+from pyss import plot_queue_lifeline
 from pyss import plot_facility_lifeline
 from pyss.pyssobject import PyssObject
 from pyss.pyssobject import ErrorKeyExists
@@ -100,9 +103,11 @@ class PyssModel(PyssStateObject):
         self[CURRENT_TRANSACT] = None
         # текущая секция
         self[CURRENT_SEGMENT] = None
-        # Список задержки ОКУ или МКУ;
-        # {facilityName:queue_event_priorities.QueueEventPriorities(reverse=True)}
+        
+        # Список задержки ОКУ или МКУ и др.
+        # {<key, facilityName or other> : queue_event_priorities.QueueEventPriorities(reverse=True), и т.д.}
         self[DELAYED_LIST] = {}
+        
         # # Список текущих событий;
         # {"name of fac": state (STATE_FREE or STATE_BUSY or STATE_NOT_ACCESS)}
         # self[SEGMENT_CURRENT_EVENT_LIST]=queue_event_priorities.QueueEventPriorities(reverse=True)
@@ -195,10 +200,13 @@ class PyssModel(PyssStateObject):
     def getStorages(self):
         return self[STORAGES]
 
+    def getTables(self):
+        return self.tableList.values()
+
     def getFacilities(self):
         return self[FACILITIES]
     
-    def getLogicObject(self):
+    def getLogicObjects(self):
         return self[LOGIC_OBJECTS]
 
     def findFacility(self, facilityName):
@@ -227,7 +235,7 @@ class PyssModel(PyssStateObject):
             qep.remove(tranzact)
 
     def extractFromDelayedListFirst(self, key):
-        t=self[DELAYED_LIST][key].extractFirst()
+        t = self[DELAYED_LIST][key].extractFirst()
         if t is not None:
             # исключить t из всех списков
             self.removeAllFromDelayedList(t)
@@ -255,14 +263,14 @@ class PyssModel(PyssStateObject):
                 cur_el.put(t)
             t = fut_el.extractByTime(currentTime)
 
-    def moveFromDelayedList_KEY_TEST_BLOCK_IF_NOT_CAN_ENTER_toCel(self):
+    def moveFromDelayedListForKey_toCel(self, key):
         delayedList = self[DELAYED_LIST]
         cel = self[CURRENT_EVENT_LIST]
-        if KEY_TEST_BLOCK_IF_NOT_CAN_ENTER in delayedList:
-            t = delayedList[KEY_TEST_BLOCK_IF_NOT_CAN_ENTER].extractFirst()
+        if key in delayedList:
+            t = delayedList[key].extractFirst()
             while t:
                 cel.put(t)
-                t = delayedList[KEY_TEST_BLOCK_IF_NOT_CAN_ENTER].extractFirst()
+                t = delayedList[key].extractFirst()
 
     def addTable(self, table):
         """Добавить таблицу"""
@@ -419,6 +427,22 @@ Args:
             plot_storage_lifeline.PlotStorageLifeLine(self, stor=t,
                                                       title=(title + " " + t[STORAGE_NAME]) if title is not None else t[STORAGE_NAME],
                                                       funcAnnotate=funcAnnotate)
+            
+    def initPlotLogicObjectLifeLine(self, logicObjectNames=None, title=""):
+        """Настраивает подсистему диаграмм для отображения линий жизни огических ключей.
+
+        Args:
+            logicObjectNames=None - список наименований ЛК. Если None, то диаграмма строится для всех ЛК.
+            title - заголовок диаграммы
+
+        """
+        if logicObjectNames is None:
+            b = [self[LOGIC_OBJECTS][t] for t in sorted(self[LOGIC_OBJECTS].keys())]
+        else:
+            b = [self[LOGIC_OBJECTS][t] for t in sorted(self[LOGIC_OBJECTS].keys()) if t[LOGIC_OBJECT_NAME] in logicObjectNames]
+        plot_logicobject_lifeline.PlotLogicObjectLifeLine(
+            self, logicObjectList=b,
+            title=title)            
 
     def initPlotQueueLifeLine(self, queueNames=None, title=None, funcAnnotate=None):
         """Настраивает подсистему диаграмм для отображения линий жизни Очередей.

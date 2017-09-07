@@ -28,6 +28,8 @@ class Facility(PyssStateObject):
 
 Владельцем Facility является модель.
 
+При изменении состояния, вызывается обработчик измененния состояния (см. pyssstateobject.PyssStateObject).
+
 Args:
     ownerModel=None - объект модели-владельца 
     facilityName - строка с наименованием одноканального устройства
@@ -225,11 +227,6 @@ f[LIFE_TIME_LIST] - список меток времени и состояний
         self[TIME_BUSY_START] = None
         self[COUNT_NOT_ACCESS] += 1
         self.fireHandlerOnStateChange(oldState)
-
-    def moveToRetryAttempList(self, transact):
-        if transact not in self[RETRY_ATTEMP_LIST]:
-            self[OWNER].getCel().remove(transact)
-            self[RETRY_ATTEMP_LIST].append(transact)
 
     def moveToCel(self, transact):
         if transact in self[RETRY_ATTEMP_LIST]:

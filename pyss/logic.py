@@ -10,6 +10,7 @@ from pyss import pyssobject
 from pyss.pyss_const import *
 from pyss import queue_event_priorities
 from pyss.block import Block
+from pyss.logic_object import LogicObject
 
 def invert(owner, logicObject):
     """Инвертирование состояния логического ключа logicObject"""
@@ -55,6 +56,8 @@ bl[ACTION_FUNC] - функция изменения состояния логи�
         super(Logic, self).__init__(LOGIC, label=label, ownerSegment=ownerSegment)
         map(pyssobject.raiseIsTrue, [logicObjectName is None or logicObjectName == "", actionFunc is None])
         self[LOGIC_OBJECT_NAME] = logicObjectName
+        if ownerSegment.getOwner().findLogicObject(logicObjectName) is None:
+            LogicObject(ownerSegment.getOwner(), logicObjectName)
         self[ACTION_FUNC]=actionFunc
 
     def _findLogicObject(self):

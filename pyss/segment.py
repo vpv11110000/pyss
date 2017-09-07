@@ -59,6 +59,7 @@ s[AFTER_BLOCK]=None - обработчик события после вызов�
         self[OPTIONS] = options_val
         self[BEFORE_BLOCK] = None
         self[AFTER_BLOCK] = None
+        self[BLOCK_TESTS]=[]
         ownerModel.addSegment(self)
 
     def addBlock(self, block):
@@ -80,6 +81,8 @@ s[AFTER_BLOCK]=None - обработчик события после вызов�
             self[GENERATES].append(block)
             if self.getModel():
                 self.getModel().generates.append(block)
+        if block[ENTITY_TYPE] == TEST:
+            self[BLOCK_TESTS].append(block)
         lastBlock = None
         if self[BLOCKS]:
             lastBlock = self[BLOCKS][-1]
@@ -113,8 +116,6 @@ s[AFTER_BLOCK]=None - обработчик события после вызов�
                     self[AFTER_BLOCK](g)
 
         opt = self[OPTIONS]
-        #
-        m.moveFromDelayedList_KEY_TEST_BLOCK_IF_NOT_CAN_ENTER_toCel()
 
         # free FACILITIES
         # handle components.CEL
@@ -139,13 +140,17 @@ s[AFTER_BLOCK]=None - обработчик события после вызов�
             m.setCurrentTransact(t)
             self.fireHandlerOnStateChange(oldTransact)
             while block:
-                t[TRACK].append((currentTime, block))
+                if not t[HANDLED]:
+                    t[TRACK].append((currentTime, block))
                 if self[BEFORE_BLOCK] is not None:
                     self[BEFORE_BLOCK](block)
                 try:
                     r = block.transactHandle(currentTime, t)
                     if self[AFTER_BLOCK] is not None:
                         self[AFTER_BLOCK](block)
+                    for z in self[BLOCK_TESTS]:
+                        if z.checkFuncCondition() is True:
+                            z.moveTransactFromDelayedListToCel()                            
                     if r:
                         if not t[TRANSACT_DELETED]:
                             block = t[CURRENT_BLOCK]

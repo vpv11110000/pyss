@@ -11,6 +11,10 @@ DIRNAME_MODULE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpat
 sys.path.append(DIRNAME_MODULE)
 sys.path.append(DIRNAME_MODULE + "pyss" + os.sep)
 
+from pyss import pyssobject
+from pyss.pyss_model import PyssModel
+from pyss.segment import Segment
+
 from pyss import generate
 from pyss import terminate
 from pyss import logger
@@ -26,7 +30,7 @@ from pyss import advance
 from pyss import options
 from pyss.pyss_const import *
 
-class TestEnterLeave(unittest.TestCase):
+class TestEnter(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -40,9 +44,9 @@ class TestEnterLeave(unittest.TestCase):
             Enter(None, storageName="S1", funcBusySize=1)
 
     def test_init_002(self):
-        m = pyss_model.PyssModel(optionz=None)
+        m = PyssModel(optionz=None)
         m[OPTIONS].setAllFalse()
-        sgm = segment.Segment(m)
+        sgm = Segment(m)
         #
         Enter(sgm, storageName="S1", funcBusySize=1) 
 

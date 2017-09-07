@@ -29,7 +29,6 @@ import os
 import random
 import unittest
 
-
 DIRNAME_MODULE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))) + os.sep
 sys.path.append(DIRNAME_MODULE)
 sys.path.append(DIRNAME_MODULE + "pyss" + os.sep)
@@ -191,7 +190,6 @@ def main():
     #m.getPlotSubsystem().plotByModules()
     #m.getPlotSubsystem().show()
     m.getPlotSubsystem().plotByModulesAndSave("1_example_3_8")
-
     
 if __name__ == '__main__':
     main()

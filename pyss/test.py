@@ -16,9 +16,6 @@ from pyss.block import Block
 
 # pylint: disable=line-too-long
 
-T123 = "$$$123"
-T124 = "$$$124"
-
 class Test(Block):
     """Блок проверки условия и выбора дальнейшего маршрута транзакта
 
@@ -30,7 +27,7 @@ class Test(Block):
 Args:
     ownerSegment=None - объект сегмента-владельца 
     label=None - метка блока (см. block.py)    
-    funcCondition=None - функция вычисления условия, сигнатура: bool f(owner, transact)
+    funcCondition=None - функция вычисления условия, сигнатура: bool f(owner)
     move2block=None - метка блока, к которому будет направляться транзакт, если условие не будет выполняться
 
 Например, блок
@@ -48,8 +45,6 @@ bl = Test(...)
 bl[FUNC_CONDITION] - функция вычисления условия, сигнатура: bool f(transact)
 bl[TO_BLOCK_LABEL] - метка блока, к которому будет направляться транзакт, 
                      если условие не будет выполняться
-bl[firstBlock_4365643] - кеш, внутреннее использование
-bl[secBlock_4365643] - кеш, внутреннее использование
     
     """
     
@@ -63,50 +58,63 @@ bl[secBlock_4365643] - кеш, внутреннее использование
         self[TO_BLOCK_LABEL] = move2block
         self[firstBlock_4365643] = None
         self[secBlock_4365643] = None
+        self[KEY_FOR_DELAYED_LIST] = None
         
-    def canEnter(self, transact):
-        b = self[FUNC_CONDITION](self, transact) is True
-        transact[RESULT_TEST_BLOCK] = b
-        return b or self[TO_BLOCK_LABEL] is not None
+    def _buildKeyForDelayedList(self):
+        if self[KEY_FOR_DELAYED_LIST] is None:
+            self[KEY_FOR_DELAYED_LIST] = "$$" + self.getOwner()[ENTITY_TYPE] + "_" + str(self.getOwner()[NUM]) + "_" + self[ENTITY_TYPE] + "_" + str(self[NUM]) 
+        return self[KEY_FOR_DELAYED_LIST]        
+        
+    def checkFuncCondition(self):
+        """
+        Return:
+            None - self[TO_BLOCK_LABEL] is not None, условие не проверяется
+            True - условие выполняется
+            False - условие не выполняется
+        """
+        
+        if self[TO_BLOCK_LABEL] is not None:
+            return None
+        return self[FUNC_CONDITION](self) is True
+        
+    def canEnter(self, tranzact):
+        b = self.checkFuncCondition()
+        if b is None:
+            return True
+        return b     
+    
+    def moveTransactFromDelayedListToCel(self):
+        m = self.getOwnerModel()
+        m.moveFromDelayedListForKey_toCel(self._buildKeyForDelayedList())   
 
     def handleCanNotEnter(self, transact):
         # если задан атрибут self[TO_BLOCK_LABEL], 
         #    то транзакт переходит в указанный в параметре блок (см. transactInner);
         # если атрибут self[TO_BLOCK_LABEL] не задан, то транзакт задерживается в предыдущем блоке.
+        
         if self[TO_BLOCK_LABEL] is None:
+            k = self._buildKeyForDelayedList()
             m = self.getOwnerModel()
-            m.appendToDelayedList(KEY_TEST_BLOCK_IF_NOT_CAN_ENTER, transact)
-        transact[RESULT_TEST_BLOCK] = None
+            m.appendToDelayedList(k, transact)
 
-    def transactInner(self, currentTime, transact=None):
+    def transactInner(self, currentTime, tranzact=None):
         # # calc modificatorFunc on current transact[self[PARAMETR_NAME]]
         # and set new value to transact[self[PARAMETR_NAME]]
 
         # pylint:disable=unused-argument
-        if not self[firstBlock_4365643]:
-            block = self.findBlockByLabel(self[TO_BLOCK_LABEL])
-            self[firstBlock_4365643] = block
-            self[secBlock_4365643] = self[BLOCK_NEXT]
-
-        if RESULT_TEST_BLOCK in transact: 
-            if transact[RESULT_TEST_BLOCK] is True:
-                # Если условие выполняется (self[FUNC_CONDITION](transact) is True), 
-                # транзакту разрешается вход и прохождение блока.
-                block = self[secBlock_4365643]
-            elif transact[RESULT_TEST_BLOCK] is False: 
-                # изменение маршрута
-                # если задан атрибут self[TO_BLOCK_LABEL], 
-                # то транзакт переходит в указанный в параметре move2block блок
-                block = self[firstBlock_4365643]
+        c = self[FUNC_CONDITION](self)
+        if self[TO_BLOCK_LABEL] is not None:
+            if not c:
+                block = self.findBlockByLabel(self[TO_BLOCK_LABEL])
             else:
-                raise Exception("Transact [%s] eq or less 0" % self[PARAMETR_NAME])
-            if block is None:
-                raise Exception("Block not found, label is [%s]" % self[TO_BLOCK_LABEL])
-            self[BLOCK_NEXT] = block
-            transact[RESULT_TEST_BLOCK] = None
+                block = self[BLOCK_NEXT]
         else:
-            raise Exception("Transact hasnt [%s]" % RESULT_TEST_BLOCK)
-        return transact
+            if c is True:
+                block = self[BLOCK_NEXT]
+            else:
+                raise pyssobject.ErrorBadAlgorithm("Test().transactInner")
+        tranzact[BLOCK_NEXT] = block
+        return tranzact
 
 if __name__ == '__main__':
     def main():

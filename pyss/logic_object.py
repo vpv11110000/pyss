@@ -18,6 +18,8 @@ class LogicObject(PyssStateObject):
 
 Владельцем LogicObject является модель.
 
+При изменении состояния, вызывается обработчик измененния состояния (см. pyssstateobject.PyssStateObject). 
+
 Args:
     ownerModel=None - объект модели-владельца 
     logicObjectName - строка с наименованием логического ключа
@@ -65,17 +67,19 @@ f[LIFE_TIME_LIST] - список меток времени и состояний
     def setLifeState(self, dstState, timeTick=None):
         """
         Args:
-            dstState=None - True, False
+            dstState - True, False
             timeTick=None - метка времени
         """
-        
-        self[STATE] = dstState
+        if dstState not in [True, False]:
+            raise pyssobject.ErrorInvalidArg("dstState must in [True,False]");
         if timeTick is None:
             raise Exception("timeTick is None")
-        if dstState not in [True, False]:
-            logger.warn("dstState not in [True, False]")
-        if self[LIFE_TIME_LIST][-1][STATE] != dstState:
-            self[LIFE_TIME_LIST].append({START:timeTick, STATE:dstState})
+        if self[STATE] != dstState:
+            oldState = self[STATE]
+            self[STATE] = dstState
+            if self[LIFE_TIME_LIST][-1][STATE] != dstState:
+                self[LIFE_TIME_LIST].append({START:timeTick, STATE:dstState})
+            self.fireHandlerOnStateChange(oldState)
 
 if __name__ == '__main__':
     def main():

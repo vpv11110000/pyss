@@ -45,7 +45,7 @@ bl[ON_DELETED] - обработчик события "после удалени�
         super(Terminate, self).__init__(TERMINATE, label=label, ownerSegment=ownerSegment)
         self[DELTA_TERMINATE] = deltaTerminate
         self[ON_DELETED] = None
-
+        
     def transactInner(self, currentTime, transact):
         if transact is None:
             return None
