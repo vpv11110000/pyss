@@ -96,6 +96,14 @@ Requirements
 
 .. _`1_example_3_15`: examples/1_example_3_15
 
+2. Пример с использованием Gate (4) `1_example_3_16`_.
+
+.. _`1_example_3_16`: examples/1_example_3_16
+
+2. Пример с использованием Gate (5) `1_example_3_17`_.
+
+.. _`1_example_3_17`: examples/1_example_3_17
+
 2. `manufact`_.
 
 .. _`manufact`: examples/manufact
