@@ -6,54 +6,63 @@
 
 Смоделировать обработку 100 заявок.
 
+**ВНИМАНИЕ**
+Программа на рис. 3.28 не соответствует примеру в книге.
+
+ 
+
+
 Результат
 =========
 
+    === REPORT ===
     Start time      End time        Blocks       Facilities      Storages
-           0.0    573.036576911            16                2             1
+           0.0    665.738961294            19                2             1
     === BLOCKS ===
     LABEL          BLOCK TYPE     ENTRY COUNT   CURRENT COUNT   RETRY
                       segment -----------------------------------
                      GENERATE          100            0            0
+                        ENTER          100            0            0
                          GATE          100            0            0
-                        ENTER           59            0            0
-                        QUEUE           59            0            0
-                        SEIZE           59            0            0
-                       DEPART           59            0            0
-                        LEAVE           59            0            0
-                      ADVANCE           59            0            0
-                      RELEASE           59            0            0
-                    TERMINATE           59           59            0
-          QUE2          QUEUE           41            0            0
-        FACIL2          SEIZE           41            0            0
-                       DEPART           41            0            0
-                      ADVANCE           41            0            0
-                      RELEASE           41            0            0
-                    TERMINATE           41           41            0
+                        QUEUE           49            0            0
+                        SEIZE           49            0            0
+                        LEAVE           49            0            0
+                       DEPART           49            0            0
+                       HANDLE           49            0            0
+                      ADVANCE           49            0            0
+                      RELEASE           49            0            0
+                    TERMINATE           49           49            0
+          QUE2          QUEUE           51            0            0
+        FACIL2          SEIZE           51            0            0
+                        LEAVE           51            0            0
+                       DEPART           51            0            0
+                       HANDLE           51            0            0
+                      ADVANCE           51            0            0
+                      RELEASE           51            0            0
+                    TERMINATE           51           51            0
     
       FACILITY        ENTRIES        UTIL.    AVE. TIME       AVAIL.        OWNER         PEND        INTER        RETRY        DELAY
-            F1             59        0.926   8.9979921347            0            0            0            0            0            0
-            F2             41        0.933   13.0411347046            0            0            0            0            0            0
+            F1             49        0.671   9.11395437217            0            0            0            0            0            0
+            F2             51        0.992   12.9464883547            0            0            0            0            0            0
     
          QUEUE            MAX        ENTRY     ENTRY(0)     AVE.TIME        AVE.(-0)        RETRY
-            Q1              3           59            1     22.7987315965   23.1918131757            0
-            Q2              5           41            2     30.8643349196   32.4471213257            0
+            Q1              1           49           49            0.0         None            0
+            Q2              3           51            1     35.6686310446   36.3820036655            0
     
     
        STORAGE           CAP.         REM.         MIN.         MAX.      ENTRIES         AVL.       AVE.C.        UTIL.        RETRY        DELAY
-          None             3            3            0            3           59         True   2.35570164436        0.785            0            0
-
-
+          None             3            3            0            3          100         True   8.60126819846        2.867            0            0
+    
 
 
     
-![1_example_3_13 1](001.png "001.png")
+![1_example_3_13 1](_001.png "_001.png")
 
-![1_example_3_13 2](002.png "002.png")
+![1_example_3_13 2](_002.png "_002.png")
 
-![1_example_3_13 3](003.png "003.png")
+![1_example_3_13 3](_003.png "_003.png")
 
-![1_example_3_13 4](004.png "004.png")
+![1_example_3_13 4](_004.png "_004.png")
 
-![1_example_3_13 5](005.png "005.png")
+![1_example_3_13 5](_005.png "_005.png")
 

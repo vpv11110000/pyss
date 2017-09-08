@@ -20,6 +20,8 @@ class Queue(Block):
 Создаёт в наборе pyss_model.PyssModel()[QUEUE_OBJECTS], по ключу queueName, объект очереди.
 При прохождении транзакта увеличивает длину очереди на значение, полученное из атрибута DELTA_INCREASE.
 
+Уменьшение длины очереди см. depart
+
 Args:
     ownerSegment=None - объект сегмента-владельца 
     label=None - метка блока (см. block.py) 

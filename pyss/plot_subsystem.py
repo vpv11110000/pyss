@@ -81,7 +81,7 @@ Methods:
         for i in plt.get_fignums():
             fig = plt.figure(i)
             #21x19
-            fig.set_size_inches(8.26, 7.48)
+            fig.set_size_inches(21.0, 19.0)
             plt.savefig("%s_%03d"%(filename, i))
             plt.close(i)    # close the figure
 

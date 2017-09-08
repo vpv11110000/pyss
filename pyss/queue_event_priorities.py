@@ -10,7 +10,7 @@
 from pyss.pyss_const import *
 
 def transact_compare_by_created_time(x, y):
-    return x[TIME_CREATED] - y[TIME_CREATED]
+    return -1 if (x[TIME_CREATED] - y[TIME_CREATED])<-0.000001 else 0 if abs(x[TIME_CREATED] - y[TIME_CREATED])<0.000001 else 1 
 
 class QueueEventPriorities(object):
     """Очередь событий с приоритетами
